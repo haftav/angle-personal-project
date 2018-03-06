@@ -1,0 +1,124 @@
+.login {
+    text-align: center;
+    color: white;
+}
+
+.login-header {
+    height: 8vh;
+    width: 100%;
+    background: rgb(63, 63, 63);
+    display: flex;
+    align-items: center;
+}
+
+.logo, .angle-motto {
+    display: inline-block
+}
+
+.logo {
+    margin-left: 50px;
+    color: orange;
+}
+
+.angle-motto {
+    margin-left: 150px;
+    color: gray;
+}
+
+.login-main {
+    height: 92vh;
+    width: 100%;
+    background: rgb(6, 20, 34);
+    background-size: cover;
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+.login-main > h1 {
+    font-size: 50px;
+    width: 70%;
+    font-weight: 400;
+    margin: 50px auto 30px auto;
+}
+
+.login-main > p {
+    font-size: 25px;
+    width: 55%;
+    margin: 0px auto 25px auto;
+}
+
+.login-main > button {
+    border-radius: none;
+    border: none;
+    margin-top: 15px;
+    width: 360px;
+    height: 65px;
+    font-size: 27px;
+    padding-top: 2px;
+    color: white;
+    font-weight: 400;
+    background-image: linear-gradient(to bottom, rgb(67, 108, 161) 0%, rgb(37, 56, 94) 100%);
+}
+
+.login-main-info {
+    width: 100%;
+    height: 200px;
+    background: rgba(0, 0, 0, 0.61);
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+}
+
+.login-main-info > div {
+    opacity: 1;
+    width: 300px; 
+    height: 80%;
+    color: black;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-main-info > div h3 {
+    color: orange;
+    padding: 10px 0px 5px 10px;
+    font-size: 25px;
+}
+
+.login-main-info > div p {
+    padding: 10px 0px 5px 10px;
+    color: rgb(235, 231, 231);
+    font-weight: 500;
+    line-height: 1.6em;
+}
+
+
+/*middle*/
+
+.login-middle {
+    height: 100vh;
+    width: 100%;
+    background: lightblue;
+}
+
+.login-middle-top {
+    height: 20vh;
+    width: 100%;
+    background: gray;
+}
+
+.login-middle-middle {
+    height: 65vh;
+    width: 100%;
+}
+
+.login-middle-bottom {
+    width: 100%;
+    height: 15vh;
+    background: lightsalmon;
+}
