@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS users (
     description VARCHAR(500),
     artist_type TEXT,
     image VARCHAR(300),
+    info VARCHAR(10),
     auth_id VARCHAR(200)
 )

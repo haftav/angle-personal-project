@@ -21,6 +21,7 @@ massive(CONNECTION_STRING).then(db => {
 })
 
 const app = express();
+app.use(bodyParser.json());
 
 // app.use(express.static(__dirname + './../build'))
 
@@ -40,7 +41,6 @@ passport.use(new Auth0Strategy({
     callbackURL: CALLBACK_URL,
     scope: 'openid profile'    
 }, function(accessToken, refreshToken, extraParams, profile, done) {
-    console.log(profile);
     const db = app.get('db');
     db.find_user([profile.id]).then(users => {
         if (!users[0]) {
@@ -50,8 +50,7 @@ passport.use(new Auth0Strategy({
                 }
             }
             const {id, displayName, name, picture} = profile;
-            db.create_user([id, name.givenName, name.familyName, displayName, picture]).then(user => {
-                console.log(user);
+            db.create_user([id, name.givenName, name.familyName, displayName, picture, 'false', '', 'Both']).then(user => {
                 done(null, user[0].id)
             })
         } else {
@@ -66,26 +65,33 @@ passport.serializeUser( (id, done) => {
 
 passport.deserializeUser( (id, done) => {
     app.get('db').find_session_user([id]).then( user => {
-        console.log(user[0]);
         done(null, user[0]);
     } ) 
 } )
 
 app.get('/api/auth', passport.authenticate('auth0'));
 app.get('/api/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard',
+    successRedirect: 'http://localhost:3000/#/info',
     failureRedirect: 'http://localhost:3000/#/'
     
 }))
 
 app.get('/api/user', (req, res) => {
-    console.log(req.session);
-    console.log(req.user);
     if (req.user) {
         res.status(200).send(req.user);
     } else {
         res.status(401).send('nah');
     }
+})
+
+app.put('/api/user', (req, res) => {
+    console.log('body: ', req.body)
+    const { user_name, first_name, last_name, description, artist_type } = req.body;
+    const db = app.get('db');
+    db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(user => {
+        res.status(200).send(user[0])
+    })
+
 })
 
 // app.get('/auth/logout', function(req, res){
