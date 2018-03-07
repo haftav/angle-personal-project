@@ -6,6 +6,8 @@ const express = require('express')
 , massive = require('massive')
 , bodyParser = require('body-parser');
 
+const projects_controller = require('./controllers/projects_controller');
+
 const {
     SERVER_PORT,
     SESSION_SECRET,
@@ -105,6 +107,11 @@ app.get('/api/user/:id', (req, res) => {
 //     req.logOut();
 //     res.redirect('http://localhost:3535/');
 // });
+
+/* PROJECT ENDPOINTS */
+app.get('/api/projects', projects_controller.getProjects);
+app.get('/api/projects/:id', projects_controller.getProject)
+app.post('/api/projects', projects_controller.createProject);
 
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));

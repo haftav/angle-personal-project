@@ -1,0 +1,44 @@
+.project-thumbnail {
+    margin: 25px;
+    border: 1px solid red;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.project-thumbnail-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr 3fr;
+    grid-template-rows: 50px 1fr;
+    border: 1px solid green;
+    grid-column: 1 / span 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.project-thumbnail-userimage {
+    height: 75px;
+    grid-row-start: 1;
+    grid-column: 1 / 2;
+}
+
+.project-thumbnail-projectimage {
+    background: lightblue;
+    height: 150px;
+    width: 275px;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+}
+
+.project-thumbnail-name {
+    grid-column: 2 / span 3;
+    border: 1px solid black;
+    grid-row: 1 / 2;
+}
+
+.project-thumbnail-description {
+    grid-column: 3 / span 1;
+}
+
+.project-thumbnail-content h2 {
+    font-size: 20px;
+}

@@ -34,6 +34,16 @@
     align-items: center;
 }
 
+.profile-projects {
+    grid-column: 1 / 6;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.profile-projects > div {
+    border: 1px solid black;
+}
+
 .profile-contact {
     border: 1px solid black;
     margin: 50px;

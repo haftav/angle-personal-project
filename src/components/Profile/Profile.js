@@ -4,6 +4,7 @@ import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
 import ModalContainer from '../ModalContainer/ModalContainer';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './Profile.css';
 
 class Profile extends Component {
@@ -33,6 +34,7 @@ class Profile extends Component {
         return (
             <div>
                 <Header />
+                <Link to="/dashboard"><button>Dashboard</button></Link>
                 <div className='profile'>
                     <div className='profile-user-content'>
                         <img src={image}
@@ -48,13 +50,21 @@ class Profile extends Component {
                         <div className='profile-stats'>
                             <div>
                                 Projects
-                        </div>
+                            </div>
                             <div>
                                 Reviews
-                        </div>
+                            </div>
                             <div>
                                 Connections
+                            </div>
                         </div>
+                        <div className='profile-projects'>
+                            <div className='profile-projects-thumbnail'>hai</div>
+                            <div className='profile-projects-thumbnail'>hai</div>
+                            <div className='profile-projects-thumbnail'>hai</div>
+                            <div className='profile-projects-thumbnail'>hai</div>
+                            <div className='profile-projects-thumbnail'>hai</div>
+                            <div className='profile-projects-thumbnail'>hai</div>
                         </div>
                     </div>
                     <div className='profile-contact'>

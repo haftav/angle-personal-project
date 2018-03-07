@@ -4,35 +4,59 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
+import ProjectThumbnail from '../ProjectThumbnail/ProjectThumbnail';
+
+import './Dashboard.css';
 
 class Dashboard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-
+            projects: []
         }
     }
 
     componentDidMount() {
         this.props.getUser();
+        axios.get('/api/projects').then(res => {
+            console.log(res.data);
+            this.setState({
+                projects: res.data
+            })
+        })
     }
 
     render() {
+        const projects = this.state.projects.map((el, idx) => {
+            const { name, type, description, 
+                    price, image, id, first_name,
+                    last_name, user_image, user_id } = el;
+            return (
+                <Link to={`/project/${id}`}>
+                    <ProjectThumbnail name={name}
+                        type={type}
+                        description={description}
+                        price={price}
+                        image={image}
+                        first_name={first_name}
+                        last_name={last_name}
+                        user_image={user_image} />
+                </Link>
+            )
+        })
         return (
             <div>
                 <Header />
-                <h1>Dashboard</h1>
                 <Link to='/profile'><button>Profile</button></Link>
-                <div className='grid'>
-                    <div className='grid-1'>
-                        Hello
-                    </div>  
-                    <div className='grid-2'>
-                        World
+                <Link to='/create'><button>START YOUR PROJECT</button></Link>
+                <div className='dashboard'>
+                    <input placeholder='search' />
+                    <div className='dashboard-feed'>
+                        {projects}
                     </div>
-                    <div className='grid-3'>
-                        Thing
+                    <div className='dashboard-network'>
+
                     </div>
                 </div>
             </div>
