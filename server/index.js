@@ -94,6 +94,13 @@ app.put('/api/user', (req, res) => {
 
 })
 
+app.get('/api/user/:id', (req, res) => {
+    const db = app.get('db');
+    db.find_id_user([req.params.id]).then(user => {
+        res.status(200).send(user[0])
+    })
+})
+
 // app.get('/auth/logout', function(req, res){
 //     req.logOut();
 //     res.redirect('http://localhost:3535/');

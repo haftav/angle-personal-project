@@ -8,7 +8,7 @@ export default (
     <Switch>
         <Route exact path='/' component={Login} />
         <Route path='/dashboard' component={Dashboard} />
-        <Route path='/profile/:id' component={Profile} />
+        <Route path='/profile' component={Profile} />
         <Route path='/info' component={GetInfo} />
     </Switch>
 

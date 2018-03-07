@@ -59,6 +59,7 @@
     color: white;
     font-weight: 400;
     background-image: linear-gradient(to bottom, rgb(67, 108, 161) 0%, rgb(37, 56, 94) 100%);
+    cursor: pointer;
 }
 
 .login-main-info {

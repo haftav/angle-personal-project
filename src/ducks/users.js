@@ -16,6 +16,7 @@ export default function reducer(state = initialState, action) {
             console.log(action.payload);
             return Object.assign({}, state, { user: action.payload, loading: false })
         case UPDATE_USER + '_FULFILLED':
+            console.log(action.payload)
             return Object.assign({}, state, { user: action.payload})
         default:
             return state;
@@ -34,15 +35,12 @@ export function getUser() {
 
 export function updateUser(user) {
     const { user_name, first_name, last_name, description, artist_type } = user
-    let friend = 'friend'
     let userData = axios.put('/api/user', { user_name, first_name, last_name, description, artist_type }).then(res => {
         return res.data;
     })
 
-    console.log('userdata: ', userData)
-
     return {
         type: UPDATE_USER,
-        payload: user
+        payload: userData
     }
 }

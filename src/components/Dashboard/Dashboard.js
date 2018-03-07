@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
+import Header from '../Header/Header';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -20,8 +21,20 @@ class Dashboard extends Component {
     render() {
         return (
             <div>
+                <Header />
                 <h1>Dashboard</h1>
-                <Link to={`/profile/${this.props.user.id}`}><button>Profile</button></Link>
+                <Link to='/profile'><button>Profile</button></Link>
+                <div className='grid'>
+                    <div className='grid-1'>
+                        Hello
+                    </div>  
+                    <div className='grid-2'>
+                        World
+                    </div>
+                    <div className='grid-3'>
+                        Thing
+                    </div>
+                </div>
             </div>
         )
     }

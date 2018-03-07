@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import { getUser, updateUser } from '../../ducks/users';
+import { updateUser, getUser } from '../../ducks/users';
 
-class GetInfo extends Component {
+class ModalInfo extends Component {
     constructor(props) {
         super(props);
 
@@ -10,22 +11,20 @@ class GetInfo extends Component {
             user: {}
         }
 
-        this.updateUser = this.updateUser.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        document.addEventListener('mousedown', this.handleClick, false);
         this.props.getUser();
-        // console.log(this.props.user.info === 'true')
         this.setState({
             user: this.props.user
         })
     }
-
-    componentWillReceiveProps(newProps) {
-        if (newProps.user.info === 'true') {
-            this.props.history.push('/dashboard')
-        }
+    componentWillUnmount() {
+        document.removeEventListener('mousedown', this.handleClick, false);
     }
 
     updateUser(val, type) {
@@ -36,25 +35,27 @@ class GetInfo extends Component {
         const { user_name, first_name, last_name, description, artist_type } = this.state.user;
         if (user_name && first_name && last_name && description && artist_type) {
             this.props.updateUser(this.state.user);
+            this.props.toggleModal();
         } else {
             alert('Please fill in the required information.')
         }
     }
 
-
+    handleClick(e) {
+        if (this.props.active) {
+            if (!this.node.contains(e.target)) {
+                this.props.toggleModal();
+            }
+        }
+    }
     render() {
+        console.log(this.props);
+        const { toggleModal, active } = this.props;
         return (
-            <div>
-                {/* {
-                    this.props.loading ?
-                    <h1>Loading</h1>
-                    : */}
-                    <div>
-                        <h1>Get Info</h1>
-                        <h3>Please fill in some more info about yourself.</h3>
-                        <h3>Username</h3>
-                        <input placeholder={this.state.user.user_name}
-                                onChange={(e) => this.updateUser(e.target.value, 'user_name')}/>
+            <div ref={node => this.node = node}
+                className={active ? 'modal modal-active' : 'modal'}>
+ <div>
+                        <h1>Edit Info</h1>
                         <h3>First Name</h3>
                         <input placeholder={this.state.user.first_name}
                                 onChange={(e) => this.updateUser(e.target.value, 'first_name')}/>
@@ -70,24 +71,23 @@ class GetInfo extends Component {
                             <option>Musician</option>
                         </select>
                         <button onClick={this.handleUpdate}>Submit</button>
-                    </div>
-                {/* // } */}
+                <div className='x-button' onClick={toggleModal}>X</div>
+            </div>
             </div>
         )
     }
 }
 
 function mapStateToProps(state) {
-    const { user, loading } = state;
+    const { user } = state;
     return {
-        user,
-        loading
+        user
     }
 }
 
 let actions = {
-    getUser,
-    updateUser
+    updateUser,
+    getUser
 }
 
-export default connect(mapStateToProps, actions)(GetInfo);
+export default connect(mapStateToProps, actions)(ModalInfo)

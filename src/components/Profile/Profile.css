@@ -1,0 +1,41 @@
+.profile {
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.profile-user-content {
+    margin: 50px;
+    border: 1px solid black;
+    display: grid;
+    grid-column: 1/5;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
+}
+
+.profile-user-content img {
+    background: lightcoral;
+    height: 200px;
+    border: 1px solid black;
+}
+
+.profile-description {
+    border: 1px solid black;
+    grid-column: 2 / 4;
+    padding: 15px;
+}
+
+.profile-stats {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.profile-contact {
+    border: 1px solid black;
+    margin: 50px;
+    grid-column: 5 / 7;
+}
