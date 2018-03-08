@@ -26,7 +26,7 @@ class Requests extends Component {
 
     addConnection(id, connection_id) {
         let userid = this.props.user.id;
-        axios.post('/api/connections', { userid, id, connection_id }).then(res => {
+        axios.post('/api/connections/accepted', { userid, id, connection_id }).then(res => {
             this.setState({
                 requests: res.data
             })
@@ -41,7 +41,7 @@ class Requests extends Component {
                 <div>
                     <img src={image} alt={first_name} />
                     <h1>{first_name} {last_name}</h1>
-                    <button onClick={this.addConnection(user_id, connection_id)}>Add Connection</button>
+                    <button onClick={() => this.addConnection(user_id, connection_id)}>Add Connection</button>
                 </div>
             )
         })

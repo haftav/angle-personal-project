@@ -16,11 +16,13 @@ class User extends Component {
             projects: [],
             user: {},
             connection_status: '',
+            request_status: '',
             connections: []
         }
 
         this.getInfo = this.getInfo.bind(this);
         this.addConnection = this.addConnection.bind(this);
+        this.addFriend = this.addFriend.bind(this);
     }
 
     getInfo(id) {
@@ -41,11 +43,27 @@ class User extends Component {
             })
         })
 
-        axios.get(`/api/connections/status/${id}`).then(res => {
-            console.log('status: ', res.data);
+        axios.get(`/api/connections/status/to/${id}`).then(res => {
             if (res.data) {
                 this.setState({
                     connection_status: res.data.status
+                })
+            } else {
+                this.setState({
+                    connection_status: ''
+                })
+            }
+        })
+
+        axios.get(`/api/connections/status/from/${id}`).then(res => {
+            if (res.data.status === 'pending') {
+                console.log('requesting');
+                this.setState({
+                    request_status: 'requesting'
+                })
+            } else {
+                this.setState({
+                    request_status: ''
                 })
             }
         })
@@ -62,14 +80,27 @@ class User extends Component {
     addConnection() {
         let friend_id_1 = this.props.user.id;
         let friend_id_2 = this.props.match.params.id;
-        axios.post('/api/connections', {friend_id_1, friend_id_2}).then(res => {
+        axios.post('/api/connections/pending', { friend_id_1, friend_id_2 }).then(res => {
             this.setState({
                 connection_status: res.data.status
             })
         })
     }
 
+    addFriend() {
+        let userid = this.props.user.id;
+        let id = this.props.match.params.id;
+        axios.post('/api/connections/user/accepted', { userid, id }).then(res => {
+            this.setState({
+                connection_status: res.data.status,
+                request_status: ''
+            })
+        })
+    }
+
     render() {
+        console.log('connection: ', this.state.connection_status);
+        console.log('request', this.state.request_status);
         const connections = this.state.connections.map((el, idx) => {
             let { first_name, last_name, image, user_id } = el
             return (
@@ -84,17 +115,24 @@ class User extends Component {
             let { name, type, description, image, id } = el;
             return (
                 <ProfileProjectThumbnail name={name}
-                                        type={type}
-                                        description={description}
-                                        image={image}
-                                        id={id} />
+                    type={type}
+                    description={description}
+                    image={image}
+                    id={id} />
             )
         })
         return (
             <div>
                 <Header />
                 <Link to="/dashboard"><button>Dashboard</button></Link>
-                {
+                {this.state.request_status === 'requesting' ?
+                    <div>
+                        <p>
+                            {first_name} has requested to connect.
+                        </p>
+                        <button onClick={this.addFriend}>Connect</button>
+                    </div>
+                    :
                     !this.state.connection_status ? <button onClick={this.addConnection}>ADD CONNECTION</button> :
                         this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
                             <p>Connected!</p>
@@ -127,7 +165,7 @@ class User extends Component {
                     </div>
                     <div className='profile-contact'>
                         <h1>Connections</h1>
-                        { connections }
+                        {connections}
                     </div>
                 </div>
 

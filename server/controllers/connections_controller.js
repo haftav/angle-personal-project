@@ -13,14 +13,20 @@ module.exports = {
             res.status(200).send(connections);
         })
     },
-    getStatus: (req, res) => {
+    getToStatus: (req, res) => {
         const db = req.app.get('db');
         const id = Number(req.params.id);
         const userid = Number(req.user.id);
-        console.log('id: ', id, 'userid: ', userid);
-        db.get_connection_status([userid, id]).then(status => {
-            console.log(status);
+        db.get_connection_to_status([userid, id]).then(status => {
             res.status(200).send(status[0])
+        })
+    },
+    getFromStatus: (req, res) => {
+        const db = req.app.get('db');
+        const id = Number(req.params.id);
+        const userid = Number(req.user.id);
+        db.get_connection_from_status([userid, id]).then(status => {
+            res.status(200).send(status[0]);
         })
     },
     addConnection: (req, res) => {
@@ -36,6 +42,13 @@ module.exports = {
         const { userid, id, connection_id } = req.body;
         db.add_friend([userid, id, connection_id]).then(connections => {
             res.status(200).send(connections);
+        })
+    },
+    addFriendFromProfile: (req, res) => {
+        const db = req.app.get('db');
+        const { userid, id } = req.body;
+        db.add_friend_from_profile([userid, id]).then(status => {
+            res.status(200).send(status[0])
         })
     }
 }

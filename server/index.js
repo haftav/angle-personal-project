@@ -119,9 +119,11 @@ app.delete('/api/projects/:id', projects_controller.deleteProject);
 
 /* CONNECTIONS ENDPOINTS */
 app.get('/api/connections/user/:id', connections_controller.getConnections)
-app.get('/api/connections/status/:id', connections_controller.getStatus);
+app.get('/api/connections/status/to/:id', connections_controller.getToStatus);
+app.get('/api/connections/status/from/:id', connections_controller.getFromStatus);
 app.get('/api/connections/pending', connections_controller.getPendingConnections);
-app.post('/api/connections', connections_controller.addConnection);
-
+app.post('/api/connections/pending', connections_controller.addConnection);
+app.post('/api/connections/accepted', connections_controller.addFriend);
+app.post('/api/connections/user/accepted', connections_controller.addFriendFromProfile)
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
