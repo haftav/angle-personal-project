@@ -12,11 +12,14 @@ class Project extends Component {
 
         this.state = {
             project: {},
-            modalActive: false
+            modalActive: false,
+            deleteActive: false
         }
 
         this.modalClick = this.modalClick.bind(this);
         this.updateProject = this.updateProject.bind(this);
+        this.deleteClick = this.deleteClick.bind(this);
+        this.deleteProject = this.deleteProject.bind(this);
     }
 
     componentDidMount() {
@@ -33,12 +36,25 @@ class Project extends Component {
         })
     }
 
+    deleteClick() {
+        this.setState({
+            deleteActive: !this.state.deleteActive
+        })
+    }
+
     updateProject(project) {
         console.log(this.state.project.id)
         axios.put(`/api/projects/${this.state.project.id}`, project).then(res => {
             this.setState({
                 project: res.data
             })
+        })
+    }
+
+    deleteProject(project) {
+        console.log('id: ', project.id)
+        axios.delete(`/api/projects/${project.id}`).then(res => {
+            this.props.history.push('/dashboard');
         })
     }
 
@@ -64,12 +80,23 @@ class Project extends Component {
                     <h2>{price}</h2>
                     <img src={image} alt="project-image" />
                     <h3>{status}</h3>
-                    {this.props.user.id === user_id ? <button onClick={this.modalClick}>Edit</button> : null }
+                    {this.props.user.id === user_id 
+                    ? 
+                    <div>
+                        <button onClick={this.modalClick}>Edit</button> 
+                        <button onClick={this.deleteClick}>Delete</button>
+                    </div>               
+                    : null }
                 </div>
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}
-                    info={false} 
+                    info='project' 
                     update={this.updateProject}
+                    project={this.state.project}/>
+                <ModalContainer toggleModal={this.deleteClick}
+                    active={this.state.deleteActive}
+                    info='delete'
+                    update={this.deleteProject} 
                     project={this.state.project}/>
 
             </div>

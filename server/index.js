@@ -7,6 +7,7 @@ const express = require('express')
 , bodyParser = require('body-parser');
 
 const projects_controller = require('./controllers/projects_controller');
+const connections_controller = require('./controllers/connections_controller');
 
 const {
     SERVER_PORT,
@@ -114,6 +115,13 @@ app.get('/api/projects/:id', projects_controller.getProject)
 app.get('/api/projects/user/:id', projects_controller.getUserProjects);
 app.post('/api/projects', projects_controller.createProject);
 app.put('/api/projects/:id', projects_controller.updateProject)
+app.delete('/api/projects/:id', projects_controller.deleteProject);
+
+/* CONNECTIONS ENDPOINTS */
+app.get('/api/connections/user/:id', connections_controller.getConnections)
+app.get('/api/connections/status/:id', connections_controller.getStatus);
+app.get('/api/connections/pending', connections_controller.getPendingConnections);
+app.post('/api/connections', connections_controller.addConnection);
 
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));

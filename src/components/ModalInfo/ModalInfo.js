@@ -50,7 +50,6 @@ class ModalInfo extends Component {
         }
     }
     render() {
-        console.log(this.props);
         const { toggleModal, active } = this.props;
         return (
             <div ref={node => this.node = node}

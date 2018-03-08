@@ -14,27 +14,71 @@ class User extends Component {
 
         this.state = {
             projects: [],
-            user: {}
+            user: {},
+            connection_status: '',
+            connections: []
         }
 
+        this.getInfo = this.getInfo.bind(this);
+        this.addConnection = this.addConnection.bind(this);
     }
 
-    componentDidMount() {
-        axios.get(`/api/user/${this.props.match.params.id}`).then(res => {
+    getInfo(id) {
+
+        axios.get(`/api/user/${id}`).then(res => {
             this.setState({
                 user: res.data
             })
         })
-        axios.get(`/api/projects/user/${this.props.match.params.id}`).then(res => {
+        axios.get(`/api/projects/user/${id}`).then(res => {
             this.setState({
                 projects: res.data
             })
         })
+        axios.get(`/api/connections/user/${id}`).then(res => {
+            this.setState({
+                connections: res.data
+            })
+        })
+
+        axios.get(`/api/connections/status/${id}`).then(res => {
+            console.log('status: ', res.data);
+            if (res.data) {
+                this.setState({
+                    connection_status: res.data.status
+                })
+            }
+        })
     }
 
+    componentDidMount() {
+        this.getInfo(this.props.match.params.id)
+    }
 
+    componentWillReceiveProps(newProps) {
+        this.getInfo(newProps.match.params.id);
+    }
+
+    addConnection() {
+        let friend_id_1 = this.props.user.id;
+        let friend_id_2 = this.props.match.params.id;
+        axios.post('/api/connections', {friend_id_1, friend_id_2}).then(res => {
+            this.setState({
+                connection_status: res.data.status
+            })
+        })
+    }
 
     render() {
+        const connections = this.state.connections.map((el, idx) => {
+            let { first_name, last_name, image, user_id } = el
+            return (
+                <Link to={user_id === this.props.user.id ? '/profile' : `/user/${user_id}`}>
+                    <h1>{first_name} {last_name}</h1>
+                </Link>
+            )
+        })
+
         const { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
         const projects = this.state.projects.map((el, idx) => {
             let { name, type, description, image, id } = el;
@@ -50,6 +94,11 @@ class User extends Component {
             <div>
                 <Header />
                 <Link to="/dashboard"><button>Dashboard</button></Link>
+                {
+                    !this.state.connection_status ? <button onClick={this.addConnection}>ADD CONNECTION</button> :
+                        this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
+                            <p>Connected!</p>
+                }
                 <div className='profile'>
                     <div className='profile-user-content'>
                         <img src={image}
@@ -77,7 +126,8 @@ class User extends Component {
                         </div>
                     </div>
                     <div className='profile-contact'>
-                        <h1>CONTACT</h1>
+                        <h1>Connections</h1>
+                        { connections }
                     </div>
                 </div>
 

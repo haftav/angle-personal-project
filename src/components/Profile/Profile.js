@@ -14,7 +14,8 @@ class Profile extends Component {
 
         this.state = {
             modalActive: false,
-            projects: []
+            projects: [],
+            connections: []
         }
 
         this.modalClick = this.modalClick.bind(this);
@@ -28,6 +29,13 @@ class Profile extends Component {
                 projects: res.data
             })
         })
+
+        axios.get(`/api/connections/user/${this.props.user.id}`).then(res => {
+            this.setState({
+                connections: res.data
+            })
+        })
+
     }
 
 
@@ -38,6 +46,14 @@ class Profile extends Component {
     }
 
     render() {
+        const connections = this.state.connections.map((el, idx) => {
+            let { first_name, last_name, image, user_id } = el
+            return (
+                <Link to={`/user/${user_id}`}>
+                    <h1>{first_name} {last_name}</h1>
+                </Link>
+            )
+        })
         const { first_name, last_name, user_name, description, artist_type, image, id } = this.props.user;
         const projects = this.state.projects.map((el, idx) => {
             let { name, type, description, image, id } = el;
@@ -53,6 +69,7 @@ class Profile extends Component {
             <div>
                 <Header />
                 <Link to="/dashboard"><button>Dashboard</button></Link>
+                <Link to="/requests"><button>Requests</button></Link>
                 <div className='profile'>
                     <div className='profile-user-content'>
                         <img src={image}
@@ -81,13 +98,14 @@ class Profile extends Component {
                         </div>
                     </div>
                     <div className='profile-contact'>
-                        <h1>CONTACT</h1>
+                        <h1>Connections</h1>
+                        {connections}
                     </div>
                 </div>
 
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}
-                    info={true} />
+                    info='edit' />
             </div>
         )
     }

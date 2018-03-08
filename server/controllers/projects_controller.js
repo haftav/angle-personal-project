@@ -37,6 +37,13 @@ module.exports = {
             console.log('project: ', project)
             res.status(200).send(project[0])
         })
+    },
+    deleteProject: (req, res) => {
+        const db = req.app.get('db');
+        const { id } = req.params;
+        db.delete_project([id]).then(project => {
+            res.status(200).send();
+        })
     }
 
 }
