@@ -111,7 +111,9 @@ app.get('/api/user/:id', (req, res) => {
 /* PROJECT ENDPOINTS */
 app.get('/api/projects', projects_controller.getProjects);
 app.get('/api/projects/:id', projects_controller.getProject)
+app.get('/api/projects/user/:id', projects_controller.getUserProjects);
 app.post('/api/projects', projects_controller.createProject);
+app.put('/api/projects/:id', projects_controller.updateProject)
 
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { updateUser, getUser } from '../../ducks/users';
+import './ModalInfo.css'
 
 class ModalInfo extends Component {
     constructor(props) {

@@ -1,0 +1,89 @@
+.modal {
+    background: linear-gradient(to top right, #FFFFFF 0%, #F5F0F2 100%);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+    position: absolute;
+    border-radius: 3px;
+    box-shadow: 2px 3px 20px -5px;
+    width: 400px;
+    height: 300px;
+    left: 0;
+    right: 0;
+    bottom: 50vh;
+    top: 50vh;
+    margin: auto;
+    transition: .5s all ease-in-out;
+  
+  }
+  
+  .modal-active {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50vh;
+    top: 50vh;
+  }
+  
+  .modal textarea {
+    width: 75%;
+    height: 50%;
+  }
+  
+  .modal h1 {
+    margin: 25px;
+  }
+  
+  
+  .modal button {
+    display: block;
+    width: 100px;
+    height: 30px;
+    margin: 10px auto;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    background: #4C8DCA;
+    cursor: pointer;
+    transition: all .1s ease;
+  }
+  
+  .modal button:hover {
+    background: rgba(76, 141, 202, 0.856);
+  }
+  
+  
+  .sick-modal-button {
+    padding: 25px;
+    width: 200px;
+    border: none;
+    margin-top: 30px;
+    border-radius: 3px;
+    background: #4C8DCA;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    transition: all .1s ease;
+  }
+  
+  .sick-modal-button:hover {
+    background: rgba(76, 141, 202, 0.856);
+  }
+  
+  .x-button {
+    height: 24px;
+    width: 24px;
+    background: gray;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .x-button:hover {
+    background: rgb(146, 146, 146)
+  }

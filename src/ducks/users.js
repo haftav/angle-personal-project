@@ -33,6 +33,7 @@ export function getUser() {
     }
 }
 
+
 export function updateUser(user) {
     const { user_name, first_name, last_name, description, artist_type } = user
     let userData = axios.put('/api/user', { user_name, first_name, last_name, description, artist_type }).then(res => {

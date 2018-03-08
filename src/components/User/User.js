@@ -5,25 +5,27 @@ import Header from '../Header/Header';
 import ModalContainer from '../ModalContainer/ModalContainer';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Profile.css';
+import './User.css';
 import ProfileProjectThumbnail from '../ProfileProjectThumbnail/ProfileProjectThumbnail';
 
-class Profile extends Component {
+class User extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            modalActive: false,
-            projects: []
+            projects: [],
+            user: {}
         }
 
-        this.modalClick = this.modalClick.bind(this);
     }
 
     componentDidMount() {
-        this.props.getUser();
-        console.log('userid: ', this.props.user.id)
-        axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
+        axios.get(`/api/user/${this.props.match.params.id}`).then(res => {
+            this.setState({
+                user: res.data
+            })
+        })
+        axios.get(`/api/projects/user/${this.props.match.params.id}`).then(res => {
             this.setState({
                 projects: res.data
             })
@@ -31,22 +33,17 @@ class Profile extends Component {
     }
 
 
-    modalClick() {
-        this.setState({
-            modalActive: !this.state.modalActive
-        })
-    }
 
     render() {
-        const { first_name, last_name, user_name, description, artist_type, image, id } = this.props.user;
+        const { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
         const projects = this.state.projects.map((el, idx) => {
             let { name, type, description, image, id } = el;
             return (
-                    <ProfileProjectThumbnail name={name}
-                        type={type}
-                        description={description}
-                        image={image}
-                        id={id}/>
+                <ProfileProjectThumbnail name={name}
+                                        type={type}
+                                        description={description}
+                                        image={image}
+                                        id={id} />
             )
         })
         return (
@@ -63,7 +60,6 @@ class Profile extends Component {
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
                             <h2>{artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>
-                            <button onClick={this.modalClick}>Edit Info</button>
                         </div>
                         <div className='profile-stats'>
                             <div>
@@ -85,9 +81,6 @@ class Profile extends Component {
                     </div>
                 </div>
 
-                <ModalContainer toggleModal={this.modalClick}
-                    active={this.state.modalActive}
-                    info={true} />
             </div>
         )
     }
@@ -104,4 +97,4 @@ let actions = {
     getUser
 }
 
-export default connect(mapStateToProps, actions)(Profile);
+export default connect(mapStateToProps, actions)(User);
