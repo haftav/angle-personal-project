@@ -41,7 +41,8 @@ class Dashboard extends Component {
                         image={image}
                         first_name={first_name}
                         last_name={last_name}
-                        user_image={user_image} />
+                        user_image={user_image}
+                        project_id={id} />
                 </Link>
             )
         })

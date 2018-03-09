@@ -5,12 +5,11 @@ export default function ProfileProjectThumbnail ({ name, type, description, imag
 
     //name, type, description, image
     return (
-        <div>
+        <div className='profile-project-thumbnail'>
             <Link to={`/project/${id}`}>
             <img src={image} alt={name} />
             <h1>{name}</h1>
-            <h2>{type}</h2>
-            <p>{description}</p>
+            <h2>Looking for: {type}</h2>
             </Link>
         </div>
     )

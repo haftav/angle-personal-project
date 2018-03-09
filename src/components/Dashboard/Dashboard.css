@@ -24,3 +24,8 @@
     grid-column-start: 3;
     margin: 50px 25px 0px 25px;
 }
+
+.dashboard a {
+    text-decoration: none;
+    color: black;
+}

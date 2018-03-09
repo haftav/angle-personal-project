@@ -16,7 +16,10 @@ module.exports = {
         const db = req.app.get('db');
         const id = req.params.id;
         db.get_project([id]).then(project => {
-            res.status(200).send(project[0])
+            db.get_bids([id]).then(bids => {
+                project[0].bids = bids;
+                res.status(200).send(project[0])
+            })
         })
     },
     getUserProjects: (req, res) => {

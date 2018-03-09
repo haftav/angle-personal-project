@@ -1,5 +1,41 @@
 .header {
-    height: 100px;
+    height: 75px;
     width: 100%;
-    background: red;
+    background: #273E49;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-home {
+    height: 100%;
+    width: 125px;
+    display: block;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: rgb(48, 76, 88);
+    color: white;
+}
+
+.header-home:hover {
+    background: rgb(50, 80, 94);
+}
+
+.header-profile {
+    height: 100%;
+    width: 125px;
+    display: block;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background: rgb(48, 76, 88);
+    color: white;
+}
+
+.header-profile:hover {
+    background: rgb(50, 80, 94);
 }

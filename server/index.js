@@ -8,6 +8,7 @@ const express = require('express')
 
 const projects_controller = require('./controllers/projects_controller');
 const connections_controller = require('./controllers/connections_controller');
+const bids_controller = require('./controllers/bids_controller');
 
 const {
     SERVER_PORT,
@@ -125,5 +126,10 @@ app.get('/api/connections/pending', connections_controller.getPendingConnections
 app.post('/api/connections/pending', connections_controller.addConnection);
 app.post('/api/connections/accepted', connections_controller.addFriend);
 app.post('/api/connections/user/accepted', connections_controller.addFriendFromProfile)
+
+/*  BIDS ENDPOINTS  */
+
+app.post('/api/bids/add', bids_controller.addBid);
+app.delete('/api/bids/:id', bids_controller.removeBid);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));

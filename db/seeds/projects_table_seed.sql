@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS projects (
     description VARCHAR(700),
     image VARCHAR(300),
     status VARCHAR(20),
-    user_id INTEGER NOT NULL REFERENCES users(id)
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    collab_id INTEGER REFERENCES users(id)
 )

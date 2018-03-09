@@ -11,7 +11,9 @@ class Project extends Component {
         super(props);
 
         this.state = {
-            project: {},
+            project: {
+                bids: []
+            },
             modalActive: false,
             deleteActive: false
         }
@@ -20,14 +22,30 @@ class Project extends Component {
         this.updateProject = this.updateProject.bind(this);
         this.deleteClick = this.deleteClick.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
+        this.addBid = this.addBid.bind(this);
+        this.removeBid = this.removeBid.bind(this);
     }
 
     componentDidMount() {
-        axios.get(`/api/projects/${this.props.match.params.id}`).then(res => {
+
+        const project_id = this.props.match.params.id;
+        axios.get(`/api/projects/${project_id}`).then(res => {
+            console.log('DATA: ', res.data);
             this.setState({
                 project: res.data
             })
         })
+        // axios.get(`/api/bids/${project_id}`).then(res => {
+        //     this.setState({
+        //         bids: res.data,
+        //     })
+        // })
+        // axios.get(`/api/bids/check/${project_id}`).then(res => {
+        //     console.log(res.data);
+        //     this.setState({
+        //         bid_placed: res.data
+        //     })
+        // })
     }
 
     modalClick() {
@@ -43,7 +61,6 @@ class Project extends Component {
     }
 
     updateProject(project) {
-        console.log(this.state.project.id)
         axios.put(`/api/projects/${this.state.project.id}`, project).then(res => {
             this.setState({
                 project: res.data
@@ -52,16 +69,57 @@ class Project extends Component {
     }
 
     deleteProject(project) {
-        console.log('id: ', project.id)
         axios.delete(`/api/projects/${project.id}`).then(res => {
             this.props.history.push('/dashboard');
         })
     }
 
+    addBid() {
+        const project_id = this.state.project.id
+        const bidder_id = this.props.user.id;
+        axios.post('/api/bids/add', { project_id, bidder_id }).then(res => {
+            //get back all bids associated with project
+            let bids = res.data;
+            this.setState({
+                project: Object.assign({}, this.state.project, { bids: bids })
+            })
+        })
+    }
+
+    removeBid() {
+        const project_id = this.props.match.params.id;
+        axios.delete(`/api/bids/${project_id}`).then(res => {
+            let bids = res.data;
+            this.setState({
+                project: Object.assign({}, this.state.project, { bids: bids })
+            })
+        })
+    }
+
     render() {
+        console.log(this.state.project);
         const { name, type, price, description,
             image, status, user_id, user_name,
-            first_name, last_name, artist_type } = this.state.project;
+            first_name, last_name, artist_type} = this.state.project;
+        const bids = this.state.project.bids.map((el, idx) => {
+            let {first_name, last_name, image, votes} = el;
+            return (
+                <div>
+                    <img src={image} alt={first_name} />
+                    <h2>{first_name} {last_name}</h2>
+                    <h3>Votes: {votes}</h3>
+
+                </div>
+            )
+        })
+        console.log('bids: ', bids)
+        let bid_placed = false;
+        let bid_index = this.state.project.bids.findIndex(bid =>  {
+            return bid.bidder_id === this.props.user.id
+        })
+        if (bid_index !== -1) {
+            bid_placed = true;
+        }
         return (
             <div>
                 <Header />
@@ -86,7 +144,15 @@ class Project extends Component {
                         <button onClick={this.modalClick}>Edit</button> 
                         <button onClick={this.deleteClick}>Delete</button>
                     </div>               
-                    : null }
+                    : bid_placed ? 
+                    <button onClick={this.removeBid}>Remove Bid</button>
+                    :
+                    <button onClick={this.addBid}>Add Bid</button> 
+                    }
+                </div>
+                <div>
+                    <h1>BIDS</h1>
+                    {bids}
                 </div>
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}

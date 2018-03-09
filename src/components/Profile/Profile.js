@@ -68,7 +68,6 @@ class Profile extends Component {
         return (
             <div>
                 <Header />
-                <Link to="/dashboard"><button>Dashboard</button></Link>
                 <Link to="/requests"><button>Requests</button></Link>
                 <div className='profile'>
                     <div className='profile-user-content'>
@@ -76,7 +75,6 @@ class Profile extends Component {
                             alt={`user/${id}`}
                             className='profile-image' />
                         <div className='profile-description'>
-                            <h1>{user_name || 'username'}</h1>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
                             <h2>{artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>

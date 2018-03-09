@@ -4,30 +4,14 @@
     box-sizing: border-box;
 }
 
-.grid {
-    background: lightblue;
-    height: 200px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-
+body {
+  background: #F5F5F5;
 }
 
-.grid-1 {
-  grid-row-start: 1;
-  grid-row-end: span 2;
-  background: lightgreen;
+button {
+  border-radius: 3px;
+  padding: 5px;
+  border: none;
+  background: #2274A5;
+  color: white;
 }
-
-.grid-2 {
-  grid-column-start: 2;
-  background: lightcoral;
-}
-
-.grid-3 {
-  grid-row-start: 2;
-  grid-column-start: 3;
-  background: red;
-}
-
-
