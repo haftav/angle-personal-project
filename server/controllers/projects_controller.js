@@ -8,8 +8,19 @@ module.exports = {
     },
     getProjects: (req, res) => {
         const db = req.app.get('db');
+        console.log(req.query);
         db.get_projects().then(projects => {
+        if (!req.query.status && !req.query.type) {
             res.status(200).send(projects);
+        } else {            
+            if (req.query.status !== 'all') {
+                projects = projects.filter((el) => el.status === req.query.status)
+            }
+            if (req.query.type !== 'all') {
+                projects = projects.filter((el => el.type === req.query.type));
+            }
+            res.status(200).send(projects);
+        }
         })
     },
     getProject: (req, res) => {

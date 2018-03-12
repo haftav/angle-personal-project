@@ -7,6 +7,16 @@
 
 .dashboard-top h1 {
     margin-left: 0px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 32px;
+
+}
+
+.dashboard-top label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: #707070;
+    margin: 0px 5px;
 }
 
 .dashboard-top img {
@@ -22,18 +32,34 @@
     grid-column-start: 3;
     grid-row-start: 1;
     padding: 0px 50px 0px 0px;
+
+
 }
 
 .create-button button {
     background: #003C5E;
     height: 70px;
     width: 327px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    letter-spacing: .1em;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .filter-buttons {
     grid-row-start: 2;
     grid-column-start: 2;
     margin-left: 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.filter-buttons > h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    margin: 0px 10px;
 }
 
 .filter-buttons input {

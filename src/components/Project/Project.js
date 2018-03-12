@@ -26,6 +26,8 @@ class Project extends Component {
         this.addBid = this.addBid.bind(this);
         this.removeBid = this.removeBid.bind(this);
         this.chooseBid = this.chooseBid.bind(this);
+
+        this.getTimeRemaining = this.getTimeRemaining.bind(this);
     }
 
     componentDidMount() {
@@ -94,14 +96,34 @@ class Project extends Component {
         })
     }
 
+    getTimeRemaining(endtime) {
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var seconds = Math.floor( (t/1000) % 60 );
+        var minutes = Math.floor( (t/1000/60) % 60 );
+        var hours = Math.floor( (t/(1000*60*60)) % 24 );
+        var days = Math.floor( t/(1000*60*60*24) );
+        return {
+          'total': t,
+          'days': days,
+          'hours': hours,
+          'minutes': minutes,
+          'seconds': seconds
+        };
+    }
+
     render() {
         console.log(this.state.project);
         let { name, type, price, description,
             image, status, user_id, user_name,
             first_name, last_name, artist_type,
             bidding_deadline, project_deadline} = this.state.project;
+        let days, hours, minutes;
             if (bidding_deadline) {
                 bidding_deadline = bidding_deadline.split('T')[0]
+                let countdown = this.getTimeRemaining(bidding_deadline);
+                days = countdown.days;
+                hours = countdown.hours;
+                minutes = countdown.minutes;
             }
             if (project_deadline) {
                 project_deadline = project_deadline.split('T')[0]
@@ -145,6 +167,19 @@ class Project extends Component {
                     <img src={image} alt="project-image" />
                     <h3>{status}</h3>
                     <h3>Bidding Deadline: {bidding_deadline}</h3>
+                    {
+                        bidding_deadline ? (
+                            days > 1 ?
+                            <h3>Days remaining: {days}</h3>
+                            :
+                            hours > 1 ?
+                            <h3>Hours remaining: {hours}</h3>
+                            :
+                            <h3>Minutes remaining: {minutes}</h3>
+                        )
+                        :
+                        null
+                    }
                     <h3>Project Deadline: {project_deadline}</h3>
                     {this.props.user.id === user_id 
                     ? 

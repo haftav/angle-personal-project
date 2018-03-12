@@ -3,6 +3,7 @@
     display: grid;
     grid-template-rows: 1fr;
     background: white;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .project-thumbnail-content {

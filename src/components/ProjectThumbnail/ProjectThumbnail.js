@@ -28,7 +28,7 @@ export default class ProjectThumbnail extends Component {
                 <div className='project-thumbnail-content'>
                     <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
                     <div className='project-thumbnail-name'>
-                        <h2>{first_name} {last_name} is looking for a {type.toLowerCase()}</h2>
+                        <h2><strong>{first_name} {last_name}</strong> is looking for a {type.toLowerCase()}</h2>
                         <hr />
                     </div>
                     <div className='project-bidding-deadline'>

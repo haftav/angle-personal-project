@@ -4,6 +4,9 @@
     background: #003C5E;
     display: flex;
     justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .header-left {
