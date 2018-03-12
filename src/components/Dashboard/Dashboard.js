@@ -31,7 +31,7 @@ class Dashboard extends Component {
         const projects = this.state.projects.map((el, idx) => {
             const { name, type, description,
                 price, image, id, first_name,
-                last_name, user_image, user_id } = el;
+                last_name, user_image, user_id, bidding_deadline } = el;
             return (
                 <Link to={`/project/${id}`}>
                     <ProjectThumbnail name={name}
@@ -42,6 +42,7 @@ class Dashboard extends Component {
                         first_name={first_name}
                         last_name={last_name}
                         user_image={user_image}
+                        bidding_deadline={bidding_deadline}
                         project_id={id} />
                 </Link>
             )

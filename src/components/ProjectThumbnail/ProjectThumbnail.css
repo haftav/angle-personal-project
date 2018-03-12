@@ -8,7 +8,7 @@
 .project-thumbnail-content {
     height: 220px;
     display: grid;
-    grid-template-columns: 75px 1fr 3fr;
+    grid-template-columns: 75px 1fr 3fr 2fr;
     grid-template-rows: 40px 1fr;
     border: 1px solid #b3b3b3;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
@@ -51,9 +51,15 @@
     background: #b3b3b3;
 }
 
+.project-bidding-deadline {
+    grid-column: 4 / span 1;
+    grid-row: 1 / span 2;
+}
+
 .project-thumbnail-description {
     padding: 10px;
-    grid-column: 3 / span 1;
+    grid-column: 3 / span 2;
+    grid-row: 2 / span 2;
 }
 
 .project-thumbnail-content h2 {

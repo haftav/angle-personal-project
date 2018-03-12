@@ -96,9 +96,16 @@ class Project extends Component {
 
     render() {
         console.log(this.state.project);
-        const { name, type, price, description,
+        let { name, type, price, description,
             image, status, user_id, user_name,
-            first_name, last_name, artist_type} = this.state.project;
+            first_name, last_name, artist_type,
+            bidding_deadline, project_deadline} = this.state.project;
+            if (bidding_deadline) {
+                bidding_deadline = bidding_deadline.split('T')[0]
+            }
+            if (project_deadline) {
+                project_deadline = project_deadline.split('T')[0]
+            }
         const bids = this.state.project.bids.map((el, idx) => {
             let {first_name, last_name, image, votes, bidder_id, project_id} = el;
             return (
@@ -137,6 +144,8 @@ class Project extends Component {
                     <h2>{price}</h2>
                     <img src={image} alt="project-image" />
                     <h3>{status}</h3>
+                    <h3>Bidding Deadline: {bidding_deadline}</h3>
+                    <h3>Project Deadline: {project_deadline}</h3>
                     {this.props.user.id === user_id 
                     ? 
                     <div>
