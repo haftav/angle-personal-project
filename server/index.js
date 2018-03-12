@@ -116,6 +116,8 @@ app.get('/api/projects/:id', projects_controller.getProject)
 app.get('/api/projects/user/:id', projects_controller.getUserProjects);
 app.post('/api/projects', projects_controller.createProject);
 app.put('/api/projects/:id', projects_controller.updateProject)
+app.get('/api/projects/collab/:id', projects_controller.getCollab);
+app.put('/api/projects/collab/:id', projects_controller.chooseBid);
 app.delete('/api/projects/:id', projects_controller.deleteProject);
 
 /* CONNECTIONS ENDPOINTS */

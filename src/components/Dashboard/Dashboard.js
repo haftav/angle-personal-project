@@ -29,9 +29,9 @@ class Dashboard extends Component {
 
     render() {
         const projects = this.state.projects.map((el, idx) => {
-            const { name, type, description, 
-                    price, image, id, first_name,
-                    last_name, user_image, user_id } = el;
+            const { name, type, description,
+                price, image, id, first_name,
+                last_name, user_image, user_id } = el;
             return (
                 <Link to={`/project/${id}`}>
                     <ProjectThumbnail name={name}
@@ -49,10 +49,22 @@ class Dashboard extends Component {
         return (
             <div>
                 <Header />
-                <Link to='/profile'><button>Profile</button></Link>
-                <Link to='/create'><button>START YOUR PROJECT</button></Link>
+                <div className='dashboard-top'>
+                    <img src={this.props.user.image || 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=1xms5/zrooq397hijjktlc.jpg'} alt="" />
+                    <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>
+                    <div className='filter-buttons'>
+                        <input type='radio' name='status' id='statusChoice1' value='all'/>
+                        <label for='statusChoice1'>All</label>
+                        <input type='radio' name='status' id='statusChoice2' value='pending'/>
+                        <label for='statusChoice2'>Bidding Open</label>
+                        <input type='radio' name='status' id='statusChoice3' value='completed'/>
+                        <label for='statusChoice3'>Completed</label>
+                    </div>
+                    <Link className='create-button' to='/create'>
+                        <button>+ START PROJECT</button>
+                    </Link>
+                </div>
                 <div className='dashboard'>
-                    <input placeholder='search' />
                     <div className='dashboard-feed'>
                         {projects}
                     </div>

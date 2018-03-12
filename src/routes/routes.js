@@ -8,6 +8,7 @@ import CreateProject from '../components/CreateProject/CreateProject';
 import Project from '../components/Project/Project';
 import User from '../components/User/User';
 import Requests from '../components/Requests/Requests';
+import Collab from '../components/Collab/Collab';
 
 export default (
     <Switch>
@@ -18,6 +19,7 @@ export default (
         <Route path='/info' component={GetInfo} />
         <Route path='/create' component={CreateProject} />
         <Route path='/project/:id' component={Project} />
+        <Route path = '/collab/:id' component={Collab} />
         <Route path='/requests' component={Requests} />
     </Switch>
 

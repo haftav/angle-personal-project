@@ -4,6 +4,7 @@ import { getUser } from '../../ducks/users';
 import axios from 'axios';
 import Header from '../Header/Header';
 import ModalContainer from '../ModalContainer/ModalContainer';
+import Bid from '../Bid/Bid';
 import { Link } from 'react-router-dom';
 
 class Project extends Component {
@@ -24,28 +25,17 @@ class Project extends Component {
         this.deleteProject = this.deleteProject.bind(this);
         this.addBid = this.addBid.bind(this);
         this.removeBid = this.removeBid.bind(this);
+        this.chooseBid = this.chooseBid.bind(this);
     }
 
     componentDidMount() {
 
         const project_id = this.props.match.params.id;
         axios.get(`/api/projects/${project_id}`).then(res => {
-            console.log('DATA: ', res.data);
             this.setState({
                 project: res.data
             })
         })
-        // axios.get(`/api/bids/${project_id}`).then(res => {
-        //     this.setState({
-        //         bids: res.data,
-        //     })
-        // })
-        // axios.get(`/api/bids/check/${project_id}`).then(res => {
-        //     console.log(res.data);
-        //     this.setState({
-        //         bid_placed: res.data
-        //     })
-        // })
     }
 
     modalClick() {
@@ -96,23 +86,32 @@ class Project extends Component {
         })
     }
 
+    chooseBid(project_id, bidder_id) {
+        console.log('I got clicked: ', project_id, bidder_id);
+        // I want to update my project status to 'collab' and update collab_id to bidder_id
+        axios.put(`/api/projects/collab/${project_id}`, { bidder_id }).then(res => {
+            this.props.history.push(`/collab/${project_id}`);
+        })
+    }
+
     render() {
         console.log(this.state.project);
         const { name, type, price, description,
             image, status, user_id, user_name,
             first_name, last_name, artist_type} = this.state.project;
         const bids = this.state.project.bids.map((el, idx) => {
-            let {first_name, last_name, image, votes} = el;
+            let {first_name, last_name, image, votes, bidder_id, project_id} = el;
             return (
-                <div>
-                    <img src={image} alt={first_name} />
-                    <h2>{first_name} {last_name}</h2>
-                    <h3>Votes: {votes}</h3>
-
-                </div>
+                <Bid image={image}
+                    first_name={first_name}
+                    last_name={last_name}
+                    votes={votes}
+                    bidder_id={bidder_id}
+                    user_id={user_id}
+                    project_id={project_id}
+                    chooseBid={this.chooseBid}/>
             )
         })
-        console.log('bids: ', bids)
         let bid_placed = false;
         let bid_index = this.state.project.bids.findIndex(bid =>  {
             return bid.bidder_id === this.props.user.id

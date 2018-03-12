@@ -22,6 +22,17 @@ module.exports = {
             })
         })
     },
+    getCollab: (req, res) => {
+        const db = req.app.get('db');
+        const id = req.params.id;
+        db.get_project([id]).then(project => {
+            const { collab_id } = project[0];
+            db.find_id_user([collab_id]).then(user => {
+                project[0].collab_user = user[0]
+                res.status(200).send(project[0])
+            })
+        })
+    },
     getUserProjects: (req, res) => {
         console.log('you hit this')
         const db = req.app.get('db');
@@ -44,8 +55,20 @@ module.exports = {
     deleteProject: (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
-        db.delete_project([id]).then(project => {
-            res.status(200).send();
+        db.remove_bids([id]).then(bids => {
+            db.delete_project([id]).then(project => {
+                res.status(200).send();
+            })
+        })
+    },
+    chooseBid: (req, res) => {
+        const db = req.app.get('db');
+        const { id } = req.params;
+        const { bidder_id } = req.body;
+        db.choose_bid([id, bidder_id]).then(bids => {
+            db.remove_bids([id]).then(bid => {
+                res.status(200).send();
+            })
         })
     }
 

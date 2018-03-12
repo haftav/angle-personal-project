@@ -1,41 +1,59 @@
 .header {
-    height: 75px;
+    height: 79px;
     width: 100%;
-    background: #273E49;
+    background: #003C5E;
     display: flex;
     justify-content: space-between;
 }
 
+.header-left {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.header-left input {
+    background: #e0e0e0;
+    border-radius: 2px;
+    height: 45px;
+    width: 306px;
+    border: none;
+    margin: 0px 10px;
+}
+
 .header-home {
     height: 100%;
-    width: 125px;
+    width: 105px;
     display: block;
     display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    background: rgb(48, 76, 88);
     color: white;
 }
 
-.header-home:hover {
-    background: rgb(50, 80, 94);
+.header-home img {
+    height: 80%;
 }
 
-.header-profile {
+.header-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-right a {
     height: 100%;
-    width: 125px;
-    display: block;
+    width: 124px;
     display: flex;
-    text-align: center;
     justify-content: center;
     align-items: center;
-    text-decoration: none;
-    background: rgb(48, 76, 88);
     color: white;
+    text-decoration: none;
 }
 
-.header-profile:hover {
-    background: rgb(50, 80, 94);
+.header-right a:hover {
+    background: rgb(0, 68, 107);
 }
