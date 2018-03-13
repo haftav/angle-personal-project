@@ -67,7 +67,7 @@ class Profile extends Component {
         })
         return (
             <div>
-                <Header />
+                <Header userid={this.props.user.id}/>
                 <Link to="/requests"><button>Requests</button></Link>
                 <div className='profile'>
                     <div className='profile-user-content'>

@@ -150,7 +150,7 @@ class Project extends Component {
         }
         return (
             <div>
-                <Header />
+                <Header userid={this.props.user.id}/>
                 <Link to='/dashboard'><button>Dashboard</button></Link>
                 <div>
                     <Link to={this.props.user.id === user_id ? '/profile' : `/user/${user_id}`}>

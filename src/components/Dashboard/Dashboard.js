@@ -73,7 +73,7 @@ class Dashboard extends Component {
         })
         return (
             <div>
-                <Header />
+                <Header userid={this.props.user.id}/>
                 <div className='dashboard-top'>
                     <img src={this.props.user.image || 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=1xms5/zrooq397hijjktlc.jpg'} alt="" />
                     <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>

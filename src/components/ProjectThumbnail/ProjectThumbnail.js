@@ -23,6 +23,7 @@ export default class ProjectThumbnail extends Component {
                 bidding_deadline = new Date (bidding_deadline)
                 bidding_deadline = bidding_deadline.toISOString().split('T')[0];
             }
+        console.log(!!bidding_deadline);
         return (
             <div className='project-thumbnail'>
                 <div className='project-thumbnail-content'>
@@ -32,8 +33,15 @@ export default class ProjectThumbnail extends Component {
                         <hr />
                     </div>
                     <div className='project-bidding-deadline'>
-                        <h4>Bidding Deadline:</h4> 
-                        <p>{bidding_deadline}</p>  
+                        {
+                            bidding_deadline ? 
+                            <div>
+                                <h4>Bidding Deadline:</h4> 
+                                <p>{bidding_deadline}</p>  
+                            </div>
+                            :
+                            null
+                        }
                     </div>
                     <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />
                     <div className='project-thumbnail-description'>

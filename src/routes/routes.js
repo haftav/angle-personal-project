@@ -9,6 +9,7 @@ import Project from '../components/Project/Project';
 import User from '../components/User/User';
 import Requests from '../components/Requests/Requests';
 import Collab from '../components/Collab/Collab';
+import ProjectsPage from '../components/ProjectsPage/ProjectsPage';
 
 export default (
     <Switch>
@@ -18,7 +19,8 @@ export default (
         <Route path='/user/:id' component={User} />
         <Route path='/info' component={GetInfo} />
         <Route path='/create' component={CreateProject} />
-        <Route path='/project/:id' component={Project} />
+        <Route exact path='/project/:id' component={Project} />
+        <Route path='/projects' component={ProjectsPage} />
         <Route path = '/collab/:id' component={Collab} />
         <Route path='/requests' component={Requests} />
     </Switch>

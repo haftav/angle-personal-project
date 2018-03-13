@@ -44,6 +44,18 @@ module.exports = {
             })
         })
     },
+    getCollabs: (req, res) => {
+        console.log('here');
+        const db = req.app.get('db');
+        const userid = req.user.id;
+        console.log(userid);
+        db.get_collabs_user([userid]).then(usercollabs => {
+            db.get_collabs_other([userid]).then(othercollabs => {
+                let collabs = [...usercollabs, ...othercollabs]
+                res.status(200).send(collabs);
+            })
+        })
+    },
     getUserProjects: (req, res) => {
         console.log('you hit this')
         const db = req.app.get('db');

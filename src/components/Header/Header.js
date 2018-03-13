@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from './bigwhite.png'
 
-export default function Header() {
+export default function Header({userid}) {
     return (
         <div className='header'>
             <div className='header-left'>
@@ -15,7 +15,7 @@ export default function Header() {
             <div className='header-right'>
                 <Link to='/dashboard'>Dashboard</Link>
                 <Link to='/profile'>Profile</Link>
-                <a href='#'>Projects</a>
+                <Link to={`/projects/${userid}`}>Projects</Link>
                 <a href='#'>Log Out</a>
             </div>
         </div>
