@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
+import Header from '../Header/Header';
 
 class Collab extends Component {
     constructor(props) {
@@ -12,6 +13,8 @@ class Collab extends Component {
                 collab_user: {}
             }
         }
+
+        this.completeProject = this.completeProject.bind(this);
     }
 
     componentDidMount() {
@@ -24,6 +27,13 @@ class Collab extends Component {
         })
     }
 
+    completeProject() {
+        const project_id = this.props.match.params.id;
+        axios.put(`/api/projects/completed/${project_id}`, {}).then(res => {
+            console.log(res.data);
+        })
+    }
+
     render() {
         const { name, description, type, image,
                 first_name, last_name, price, user_image, collab_user } = this.state.project;
@@ -32,9 +42,11 @@ class Collab extends Component {
                 collab_image = collab_user.image;
         return (
             <div>
+                <Header userid={this.props.user.id} />
                 <h1>{name}</h1>
                 <h2>Collab between {first_name} {last_name} and {collab_first} {collab_last}</h2>
                 <p>{description}</p>
+                <button onClick={this.completeProject}>Finish Project</button>
             </div>
         )
     }

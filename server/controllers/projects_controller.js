@@ -8,19 +8,35 @@ module.exports = {
     },
     getProjects: (req, res) => {
         const db = req.app.get('db');
-        console.log(req.query);
         db.get_projects().then(projects => {
-        if (!req.query.status && !req.query.type) {
-            res.status(200).send(projects);
-        } else {            
-            if (req.query.status !== 'all') {
-                projects = projects.filter((el) => el.status === req.query.status)
-            }
-            if (req.query.type !== 'all') {
-                projects = projects.filter((el => el.type === req.query.type));
-            }
-            res.status(200).send(projects);
-        }
+            db.get_completed_projects().then(completed => {
+                const results = completed.map((el) => {
+                    const { collab_id } = el;
+                    let item = db.find_id_user([collab_id]).then(user => {
+                        el.collab_user = user[0];
+                        return el;
+                    })
+                    return item;
+                })
+                Promise.all(results).then(function(values) {
+                    console.log(values);
+                    projects = [...projects, ...values]
+                    if (!req.query.status && !req.query.type) {
+                        res.status(200).send(projects);
+                    } else {            
+                        if (req.query.status !== 'all') {
+                            projects = projects.filter((el) => el.status === req.query.status)
+                        }
+                        if (req.query.type !== 'all') {
+                            projects = projects.filter((el => el.type === req.query.type));
+                        }
+                        res.status(200).send(projects);
+                    }
+                })
+
+            })
+
+
         })
     },
     getProject: (req, res) => {
@@ -51,8 +67,10 @@ module.exports = {
         console.log(userid);
         db.get_collabs_user([userid]).then(usercollabs => {
             db.get_collabs_other([userid]).then(othercollabs => {
-                let collabs = [...usercollabs, ...othercollabs]
-                res.status(200).send(collabs);
+                db.get_collabs_pending([userid]).then(pendingcollabs => {
+                    let collabs = [...usercollabs, ...othercollabs, ...pendingcollabs]
+                    res.status(200).send(collabs);
+                })
             })
         })
     },
@@ -91,6 +109,20 @@ module.exports = {
         db.choose_bid([id, bidder_id]).then(bids => {
             db.remove_bids([id]).then(bid => {
                 res.status(200).send();
+            })
+        })
+    },
+    completeProject: (req, res) => {
+        const db = req.app.get('db');
+        const { id } = req.params;
+        //eventually add in completed link to this db query
+        db.complete_project([id]).then(output => {
+            db.get_project([id]).then(project => {
+                const { collab_id } = project[0];
+                db.find_id_user([collab_id]).then(user => {
+                    project[0].collab_user = user[0]
+                    res.status(200).send(project[0])
+                })
             })
         })
     }
