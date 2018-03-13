@@ -22,7 +22,6 @@ export default (
         <Route exact path='/project/:id' component={Project} />
         <Route path='/projects' component={ProjectsPage} />
         <Route path = '/collab/:id' component={Collab} />
-        <Route path='/requests' component={Requests} />
     </Switch>
 
 )

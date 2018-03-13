@@ -36,7 +36,7 @@ class ProjectsPage extends Component {
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
                     </Link>
                 )
-            } else {
+            } else if (status === 'collab') {
                 if (user_id === this.props.user.id) {
                     return (
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
@@ -50,6 +50,25 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>{first_name} {last_name} is collaborating on this project with you.</h1>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                        </Link>
+                    )
+                }
+            }
+            else {
+                if (user_id === this.props.user.id) {
+                    return (
+                        <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
+                            <h1>{name}</h1>
+                            <h1>You completed this project with {first_name} {last_name}.</h1>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                        </Link>
+                    )
+                } else {
+                    return (
+                        <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
+                            <h1>{name}</h1>
+                            <h1>You helped {first_name} {last_name} complete this project.</h1>
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
                         </Link>
                     )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
@@ -7,6 +8,10 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Profile.css';
 import ProfileProjectThumbnail from '../ProfileProjectThumbnail/ProfileProjectThumbnail';
+import Requests from '../Requests/Requests';
+import Portfolio from '../Portfolio/Portfolio';
+import Connections from '../Connections/Connections';
+import Reviews from '../Reviews/Reviews';
 
 class Profile extends Component {
     constructor(props) {
@@ -68,7 +73,12 @@ class Profile extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id}/>
-                <Link to="/requests"><button>Requests</button></Link>
+                <div className='profile-submenu'>
+                    <Link to='/profile'>Profile</Link>
+                    <Link to={`/profile/reviews/${this.props.user.id || 1}`}>Reviews</Link>
+                    <Link to={`/profile/connections/${this.props.user.id || 1}`}>Connections</Link>
+                    <Link to='/profile/requests'>Requests</Link>
+                </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
                         <img src={image}
@@ -91,16 +101,14 @@ class Profile extends Component {
                                 Connections
                             </div>
                         </div>
-                        <div className='profile-projects'>
-                            {projects}
-                        </div>
-                    </div>
-                    <div className='profile-contact'>
-                        <h1>Connections</h1>
-                        {connections}
                     </div>
                 </div>
-
+                <Switch>
+                    <Route exact path='/profile' component={Portfolio} />
+                    <Route path='/profile/reviews/:id' component={Reviews} />
+                    <Route path='/profile/connections/:id' component={Connections} />
+                    <Route path='/profile/requests' component={Requests} />
+                </Switch>
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}
                     info='edit' />

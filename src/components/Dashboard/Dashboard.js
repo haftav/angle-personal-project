@@ -55,25 +55,47 @@ class Dashboard extends Component {
         const projects = this.state.projects.map((el, idx) => {
             const { name, type, description,
                 price, image, id, first_name,
-                last_name, user_image, user_id, bidding_deadline } = el;
-            return (
-                <Link to={`/project/${id}`}>
-                    <ProjectThumbnail name={name}
-                        type={type}
-                        description={description}
-                        price={price}
-                        image={image}
-                        first_name={first_name}
-                        last_name={last_name}
-                        user_image={user_image}
-                        bidding_deadline={bidding_deadline}
-                        project_id={id} />
-                </Link>
-            )
+                last_name, user_image, user_id,
+                bidding_deadline, status } = el;
+            if (status === 'completed') {
+                return (
+                    <Link to={`/project/${id}`}>
+                        <ProjectThumbnail name={name}
+                            type={type}
+                            description={description}
+                            price={price}
+                            image={image}
+                            first_name={first_name}
+                            last_name={last_name}
+                            user_image={user_image}
+                            bidding_deadline={bidding_deadline}
+                            project_id={id} 
+                            status='completed'
+                            collab_first={el.collab_user.first_name}
+                            collab_last={el.collab_user.last_name}/>
+                    </Link>
+                )
+            } else {
+                return (
+                    <Link to={`/project/${id}`}>
+                        <ProjectThumbnail name={name}
+                            type={type}
+                            description={description}
+                            price={price}
+                            image={image}
+                            first_name={first_name}
+                            last_name={last_name}
+                            user_image={user_image}
+                            bidding_deadline={bidding_deadline}
+                            project_id={id}
+                            status='pending' />
+                    </Link>
+                )
+            }
         })
         return (
             <div>
-                <Header userid={this.props.user.id}/>
+                <Header userid={this.props.user.id} />
                 <div className='dashboard-top'>
                     <img src={this.props.user.image || 'http://cdnak1.psbin.com/img/mw=160/mh=210/cr=n/d=1xms5/zrooq397hijjktlc.jpg'} alt="" />
                     <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>

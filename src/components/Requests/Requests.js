@@ -47,7 +47,6 @@ class Requests extends Component {
         })
         return (
             <div>
-                <Header />
                 <h1>Requests</h1>
                 { requests }
             </div>

@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-
+    border: 1px solid red;
 }
 
 .profile-user-content {
@@ -10,8 +10,9 @@
     display: grid;
     grid-column: 1/5;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 2fr;
+    grid-template-rows: 1fr;
     background: white;
+    border: 1px solid blue;
 }
 
 .profile-user-content img {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
 import ModalContainer from '../ModalContainer/ModalContainer';
@@ -7,6 +8,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './User.css';
 import ProfileProjectThumbnail from '../ProfileProjectThumbnail/ProfileProjectThumbnail';
+import Portfolio from '../Portfolio/Portfolio';
+import Connections from '../Connections/Connections';
+import Reviews from '../Reviews/Reviews';
 
 class User extends Component {
     constructor(props) {
@@ -124,7 +128,11 @@ class User extends Component {
         return (
             <div>
                 <Header />
-                <Link to="/dashboard"><button>Dashboard</button></Link>
+                <div className='profile-submenu'>
+                    <Link to={`/user/${this.props.match.params.id}`}>Profile</Link>
+                    <Link to={`/user/reviews/${this.props.match.params.id}`}>Reviews</Link>
+                    <Link to={`/user/connections/${this.props.match.params.id}`}>Connections</Link>
+                </div>
                 {this.state.request_status === 'requesting' ?
                     <div>
                         <p>
@@ -159,15 +167,13 @@ class User extends Component {
                                 Connections
                             </div>
                         </div>
-                        <div className='profile-projects'>
-                            {projects}
-                        </div>
-                    </div>
-                    <div className='profile-contact'>
-                        <h1>Connections</h1>
-                        {connections}
                     </div>
                 </div>
+                <Switch>
+                    <Route exact path='/user/:id' component={Portfolio} />
+                    <Route path='/user/reviews/:id' component={Reviews} />
+                    <Route path='/user/connections/:id' component={Connections} />
+                </Switch>
 
             </div>
         )
