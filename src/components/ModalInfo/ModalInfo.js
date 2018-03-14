@@ -67,9 +67,9 @@ class ModalInfo extends Component {
                         <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
                         <h3>Artist Type</h3>
                         <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
-                            <option value='Both'>Both</option>
-                            <option value='Filmmaker'>Filmmaker</option>
-                            <option value='Musician'>Musician</option>
+                            <option selected={this.props.user.artist_type === 'Both' ? 'selected' : ''}value='Both'>Both</option>
+                            <option selected={this.props.user.artist_type === 'Filmmaker' ? 'selected' : ''} value='Filmmaker'>Filmmaker</option>
+                            <option selected={this.props.user.artist_type === 'Musician' ? 'selected' : ''} value='Musician'>Musician</option>
                         </select>
                         <button onClick={this.handleUpdate}>Submit</button>
                 <div className='x-button' onClick={toggleModal}>X</div>

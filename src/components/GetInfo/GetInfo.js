@@ -18,7 +18,7 @@ class GetInfo extends Component {
         this.props.getUser();
         // console.log(this.props.user.info === 'true')
         this.setState({
-            user: this.props.user
+            user: Object.assign({}, this.state.user, { artist_type: 'Both' })
         })
     }
 
@@ -43,6 +43,7 @@ class GetInfo extends Component {
 
 
     render() {
+        console.log(this.state);
         return (
             <div>
                 {/* {
@@ -65,9 +66,9 @@ class GetInfo extends Component {
                         <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
                         <h3>Artist Type</h3>
                         <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
-                            <option selected='selected'>Both</option>
-                            <option>Filmmaker</option>
-                            <option>Musician</option>
+                            <option selected='selected' value='Both'>Both</option>
+                            <option value='Filmmaker'>Filmmaker</option>
+                            <option value='Musician'>Musician</option>
                         </select>
                         <button onClick={this.handleUpdate}>Submit</button>
                     </div>
