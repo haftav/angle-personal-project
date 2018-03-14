@@ -132,6 +132,7 @@ app.get('/api/projects/:id', projects_controller.getProject)
 app.get('/api/projects/user/:id', projects_controller.getUserProjects);
 app.post('/api/projects', projects_controller.createProject);
 app.put('/api/projects/:id', projects_controller.updateProject)
+app.put('/api/projects/submit/:id', projects_controller.submitUrl)
 app.get('/api/projects/collab/:id', projects_controller.getCollab);
 app.get('/api/collabs', projects_controller.getCollabs);
 app.put('/api/projects/collab/:id', projects_controller.chooseBid);

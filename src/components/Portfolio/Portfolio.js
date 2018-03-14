@@ -107,20 +107,20 @@ export default class Portfolio extends Component {
                 {
                     artist_type === 'Both' ?
                         <div className='portfolio-media-tabs'>
+                            <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
                             <h2 onClick={() => this.changeTab('videos')}>Videos</h2>
                             <h2 onClick={() => this.changeTab('music')}>Music</h2>
-                            <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
                         </div>
                         :
                         artist_type === 'Filmmaker' ?
                             <div className='portfolio-media-tabs'>
-                                <h2 onClick={() => this.changeTab('videos')}>Videos</h2>
                                 <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
+                                <h2 onClick={() => this.changeTab('videos')}>Videos</h2>
                             </div>
                             :
                             <div className='portfolio-media-tabs'>
-                                <h2 onClick={() => this.changeTab('music')}>Music</h2>
                                 <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
+                                <h2 onClick={() => this.changeTab('music')}>Music</h2>
                             </div>
                 }
                 {
@@ -133,16 +133,16 @@ export default class Portfolio extends Component {
                             <div className='portfolio-videos'>
                                 {
                                     vimeo_profile ?
-                                        <div>{ vimeo_projects }</div>
+                                        <div>{vimeo_projects}</div>
                                         :
                                         this.props.type === 'profile' ?
-                                        <div>
-                                            <h3>To show your vimeo videos, enter your vimeo profile URL here.</h3>
-                                            <input placeholder='Vimeo URL' onChange={(e) => this.handleChange(e.target.value, 'vimeo')} />
-                                            <button onClick={() => this.getMediaProfile('vimeo')}>Submit</button>
-                                        </div>
-                                        :
-                                        <h3>This user has not connected their Vimeo profile.</h3>
+                                            <div>
+                                                <h3>To show your vimeo videos, enter your vimeo profile URL here.</h3>
+                                                <input placeholder='Vimeo URL' onChange={(e) => this.handleChange(e.target.value, 'vimeo')} />
+                                                <button onClick={() => this.getMediaProfile('vimeo')}>Submit</button>
+                                            </div>
+                                            :
+                                            <h3>This user has not connected their Vimeo profile.</h3>
                                 }
                             </div>
                             :
@@ -155,13 +155,13 @@ export default class Portfolio extends Component {
                                             height='600px' />
                                         :
                                         this.props.type === 'profile' ?
-                                        <div>
-                                            <h3>To show your soundcloud sounds, enter your soundcloud profile URL here.</h3>
-                                            <input placeholder='Soundcloud URL' onChange={(e) => this.handleChange(e.target.value, 'soundcloud')} />
-                                            <button onClick={() => this.getMediaProfile('soundcloud')}>Submit</button>
-                                        </div>
-                                        : 
-                                        <h3>This user has not connected their Soundcloud profile.</h3>
+                                            <div>
+                                                <h3>To show your soundcloud sounds, enter your soundcloud profile URL here.</h3>
+                                                <input placeholder='Soundcloud URL' onChange={(e) => this.handleChange(e.target.value, 'soundcloud')} />
+                                                <button onClick={() => this.getMediaProfile('soundcloud')}>Submit</button>
+                                            </div>
+                                            :
+                                            <h3>This user has not connected their Soundcloud profile.</h3>
                                 }
                             </div>
                 }

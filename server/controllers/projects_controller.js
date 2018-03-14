@@ -112,6 +112,20 @@ module.exports = {
             })
         })
     },
+    submitUrl: (req, res) => {
+        const db = req.app.get('db');
+        const { id } = req.params;
+        const { finished_url } = req.body;
+        db.add_finished_url([id, finished_url]).then(() => {
+            db.get_project([id]).then(project => {
+                const { collab_id } = project[0];
+                db.find_id_user([collab_id]).then(user => {
+                    project[0].collab_user = user[0]
+                    res.status(200).send(project[0])
+                })
+            })
+        })
+    },
     completeProject: (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
