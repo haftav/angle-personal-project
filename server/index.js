@@ -105,6 +105,22 @@ app.get('/api/user/:id', (req, res) => {
     })
 })
 
+app.put('/api/user/media', (req, res) => {
+    const db = app.get('db');
+    const id = req.user.id;
+    if (req.body.type === 'vimeo') {
+        const { vimeo_profile } = req.body;
+        db.add_vimeo_url([id, vimeo_profile]).then(user => {
+            res.status(200).send(user[0]);
+        })
+    } else {
+        const { soundcloud_profile } = req.body
+        db.add_soundcloud_url([id, soundcloud_profile]).then(user => {
+            res.status(200).send(user[0]);
+        })
+    }
+})
+
 // app.get('/auth/logout', function(req, res){
 //     req.logOut();
 //     res.redirect('http://localhost:3535/');

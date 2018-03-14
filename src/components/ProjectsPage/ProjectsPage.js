@@ -77,7 +77,7 @@ class ProjectsPage extends Component {
         })
         return (
             <div>
-                <Header userid={this.props.match.params.userid} />
+                <Header userid={this.props.match.params.id} />
                 <h1>User Projects</h1>
                 {projects}
             </div>

@@ -15,12 +15,12 @@ export default (
     <Switch>
         <Route exact path='/' component={Login} />
         <Route path='/dashboard' component={Dashboard} />
-        <Route path='/profile' component={Profile} />
+        <Route path='/profile/:id' component={Profile} />
         <Route path='/user/:id' component={User} />
         <Route path='/info' component={GetInfo} />
         <Route path='/create' component={CreateProject} />
         <Route exact path='/project/:id' component={Project} />
-        <Route path='/projects' component={ProjectsPage} />
+        <Route path='/projects/:id' component={ProjectsPage} />
         <Route path = '/collab/:id' component={Collab} />
     </Switch>
 

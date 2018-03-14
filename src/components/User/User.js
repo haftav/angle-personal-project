@@ -170,7 +170,8 @@ class User extends Component {
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path='/user/:id' component={Portfolio} />
+                <Route exact path='/user/:id' render={() => 
+                        <Portfolio user={this.state.user} type='user'/>} />
                     <Route path='/user/reviews/:id' component={Reviews} />
                     <Route path='/user/connections/:id' component={Connections} />
                 </Switch>

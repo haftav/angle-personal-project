@@ -74,10 +74,10 @@ class Profile extends Component {
             <div>
                 <Header userid={this.props.user.id}/>
                 <div className='profile-submenu'>
-                    <Link to='/profile'>Profile</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}`}>Profile</Link>
                     <Link to={`/profile/reviews/${this.props.user.id || 1}`}>Reviews</Link>
                     <Link to={`/profile/connections/${this.props.user.id || 1}`}>Connections</Link>
-                    <Link to='/profile/requests'>Requests</Link>
+                    <Link to={`/profile/requests/${this.props.user.id}`}>Requests</Link>
                 </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
@@ -104,10 +104,11 @@ class Profile extends Component {
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path='/profile' component={Portfolio} />
+                    <Route exact path='/profile/:id' render={() => 
+                        <Portfolio user={this.props.user} type='profile' />} />
                     <Route path='/profile/reviews/:id' component={Reviews} />
                     <Route path='/profile/connections/:id' component={Connections} />
-                    <Route path='/profile/requests' component={Requests} />
+                    <Route path='/profile/requests/:id' component={Requests} />
                 </Switch>
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}

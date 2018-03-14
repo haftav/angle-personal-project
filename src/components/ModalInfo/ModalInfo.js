@@ -50,6 +50,7 @@ class ModalInfo extends Component {
         }
     }
     render() {
+        console.log(this.state.user.artist_type);
         const { toggleModal, active } = this.props;
         return (
             <div ref={node => this.node = node}
@@ -66,9 +67,9 @@ class ModalInfo extends Component {
                         <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
                         <h3>Artist Type</h3>
                         <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
-                            <option selected='selected'>Both</option>
-                            <option>Filmmaker</option>
-                            <option>Musician</option>
+                            <option value='Both'>Both</option>
+                            <option value='Filmmaker'>Filmmaker</option>
+                            <option value='Musician'>Musician</option>
                         </select>
                         <button onClick={this.handleUpdate}>Submit</button>
                 <div className='x-button' onClick={toggleModal}>X</div>

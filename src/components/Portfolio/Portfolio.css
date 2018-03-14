@@ -1,0 +1,13 @@
+.portfolio {
+    text-align: center;
+}
+
+.portfolio-media-tabs {
+    display: flex;
+    justify-content: center;
+}
+
+.portfolio-media-tabs h2 {
+    padding: 0px 10px;
+    cursor: pointer;
+}

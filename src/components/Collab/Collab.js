@@ -36,17 +36,30 @@ class Collab extends Component {
 
     render() {
         const { name, description, type, image,
-                first_name, last_name, price, user_image, collab_user } = this.state.project;
+            first_name, last_name, price, user_image, collab_user,
+            finished_url, collab_id } = this.state.project;
         const collab_first = collab_user.first_name,
-                collab_last = collab_user.last_name, 
-                collab_image = collab_user.image;
+            collab_last = collab_user.last_name,
+            collab_image = collab_user.image;
         return (
             <div>
                 <Header userid={this.props.user.id} />
                 <h1>{name}</h1>
                 <h2>Collab between {first_name} {last_name} and {collab_first} {collab_last}</h2>
                 <p>{description}</p>
-                <button onClick={this.completeProject}>Finish Project</button>
+                {
+                    this.props.user.id === collab_id ?
+                        <div>
+                            <h3>Enter the link to the finished project below.</h3>
+                            <input placeholder='Project URL' />
+                            <button>Submit</button>
+                        </div>
+                        :
+                        finished_url ?
+                            <button onClick={this.completeProject}>Finish Project</button>
+                            :
+                            <h3>Your collaborator has not yet finished the project.</h3>
+                }
             </div>
         )
     }
@@ -63,4 +76,4 @@ let actions = {
     getUser
 }
 
-export default connect (mapStateToProps, actions)(Collab);
+export default connect(mapStateToProps, actions)(Collab);

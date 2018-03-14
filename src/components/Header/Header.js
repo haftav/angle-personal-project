@@ -14,7 +14,7 @@ export default function Header({userid}) {
             </div>
             <div className='header-right'>
                 <Link to='/dashboard'>Dashboard</Link>
-                <Link to='/profile'>Profile</Link>
+                <Link to={`/profile/${userid}`}>Profile</Link>
                 <Link to={`/projects/${userid}`}>Projects</Link>
                 <a href='#'>Log Out</a>
             </div>
