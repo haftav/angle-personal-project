@@ -75,9 +75,9 @@ class Profile extends Component {
                 <Header userid={this.props.user.id}/>
                 <div className='profile-submenu'>
                     <Link to={`/profile/${this.props.user.id || 1}`}>Profile</Link>
-                    <Link to={`/profile/reviews/${this.props.user.id || 1}`}>Reviews</Link>
-                    <Link to={`/profile/connections/${this.props.user.id || 1}`}>Connections</Link>
-                    <Link to={`/profile/requests/${this.props.user.id}`}>Requests</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}/reviews`}>Reviews</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}/connections`}>Connections</Link>
+                    <Link to={`/profile/${this.props.user.id}/requests`}>Requests</Link>
                 </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
@@ -106,9 +106,9 @@ class Profile extends Component {
                 <Switch>
                     <Route exact path='/profile/:id' render={() => 
                         <Portfolio user={this.props.user} type='profile' />} />
-                    <Route path='/profile/reviews/:id' component={Reviews} />
-                    <Route path='/profile/connections/:id' component={Connections} />
-                    <Route path='/profile/requests/:id' component={Requests} />
+                    <Route path='/profile/:id/reviews' component={Reviews} />
+                    <Route path='/profile/:id/connections' component={Connections} />
+                    <Route path='/profile/:id/requests' component={Requests} />
                 </Switch>
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}

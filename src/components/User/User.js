@@ -130,8 +130,8 @@ class User extends Component {
                 <Header />
                 <div className='profile-submenu'>
                     <Link to={`/user/${this.props.match.params.id}`}>Profile</Link>
-                    <Link to={`/user/reviews/${this.props.match.params.id}`}>Reviews</Link>
-                    <Link to={`/user/connections/${this.props.match.params.id}`}>Connections</Link>
+                    <Link to={`/user/${this.props.match.params.id}/reviews`}>Reviews</Link>
+                    <Link to={`/user/${this.props.match.params.id}/connections`}>Connections</Link>
                 </div>
                 {this.state.request_status === 'requesting' ?
                     <div>
@@ -170,10 +170,10 @@ class User extends Component {
                     </div>
                 </div>
                 <Switch>
-                <Route exact path='/user/:id' render={() => 
-                        <Portfolio user={this.state.user} type='user'/>} />
-                    <Route path='/user/reviews/:id' component={Reviews} />
-                    <Route path='/user/connections/:id' component={Connections} />
+                    <Route exact path='/user/:id' render={() =>
+                        <Portfolio user={this.state.user} type='user' />} />
+                    <Route path='/user/:id/reviews' component={Reviews} />
+                    <Route path='/user/:id/connections' component={Connections} />
                 </Switch>
 
             </div>

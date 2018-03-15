@@ -98,16 +98,16 @@ class Project extends Component {
 
     getTimeRemaining(endtime) {
         var t = Date.parse(endtime) - Date.parse(new Date());
-        var seconds = Math.floor( (t/1000) % 60 );
-        var minutes = Math.floor( (t/1000/60) % 60 );
-        var hours = Math.floor( (t/(1000*60*60)) % 24 );
-        var days = Math.floor( t/(1000*60*60*24) );
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
         return {
-          'total': t,
-          'days': days,
-          'hours': hours,
-          'minutes': minutes,
-          'seconds': seconds
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
         };
     }
 
@@ -116,20 +116,20 @@ class Project extends Component {
         let { name, type, price, description,
             image, status, user_id, user_name,
             first_name, last_name, artist_type,
-            bidding_deadline, project_deadline} = this.state.project;
+            bidding_deadline, project_deadline } = this.state.project;
         let days, hours, minutes;
-            if (bidding_deadline) {
-                bidding_deadline = bidding_deadline.split('T')[0]
-                let countdown = this.getTimeRemaining(bidding_deadline);
-                days = countdown.days;
-                hours = countdown.hours;
-                minutes = countdown.minutes;
-            }
-            if (project_deadline) {
-                project_deadline = project_deadline.split('T')[0]
-            }
+        if (bidding_deadline) {
+            bidding_deadline = bidding_deadline.split('T')[0]
+            let countdown = this.getTimeRemaining(bidding_deadline);
+            days = countdown.days;
+            hours = countdown.hours;
+            minutes = countdown.minutes;
+        }
+        if (project_deadline) {
+            project_deadline = project_deadline.split('T')[0]
+        }
         const bids = this.state.project.bids.map((el, idx) => {
-            let {first_name, last_name, image, votes, bidder_id, project_id} = el;
+            let { first_name, last_name, image, votes, bidder_id, project_id } = el;
             return (
                 <Bid image={image}
                     first_name={first_name}
@@ -138,11 +138,11 @@ class Project extends Component {
                     bidder_id={bidder_id}
                     user_id={user_id}
                     project_id={project_id}
-                    chooseBid={this.chooseBid}/>
+                    chooseBid={this.chooseBid} />
             )
         })
         let bid_placed = false;
-        let bid_index = this.state.project.bids.findIndex(bid =>  {
+        let bid_index = this.state.project.bids.findIndex(bid => {
             return bid.bidder_id === this.props.user.id
         })
         if (bid_index !== -1) {
@@ -150,10 +150,9 @@ class Project extends Component {
         }
         return (
             <div>
-                <Header userid={this.props.user.id}/>
-                <Link to='/dashboard'><button>Dashboard</button></Link>
+                <Header userid={this.props.user.id} />
                 <div>
-                    <Link to={this.props.user.id === user_id ? '/profile' : `/user/${user_id}`}>
+                    <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
                         <h2>{first_name}</h2>
                         <h2>{last_name}</h2>
                     </Link>
@@ -166,47 +165,57 @@ class Project extends Component {
                     <h2>{price}</h2>
                     <img src={image} alt="project-image" />
                     <h3>{status}</h3>
-                    <h3>Bidding Deadline: {bidding_deadline}</h3>
                     {
-                        bidding_deadline ? (
-                            days > 1 ?
-                            <h3>Days remaining: {days}</h3>
+                        status === 'completed' ?
+                            null
                             :
-                            hours > 1 ?
-                            <h3>Hours remaining: {hours}</h3>
-                            :
-                            <h3>Minutes remaining: {minutes}</h3>
-                        )
-                        :
-                        null
+                            <div>
+                                <h3>Bidding Deadline: {bidding_deadline}</h3>
+                                {
+                                    bidding_deadline ? (
+                                        days > 1 ?
+                                            <h3>Days remaining: {days}</h3>
+                                            :
+                                            hours > 1 ?
+                                                <h3>Hours remaining: {hours}</h3>
+                                                :
+                                                <h3>Minutes remaining: {minutes}</h3>
+                                    )
+                                        :
+                                        null
+                                }
+
+                                <h3>Project Deadline: {project_deadline}</h3>
+                                {this.props.user.id === user_id
+                                    ?
+                                    <div>
+                                        <button onClick={this.modalClick}>Edit</button>
+                                        <button onClick={this.deleteClick}>Delete</button>
+                                    </div>
+                                    : bid_placed ?
+                                        <button onClick={this.removeBid}>Remove Bid</button>
+                                        :
+                                        <button onClick={this.addBid}>Add Bid</button>
+                                }
+                                <div>
+                                    <h1>BIDS</h1>
+                                    {bids}
+                                </div>
+                            </div>
                     }
-                    <h3>Project Deadline: {project_deadline}</h3>
-                    {this.props.user.id === user_id 
-                    ? 
-                    <div>
-                        <button onClick={this.modalClick}>Edit</button> 
-                        <button onClick={this.deleteClick}>Delete</button>
-                    </div>               
-                    : bid_placed ? 
-                    <button onClick={this.removeBid}>Remove Bid</button>
-                    :
-                    <button onClick={this.addBid}>Add Bid</button> 
-                    }
+
                 </div>
-                <div>
-                    <h1>BIDS</h1>
-                    {bids}
-                </div>
+
                 <ModalContainer toggleModal={this.modalClick}
                     active={this.state.modalActive}
-                    info='project' 
+                    info='project'
                     update={this.updateProject}
-                    project={this.state.project}/>
+                    project={this.state.project} />
                 <ModalContainer toggleModal={this.deleteClick}
                     active={this.state.deleteActive}
                     info='delete'
-                    update={this.deleteProject} 
-                    project={this.state.project}/>
+                    update={this.deleteProject}
+                    project={this.state.project} />
 
             </div>
         )
