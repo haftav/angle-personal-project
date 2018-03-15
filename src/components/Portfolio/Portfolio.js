@@ -149,10 +149,15 @@ export default class Portfolio extends Component {
                             <div className='portfolio-music'>
                                 {
                                     soundcloud_profile ?
-                                        <ReactPlayer url={this.props.user.soundcloud_profile}
+                                        <ReactPlayer url={this.props.user.soundcloud_profile}   
+                                            config={{
+                                                soundcloud: {
+                                                    options: { visual: false }
+                                                }
+                                            }}
                                             playing={false}
-                                            width='600px'
-                                            height='600px' />
+                                            width='80%'
+                                            height='400px' />
                                         :
                                         this.props.type === 'profile' ?
                                             <div>

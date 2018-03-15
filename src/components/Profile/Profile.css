@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    border: 1px solid red;
+    border: 1px solid rgb(255, 0, 0);
 }
 
 .profile-user-content {
