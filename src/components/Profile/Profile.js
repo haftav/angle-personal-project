@@ -19,8 +19,7 @@ class Profile extends Component {
 
         this.state = {
             modalActive: false,
-            projects: [],
-            connections: []
+            projects: []
         }
 
         this.modalClick = this.modalClick.bind(this);
@@ -35,12 +34,6 @@ class Profile extends Component {
             })
         })
 
-        axios.get(`/api/connections/user/${this.props.user.id}`).then(res => {
-            this.setState({
-                connections: res.data
-            })
-        })
-
     }
 
 
@@ -51,23 +44,18 @@ class Profile extends Component {
     }
 
     render() {
-        const connections = this.state.connections.map((el, idx) => {
-            let { first_name, last_name, image, user_id } = el
-            return (
-                <Link to={`/user/${user_id}`}>
-                    <h1>{first_name} {last_name}</h1>
-                </Link>
-            )
-        })
+
         const { first_name, last_name, user_name, description, artist_type, image, id } = this.props.user;
         const projects = this.state.projects.map((el, idx) => {
-            let { name, type, description, image, id } = el;
+            let { name, type, description, image, id, collab_id } = el;
             return (
                     <ProfileProjectThumbnail name={name}
                         type={type}
                         description={description}
                         image={image}
-                        id={id}/>
+                        id={id}
+                        position={collab_id === this.props.user.id ? 'Collaborator' : 'Creator'}
+                        />
             )
         })
         return (
@@ -105,7 +93,7 @@ class Profile extends Component {
                 </div>
                 <Switch>
                     <Route exact path='/profile/:id' render={() => 
-                        <Portfolio user={this.props.user} type='profile' />} />
+                        <Portfolio user={this.props.user} type='profile' user_projects={projects}/>} />
                     <Route path='/profile/:id/reviews' component={Reviews} />
                     <Route path='/profile/:id/connections' component={Connections} />
                     <Route path='/profile/:id/requests' component={Requests} />

@@ -75,12 +75,12 @@ module.exports = {
         })
     },
     getUserProjects: (req, res) => {
-        console.log('you hit this')
         const db = req.app.get('db');
         const id = Number(req.params.id)
         db.get_user_projects([id]).then(projects => {
-            console.log('here');
-            console.log(projects);
+            projects = projects.filter((el, idx) => {
+                return el.status === 'completed'
+            })
             res.status(200).send(projects);
         })
     },

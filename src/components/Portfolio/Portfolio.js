@@ -126,7 +126,7 @@ export default class Portfolio extends Component {
                 {
                     this.state.active === 'angle' ?
                         <div className='portfolio-angle'>
-                            <h3>Show angle projects</h3>
+                            { this.props.user_projects }
                         </div>
                         :
                         this.state.active === 'videos' ?

@@ -58,7 +58,7 @@ class Collab extends Component {
     render() {
         const { name, description, type, image,
             first_name, last_name, price, user_image, collab_user,
-            finished_url, collab_id } = this.state.project;
+            finished_url, collab_id, status } = this.state.project;
         5
         const collab_first = collab_user.first_name,
             collab_last = collab_user.last_name,
@@ -72,11 +72,19 @@ class Collab extends Component {
                 {
                     this.props.user.id === collab_id ?
                         <div>
-                            <h3>Enter the link to the finished project below.</h3>
-                            <input placeholder='Project URL'
-                                value={this.setState.finished_url}
-                                onChange={(e) => this.handleChange(e.target.value)} />
-                            <button onClick={this.submitProject}>Submit</button>
+                            {
+                                status === 'completed' ?
+                                    <h3>This project has been completed.</h3>
+                                    :
+                                    <div>
+                                        <h3>Enter the link to the finished project below.</h3>
+                                        <input placeholder='Project URL'
+                                            value={this.setState.finished_url}
+                                            onChange={(e) => this.handleChange(e.target.value)} />
+                                        <button onClick={this.submitProject}>Submit</button>
+                                    </div>
+                            }
+
                             {
                                 finished_url ?
                                     <ReactPlayer url={finished_url}

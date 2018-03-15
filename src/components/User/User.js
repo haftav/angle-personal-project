@@ -116,13 +116,14 @@ class User extends Component {
 
         const { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
         const projects = this.state.projects.map((el, idx) => {
-            let { name, type, description, image, id } = el;
+            let { name, type, description, image, id, collab_id } = el;
             return (
                 <ProfileProjectThumbnail name={name}
                     type={type}
                     description={description}
                     image={image}
-                    id={id} />
+                    id={id}
+                    position={collab_id === this.state.user.id ? 'Collaborator' : 'Creator'} />
             )
         })
         return (
@@ -171,7 +172,7 @@ class User extends Component {
                 </div>
                 <Switch>
                     <Route exact path='/user/:id' render={() =>
-                        <Portfolio user={this.state.user} type='user' />} />
+                        <Portfolio user={this.state.user} type='user' user_projects={projects} />} />
                     <Route path='/user/:id/reviews' component={Reviews} />
                     <Route path='/user/:id/connections' component={Connections} />
                 </Switch>

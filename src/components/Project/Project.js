@@ -6,6 +6,7 @@ import Header from '../Header/Header';
 import ModalContainer from '../ModalContainer/ModalContainer';
 import Bid from '../Bid/Bid';
 import { Link } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 
 class Project extends Component {
     constructor(props) {
@@ -116,7 +117,7 @@ class Project extends Component {
         let { name, type, price, description,
             image, status, user_id, user_name,
             first_name, last_name, artist_type,
-            bidding_deadline, project_deadline } = this.state.project;
+            bidding_deadline, project_deadline, finished_url } = this.state.project;
         let days, hours, minutes;
         if (bidding_deadline) {
             bidding_deadline = bidding_deadline.split('T')[0]
@@ -167,7 +168,10 @@ class Project extends Component {
                     <h3>{status}</h3>
                     {
                         status === 'completed' ?
-                            null
+                            <ReactPlayer url={finished_url}
+                                playing={false}
+                                width='500px'
+                                height='300px' />
                             :
                             <div>
                                 <h3>Bidding Deadline: {bidding_deadline}</h3>
