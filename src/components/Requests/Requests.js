@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { getUser } from '../../ducks/users';
+import { request } from 'http';
 
 class Requests extends Component {
     constructor(props) {
@@ -48,7 +49,13 @@ class Requests extends Component {
         return (
             <div>
                 <h1>Requests</h1>
-                { requests }
+                {
+                    requests[0] ?
+                    requests
+                    :
+                    <h1>You have no requests at this time.</h1>
+                }
+
             </div>
         )
     }

@@ -3,7 +3,6 @@ import './Login.css';
 
 export default class Login extends Component {
     render() {
-        console.log(process.env.REACT_APP_LOGIN);
         return (
             <div className='login'>
                 <div className='login-header'>
@@ -13,7 +12,7 @@ export default class Login extends Component {
                 <section className='login-main'>
                     <h1>Connect with other film and music entrepreneurs to reach your potential</h1>
                     <p>We believe there should be more than one side to every story. Help others complete their creative projects and help yourself in the process. It's a win-win situation.</p>
-                    <a href='http://localhost:3005/api/auth'><button className="login-button">Join the Angle Network</button></a>
+                    <a href={process.env.REACT_APP_LOGIN}><button className="login-button">Join the Angle Network</button></a>
                     <div className='login-main-info'>
                         <div>
                             <h3>CONNECT.</h3>

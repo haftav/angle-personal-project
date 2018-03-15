@@ -14,6 +14,8 @@ class Dashboard extends Component {
 
         this.state = {
             projects: [],
+            articles: [],
+            connections: [],
             statusOption: 'all',
             typeOption: 'all'
         }
@@ -29,7 +31,23 @@ class Dashboard extends Component {
                 projects: res.data
             })
         })
+        axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
+            let articles = res.data.articles.slice(0, 5);
+            this.setState({
+                articles: articles
+            })
+        })
 
+
+
+    }
+
+    componentWillReceiveProps(newProps) {
+        axios.get(`/api/connections/user/${newProps.user.id}`).then(res => {
+            this.setState({
+                connections: res.data
+            })
+        })
     }
 
     handleStatusChange(val) {
@@ -69,10 +87,10 @@ class Dashboard extends Component {
                             last_name={last_name}
                             user_image={user_image}
                             bidding_deadline={bidding_deadline}
-                            project_id={id} 
+                            project_id={id}
                             status='completed'
                             collab_first={el.collab_user.first_name}
-                            collab_last={el.collab_user.last_name}/>
+                            collab_last={el.collab_user.last_name} />
                     </Link>
                 )
             } else {
@@ -93,6 +111,27 @@ class Dashboard extends Component {
                 )
             }
         })
+
+        const articles = this.state.articles.map((el, idx) => {
+            let { title, url, urlToImage } = el;
+            return (
+                <div>
+                    <a href={url} target="_blank">
+                        <p>{title}</p>
+                    </a>
+                </div>
+            )
+        })
+
+        const connections = this.state.connections.map((el, idx) => {
+            let { first_name, last_name, image, user_id } = el
+            return (
+                <Link to={`/user/${user_id}`}>
+                    <h1>{first_name} {last_name}</h1>
+                </Link>
+            )
+        })
+
         return (
             <div>
                 <Header userid={this.props.user.id} />
@@ -128,20 +167,6 @@ class Dashboard extends Component {
                             <option value='Filmmaker'>Film</option>
                             <option value='Musician'>Music</option>
                         </select>
-                        {/* <input type='checkbox'
-                            name='type'
-                            id='typeChoice1'
-                            value='filmChecked'
-                            checked={this.state.filmChecked}
-                            onChange={(e) => this.handleTypeChange(e.target.value)} />
-                        <label for='typeChoice1'>Film</label>
-                        <input type='checkbox'
-                            name='type'
-                            id='typeChoice2'
-                            value='musicChecked'
-                            checked={this.state.musicChecked}
-                            onChange={(e) => this.handleTypeChange(e.target.value)} />
-                        <label for='typeChoice1'>Music</label> */}
                     </div>
 
                     <Link className='create-button' to='/create'>
@@ -153,7 +178,9 @@ class Dashboard extends Component {
                         {projects}
                     </div>
                     <div className='dashboard-network'>
-
+                        {connections}
+                        <hr />
+                        {articles}
                     </div>
                 </div>
             </div>
