@@ -9,7 +9,8 @@
     margin-left: 0px;
     font-family: 'Open Sans', sans-serif;
     font-size: 32px;
-
+    font-weight: 400;
+    letter-spacing: -1px;
 }
 
 .dashboard-top label {

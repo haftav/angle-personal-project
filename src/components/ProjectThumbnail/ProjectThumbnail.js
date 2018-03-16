@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './ProjectThumbnail.css'
+import { Image, Transformation } from 'cloudinary-react';
 
 export default class ProjectThumbnail extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ export default class ProjectThumbnail extends Component {
                     <div className='project-thumbnail-content'>
                         <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
                         <div className='project-thumbnail-name'>
-                            <h2><strong>{first_name} {last_name}</strong> is looking for a {type.toLowerCase()}</h2>
+                            <h2><strong>{first_name} {last_name}</strong> is looking for a <strong>{type.toLowerCase()}</strong></h2>
                             <hr />
                         </div>
                         <div className='project-bidding-deadline'>
@@ -44,7 +45,10 @@ export default class ProjectThumbnail extends Component {
                                     null
                             }
                         </div>
-                        <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />
+                        {/* <img className='project-thumbnail-projectimage' src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ'} alt={name} /> */}
+                        <Image publicId={image} cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
+                            <Transformation width="280" height="150" pad="center"/>
+                        </Image>
                         <div className='project-thumbnail-description'>
                             <h1>{name}</h1>
                             <p>{description}</p>
@@ -57,11 +61,11 @@ export default class ProjectThumbnail extends Component {
                     <div className='project-thumbnail-content'>
                         <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
                         <div className='project-thumbnail-name'>
-                            <h2><strong>{first_name} {last_name}</strong> and <strong>{this.props.collab_first} {this.props.collab_last} completed a project.</strong></h2>
+                            <h2><strong>{first_name} {last_name}</strong> and <strong>{this.props.collab_first} {this.props.collab_last}</strong> completed a project.</h2>
                             <hr />
                         </div>
 
-                        <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />
+                        <img className='project-thumbnail-projectimage' src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ'} alt={name} />
                         <div className='project-thumbnail-description'>
                             <h1>{name}</h1>
                         </div>
