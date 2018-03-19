@@ -89,8 +89,6 @@ export default class Portfolio extends Component {
     }
 
     render() {
-        console.log(this.state);
-        console.log(this.props);
         const { artist_type } = this.props.user;
         const { vimeo_profile, soundcloud_profile } = this.state.user;
         const vimeo_projects = this.state.vimeo_projects.map((el, idx) => {

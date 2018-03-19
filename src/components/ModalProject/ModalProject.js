@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
 import './ModalProject.css'
+import Dropzone from 'react-dropzone';
 
 class ModalProject extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            project: {}
+            project: {
+                image_data: {}
+            }
         }
 
-    this.handleClick = this.handleClick.bind(this);
-    this.updateProject = this.updateProject.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.updateProject = this.updateProject.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDrop = this.handleDrop.bind(this);
     }
 
     componentWillMount() {
@@ -27,7 +31,7 @@ class ModalProject extends Component {
     componentWillReceiveProps(newProps) {
         if (this.props !== newProps) {
             this.setState({
-                project: newProps.project
+                project: Object.assign({}, newProps.project, { image_data: {} })
             })
         }
     }
@@ -53,26 +57,48 @@ class ModalProject extends Component {
             }
         }
     }
+
+    handleDrop(files) {
+
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("tags", `angle`);
+        formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET); // Replace the preset name with your own
+        formData.append("api_key", process.env.REACT_APP_CLOUDINARY_KEY); // Replace API key with your own Cloudinary key
+        formData.append("timestamp", (Date.now() / 1000) | 0);
+
+        this.setState({
+            project: Object.assign({}, this.state.project, { image_data: formData })
+        })
+
+    }
+
     render() {
+        console.log(this.state.project);
         const { toggleModal, active, update } = this.props;
         const { name, type, description, price, image } = this.props.project
         return (
             <div ref={node => this.node = node}
                 className={active ? 'modal modal-active' : 'modal'}>
- <div>
-                        <h1>Edit Info</h1>
-                        <h2>Name</h2>
-                        <input  placeholder={name}
-                                value={this.state.project.name}
-                                onChange={(e) => this.updateProject(e.target.value, 'name')}/>
-                        <h2>Description</h2>
-                        <input placeholder={description}
-                                value={this.state.project.description}
-                                onChange={(e) => this.updateProject(e.target.value, 'description')}/> 
-                        <h2>Image</h2>     
-                        <button onClick={this.handleUpdate}>Submit</button>
-                <div className='x-button' onClick={toggleModal}>X</div>
-            </div>
+                <div>
+                    <h1>Edit Info</h1>
+                    <h2>Name</h2>
+                    <input placeholder={name}
+                        value={this.state.project.name}
+                        onChange={(e) => this.updateProject(e.target.value, 'name')} />
+                    <h2>Description</h2>
+                    <input placeholder={description}
+                        value={this.state.project.description}
+                        onChange={(e) => this.updateProject(e.target.value, 'description')} />
+                    <h2>Image</h2>
+                    <Dropzone
+                        onDrop={this.handleDrop}
+                        accept="image/*" >
+                        <p>Drop your files or click here to upload</p>
+                    </Dropzone>
+                    <button onClick={this.handleUpdate}>Submit</button>
+                    <div className='x-button' onClick={toggleModal}>X</div>
+                </div>
             </div>
         )
     }

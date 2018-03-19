@@ -85,12 +85,17 @@ module.exports = {
         })
     },
     updateProject: (req, res) => {
-        const { id, name, description } = req.body;
+        const { id, name, description, image } = req.body;
         const db = req.app.get('db');
         console.log('you hit me')
-        db.update_project([id, name, description]).then(project => {
-            console.log('project: ', project)
-            res.status(200).send(project[0])
+        db.update_project([id, name, description]).then(project1 => {
+            if (image) {
+                db.update_project_image([id, image]).then(project2 => {
+                    res.status(200).send(project2[0])
+                })
+            } else {
+                res.status(200).send(project1[0])
+            }
         })
     },
     deleteProject: (req, res) => {

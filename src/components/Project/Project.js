@@ -54,11 +54,28 @@ class Project extends Component {
     }
 
     updateProject(project) {
-        axios.put(`/api/projects/${this.state.project.id}`, project).then(res => {
-            this.setState({
-                project: res.data
+        let bids = this.state.project.bids;
+        if (project.image_data instanceof FormData) {
+            axios.post(process.env.REACT_APP_CLOUDINARY_URL, project.image_data, {
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+            }).then(res1 => {
+                const data = res1.data;
+                let image = data.secure_url;
+                project.image = image;
+                axios.put(`/api/projects/${this.state.project.id}`, project).then(res2 => {
+                    console.log(res2.data);
+                    this.setState({
+                        project: Object.assign({}, res2.data, { bids: bids })
+                    })
+                })
             })
-        })
+        } else {
+            axios.put(`/api/projects/${this.state.project.id}`, project).then(res => {
+                this.setState({
+                    project: Object.assign({}, res.data, { bids: bids })
+                })
+            })
+        }
     }
 
     deleteProject(project) {
@@ -177,10 +194,10 @@ class Project extends Component {
                                 <h3>Bidding Deadline: {bidding_deadline}</h3>
                                 {
                                     bidding_deadline ? (
-                                        days > 1 ?
+                                        days >= 1 ?
                                             <h3>Days remaining: {days}</h3>
                                             :
-                                            hours > 1 ?
+                                            hours >= 1 ?
                                                 <h3>Hours remaining: {hours}</h3>
                                                 :
                                                 <h3>Minutes remaining: {minutes}</h3>

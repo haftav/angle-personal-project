@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './ProjectThumbnail.css'
-import { Image, Transformation } from 'cloudinary-react';
+import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
 
 export default class ProjectThumbnail extends Component {
     constructor(props) {
@@ -20,16 +20,32 @@ export default class ProjectThumbnail extends Component {
         let { name, type, description,
             price, image, first_name,
             last_name, user_image, project_id, bidding_deadline } = this.props
+        let userImageAdded = false;
         if (bidding_deadline) {
             bidding_deadline = new Date(bidding_deadline)
             bidding_deadline = bidding_deadline.toISOString().split('T')[0];
         }
-        console.log(!!bidding_deadline);
+
+        if (/https:\/\/res.cloudinary.com\//.test(user_image)) {
+            user_image = user_image.split('/')[7];
+            userImageAdded = true;
+        }
+
+        image = image.split('/')[7];
         return (
             this.props.status === 'pending' ?
                 <div className='project-thumbnail'>
                     <div className='project-thumbnail-content'>
-                        <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
+                        {
+                            userImageAdded ?
+                                <Image publicId={user_image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='project-thumbnail-userimage'>
+                                    <Transformation width="100" height="100" crop="fill" />
+                                </Image>
+                                :
+                                <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
+                        }
                         <div className='project-thumbnail-name'>
                             <h2><strong>{first_name} {last_name}</strong> is looking for a <strong>{type.toLowerCase()}</strong></h2>
                             <hr />
@@ -45,10 +61,17 @@ export default class ProjectThumbnail extends Component {
                                     null
                             }
                         </div>
-                        {/* <img className='project-thumbnail-projectimage' src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ'} alt={name} /> */}
-                        <Image publicId={image} cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
-                            <Transformation width="280" height="150" pad="center"/>
-                        </Image>
+                        {
+                            image ?
+                                <Image publicId={image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='project-thumbnail-projectimage'>
+                                    <Transformation width="280" height="150" crop="fill" />
+                                </Image>
+                                :
+                                <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />
+
+                        }
                         <div className='project-thumbnail-description'>
                             <h1>{name}</h1>
                             <p>{description}</p>
@@ -59,7 +82,16 @@ export default class ProjectThumbnail extends Component {
                 :
                 <div className='project-thumbnail'>
                     <div className='project-thumbnail-content'>
-                        <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
+                        {
+                            userImageAdded ?
+                                <Image publicId={user_image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='project-thumbnail-userimage'>
+                                    <Transformation width="100" height="100" crop="fill" />
+                                </Image>
+                                :
+                                <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
+                        }
                         <div className='project-thumbnail-name'>
                             <h2><strong>{first_name} {last_name}</strong> and <strong>{this.props.collab_first} {this.props.collab_last}</strong> completed a project.</h2>
                             <hr />

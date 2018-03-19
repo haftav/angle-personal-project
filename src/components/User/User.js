@@ -12,6 +12,8 @@ import Portfolio from '../Portfolio/Portfolio';
 import Connections from '../Connections/Connections';
 import Reviews from '../Reviews/Reviews';
 
+import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
+
 class User extends Component {
     constructor(props) {
         super(props);
@@ -103,8 +105,7 @@ class User extends Component {
     }
 
     render() {
-        console.log('connection: ', this.state.connection_status);
-        console.log('request', this.state.request_status);
+        let imageAdded = false;
         const connections = this.state.connections.map((el, idx) => {
             let { first_name, last_name, image, user_id } = el
             return (
@@ -114,7 +115,8 @@ class User extends Component {
             )
         })
 
-        const { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
+        var { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
+        
         const projects = this.state.projects.map((el, idx) => {
             let { name, type, description, image, id, collab_id } = el;
             return (
@@ -126,6 +128,12 @@ class User extends Component {
                     position={collab_id === this.state.user.id ? 'Collaborator' : 'Creator'} />
             )
         })
+
+        if (/https:\/\/res.cloudinary.com\//.test(image)) {
+            image = image.split('/')[7];
+            imageAdded = true;
+        }
+
         return (
             <div>
                 <Header />
@@ -148,9 +156,19 @@ class User extends Component {
                 }
                 <div className='profile'>
                     <div className='profile-user-content'>
-                        <img src={image}
-                            alt={`user/${id}`}
-                            className='profile-image' />
+                        {
+                            imageAdded
+                                ?
+                                <Image publicId={image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='profile-image'>
+                                    <Transformation width="280" height="150" crop="fill" />
+                                </Image>
+                                :
+                                <img src={image}
+                                    alt={`user/${id}`}
+                                    className='profile-image' />
+                        }
                         <div className='profile-description'>
                             <h1>{user_name || 'username'}</h1>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>

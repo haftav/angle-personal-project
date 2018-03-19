@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express')
-, session = require('express-session')
-, passport = require('passport')
-, Auth0Strategy = require('passport-auth0')
-, massive = require('massive')
-, bodyParser = require('body-parser');
+    , session = require('express-session')
+    , passport = require('passport')
+    , Auth0Strategy = require('passport-auth0')
+    , massive = require('massive')
+    , bodyParser = require('body-parser');
 
 const projects_controller = require('./controllers/projects_controller');
 const connections_controller = require('./controllers/connections_controller');
@@ -43,8 +43,8 @@ passport.use(new Auth0Strategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
     callbackURL: CALLBACK_URL,
-    scope: 'openid profile'    
-}, function(accessToken, refreshToken, extraParams, profile, done) {
+    scope: 'openid profile'
+}, function (accessToken, refreshToken, extraParams, profile, done) {
     const db = app.get('db');
     db.find_user([profile.id]).then(users => {
         if (!users[0]) {
@@ -53,7 +53,7 @@ passport.use(new Auth0Strategy({
                     profile.name[prop] = ''
                 }
             }
-            const {id, displayName, name, picture} = profile;
+            const { id, displayName, name, picture } = profile;
             db.create_user([id, name.givenName, name.familyName, displayName, picture, 'false', '', 'Both']).then(user => {
                 done(null, user[0].id)
             })
@@ -61,23 +61,23 @@ passport.use(new Auth0Strategy({
             done(null, users[0].id)
         }
     })
-}) )
+}))
 
-passport.serializeUser( (id, done) => {
+passport.serializeUser((id, done) => {
     done(null, id);
-} )
+})
 
-passport.deserializeUser( (id, done) => {
-    app.get('db').find_session_user([id]).then( user => {
+passport.deserializeUser((id, done) => {
+    app.get('db').find_session_user([id]).then(user => {
         done(null, user[0]);
-    } ) 
-} )
+    })
+})
 
 app.get('/api/auth', passport.authenticate('auth0'));
 app.get('/api/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/#/info',
     failureRedirect: 'http://localhost:3000/#/'
-    
+
 }))
 
 app.get('/api/user', (req, res) => {
@@ -90,11 +90,19 @@ app.get('/api/user', (req, res) => {
 
 app.put('/api/user', (req, res) => {
     console.log('body: ', req.body)
-    const { user_name, first_name, last_name, description, artist_type } = req.body;
+    const { user_name, first_name, last_name, description, artist_type, image } = req.body;
     const db = app.get('db');
-    db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(user => {
-        res.status(200).send(user[0])
-    })
+    if (image) {
+        db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(res1 => {
+            db.update_user_image([req.user.id, image]).then(user => {
+                res.status(200).send(user[0])
+            })
+        })
+    } else {
+        db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(user => {
+            res.status(200).send(user[0])
+        })
+    }
 
 })
 
