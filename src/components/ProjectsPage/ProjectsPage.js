@@ -4,6 +4,8 @@ import { getUser } from '../../ducks/users';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import axios from 'axios';
+import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
+import './ProjectsPage.css';
 
 class ProjectsPage extends Component {
     constructor(props) {
@@ -24,16 +26,36 @@ class ProjectsPage extends Component {
     }
 
     render() {
+        var imageStyles = {
+            width: "280px",
+            height: "150px",
+            background: "lightblue"
+        }
         const projects = this.state.projects.map((el, idx) => {
-            const { name, type, description,
+            let { name, type, description,
                 price, image, id, first_name,
                 last_name, user_image, user_id, status } = el;
+            let imageAdded = false;
+            if (/https:\/\/res.cloudinary.com\//.test(image)) {
+                image = image.split('/')[7];
+                imageAdded = true;
+            }
             if (status === 'pending') {
                 return (
                     <Link className='projects-project-thumbnail' to={`/project/${id}`}>
                         <h1>{name}</h1>
                         <h1>You opened this project for bidding.</h1>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                        {
+                            imageAdded ?
+                                <Image publicId={image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='projects-project-image'>
+                                    <Transformation width="280" height="150" crop="fill" />
+                                </Image>
+                                :
+                                <img src={image} alt={name} />
+                        }
+
                     </Link>
                 )
             } else if (status === 'collab') {
@@ -42,7 +64,16 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>You are collaborating on this project with {first_name} {last_name}.</h1>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                            {
+                                imageAdded ?
+                                    <Image publicId={image}
+                                        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                        className='projects-project-image'>
+                                        <Transformation width="280" height="5" crop="fill" />
+                                    </Image>
+                                    :
+                                    <img style={imageStyles} src={image} alt={name} />
+                            }
                         </Link>
                     )
                 } else {
@@ -50,7 +81,16 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>{first_name} {last_name} is collaborating on this project with you.</h1>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                            {
+                                imageAdded ?
+                                    <Image publicId={image}
+                                        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                        className='projects-project-image'>
+                                        <Transformation width="280" height="150" crop="fill" />
+                                    </Image>
+                                    :
+                                    <img className='projects-project-image' src={image} alt={name} />
+                            }
                         </Link>
                     )
                 }
@@ -61,7 +101,7 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>You completed this project with {first_name} {last_name}.</h1>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                            <img className='projects-project-image'src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
                         </Link>
                     )
                 } else {
@@ -69,7 +109,7 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>You helped {first_name} {last_name} complete this project.</h1>
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                            <img className='projects-project-image' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
                         </Link>
                     )
                 }
