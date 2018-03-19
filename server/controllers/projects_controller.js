@@ -69,6 +69,9 @@ module.exports = {
             db.get_collabs_other([userid]).then(othercollabs => {
                 db.get_collabs_pending([userid]).then(pendingcollabs => {
                     let collabs = [...usercollabs, ...othercollabs, ...pendingcollabs]
+                    collabs.sort((a, b) => {
+                        return a.project_deadline - b.project_deadline;
+                    })
                     res.status(200).send(collabs);
                 })
             })

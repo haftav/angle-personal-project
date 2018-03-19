@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from './bigwhite.png'
 
-export default function Header({userid}) {
+export default function Header({ userid }) {
     return (
         <div className='header'>
             <div className='header-left'>
@@ -13,10 +13,22 @@ export default function Header({userid}) {
                 <input />
             </div>
             <div className='header-right'>
-                <Link to='/dashboard'>Dashboard</Link>
-                <Link to={`/profile/${userid}`}>Profile</Link>
-                <Link to={`/projects/${userid}`}>Projects</Link>
-                <a href='#'>Log Out</a>
+                <Link className='home-button' to='/dashboard'>
+                    <i class="fa fa-home"></i>
+                    Dashboard
+                </Link>
+                <Link to={`/profile/${userid}`}>
+                    <i class="fa fa-user-circle"></i>
+                    Profile
+                </Link>
+                <Link to={`/projects/${userid}`}>
+                    <i class="fa fa-book"></i>
+                    Projects
+                </Link>
+                <a href='#'>
+                <i class="fa fa-sign-out"></i>
+                    Log Out
+                    </a>
             </div>
         </div>
     )

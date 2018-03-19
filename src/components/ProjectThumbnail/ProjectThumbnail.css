@@ -7,7 +7,7 @@
 }
 
 .project-thumbnail-content {
-    height: 220px;
+    height: 165px;
     display: grid;
     grid-template-columns: 75px 1fr 3fr 2fr;
     grid-template-rows: 40px 1fr;
@@ -34,7 +34,7 @@
 .project-thumbnail-projectimage {
     padding: 15px;
     height: 100%;
-    width: 280px;
+    width: 200px;
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
 }
@@ -71,4 +71,9 @@
 .project-thumbnail-content h2 {
     font-size: 16px;
     font-weight: 400;
+}
+
+.project-thumbnail-description p {
+    margin-right: 10px;
+
 }

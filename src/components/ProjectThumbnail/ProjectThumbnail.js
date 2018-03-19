@@ -66,7 +66,7 @@ export default class ProjectThumbnail extends Component {
                                 <Image publicId={image}
                                     cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
                                     className='project-thumbnail-projectimage'>
-                                    <Transformation width="280" height="150" crop="fill" />
+                                    <Transformation width="200" height="100" crop="fill" />
                                 </Image>
                                 :
                                 <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />

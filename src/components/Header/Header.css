@@ -5,8 +5,8 @@
     display: flex;
     justify-content: space-between;
     font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 12px;
+    font-weight: 200;
 }
 
 .header-left {
@@ -47,16 +47,24 @@
     align-items: center;
 }
 
+
+
 .header-right a {
     height: 100%;
     width: 124px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: rgb(223, 223, 223);
     text-decoration: none;
+    transition: all .1s ease;
+}
+
+.header-right i {
+    font-size: 29px;
 }
 
 .header-right a:hover {
-    background: rgb(0, 68, 107);
+    color: white;
 }

@@ -19,7 +19,8 @@ class Dashboard extends Component {
             articles: [],
             connections: [],
             statusOption: 'all',
-            typeOption: 'all'
+            typeOption: 'all',
+            loading: true
         }
 
         this.handleStatusChange = this.handleStatusChange.bind(this);
@@ -30,15 +31,16 @@ class Dashboard extends Component {
         this.props.getUser();
         axios.get('/api/projects').then(res => {
             this.setState({
-                projects: res.data
+                projects: res.data,
+                loading: false
             })
         })
-        axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
-            let articles = res.data.articles.slice(0, 5);
-            this.setState({
-                articles: articles
-            })
-        })
+        // axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
+        //     let articles = res.data.articles.slice(0, 5);
+        //     this.setState({
+        //         articles: articles
+        //     })
+        // })
 
 
 
@@ -142,70 +144,77 @@ class Dashboard extends Component {
         }
 
         return (
+
             <div>
                 <Header userid={this.props.user.id} />
-                <div className='dashboard-all'>
+                {
+                    this.state.loading ?
+                        <div className='loading-animation'></div>
+                        :
+                        <div className='dashboard-all'>
 
-                    <div className='dashboard-top'>
-                        {
-                            imageAdded ?
-                                <Image publicId={image}
-                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
-                                    <Transformation width="100" height="100" crop="fill" />
-                                </Image>
-                                :
-                                <img src={this.props.user.image || 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} alt="" />
-                        }
-                        <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>
-                        <div className='filter-buttons'>
-                            <h2>Project Status</h2>
-                            <input type='radio'
-                                name='status'
-                                id='statusChoice1'
-                                value='all'
-                                checked={this.state.statusOption === 'all'}
-                                onChange={(e) => this.handleStatusChange(e.target.value)} />
-                            <label htmlFor='statusChoice1'>All</label>
-                            <input type='radio'
-                                name='status'
-                                id='statusChoice2'
-                                value='pending'
-                                checked={this.state.statusOption === 'pending'}
-                                onChange={(e) => this.handleStatusChange(e.target.value)} />
-                            <label htmlFor='statusChoice2'>Bidding Open</label>
-                            <input type='radio'
-                                name='status'
-                                id='statusChoice3'
-                                value='completed'
-                                checked={this.state.statusOption === 'completed'}
-                                onChange={(e) => this.handleStatusChange(e.target.value)} />
-                            <label htmlFor='statusChoice3'>Completed</label>
-                            <h2>Type</h2>
-                            <select id='typeChoice' onChange={(e) => this.handleTypeChange(e.target.value)}>
-                                <option value='all'>All</option>
-                                <option value='Filmmaker'>Film</option>
-                                <option value='Musician'>Music</option>
-                            </select>
-                        </div>
+                            <div className='dashboard-top'>
+                                {
+                                    imageAdded ?
+                                        <Image publicId={image}
+                                            cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
+                                            <Transformation width="100" height="100" crop="fill" />
+                                        </Image>
+                                        :
+                                        <img src={this.props.user.image || 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} alt="" />
+                                }
+                                <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>
+                                <div className='filter-buttons'>
+                                    <h2>Project Status</h2>
+                                    <input type='radio'
+                                        name='status'
+                                        id='statusChoice1'
+                                        value='all'
+                                        checked={this.state.statusOption === 'all'}
+                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                    <label htmlFor='statusChoice1'>All</label>
+                                    <input type='radio'
+                                        name='status'
+                                        id='statusChoice2'
+                                        value='pending'
+                                        checked={this.state.statusOption === 'pending'}
+                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                    <label htmlFor='statusChoice2'>Bidding Open</label>
+                                    <input type='radio'
+                                        name='status'
+                                        id='statusChoice3'
+                                        value='completed'
+                                        checked={this.state.statusOption === 'completed'}
+                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                    <label htmlFor='statusChoice3'>Completed</label>
+                                    <h2>Type</h2>
+                                    <select id='typeChoice' onChange={(e) => this.handleTypeChange(e.target.value)}>
+                                        <option value='all'>All</option>
+                                        <option value='Filmmaker'>Film</option>
+                                        <option value='Musician'>Music</option>
+                                    </select>
+                                </div>
 
-                        <Link className='create-button' to='/create'>
-                            <button>+ START PROJECT</button>
-                        </Link>
-                    </div>
-                    <div className='dashboard'>
-                        <div className='dashboard-feed'>
-                            <Infinite elementHeight={220}
-                                containerHeight={700}>
-                            {projects}
-                            </Infinite>
+                                <Link className='create-button' to='/create'>
+                                    <button>+ START PROJECT</button>
+                                </Link>
+                            </div>
+                            <div className='dashboard'>
+                                <div className='dashboard-feed'>
+                                    <Infinite elementHeight={220}
+                                        containerHeight={700}>
+                                        {projects}
+                                    </Infinite>
+                                </div>
+                                <div className='dashboard-network'>
+                                    {connections}
+                                    <hr />
+                                    {articles}
+                                </div>
+                            </div>
                         </div>
-                        <div className='dashboard-network'>
-                            {connections}
-                            <hr />
-                            {articles}
-                        </div>
-                    </div>
-                </div>
+                }
+
             </div>
         )
     }

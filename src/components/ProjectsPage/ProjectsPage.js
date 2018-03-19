@@ -53,7 +53,7 @@ class ProjectsPage extends Component {
                                     <Transformation width="280" height="150" crop="fill" />
                                 </Image>
                                 :
-                                <img src={image} alt={name} />
+                                <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />
                         }
 
                     </Link>
@@ -72,7 +72,7 @@ class ProjectsPage extends Component {
                                         <Transformation width="280" height="5" crop="fill" />
                                     </Image>
                                     :
-                                    <img style={imageStyles} src={image} alt={name} />
+                                    <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />
                             }
                         </Link>
                     )
@@ -89,7 +89,7 @@ class ProjectsPage extends Component {
                                         <Transformation width="280" height="150" crop="fill" />
                                     </Image>
                                     :
-                                    <img className='projects-project-image' src={image} alt={name} />
+                                    <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />
                             }
                         </Link>
                     )
@@ -101,7 +101,16 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>You completed this project with {first_name} {last_name}.</h1>
-                            <img className='projects-project-image'src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
+                            {
+                                imageAdded ?
+                                    <Image publicId={image}
+                                        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                        className='projects-project-image'>
+                                        <Transformation width="280" height="150" crop="fill" />
+                                    </Image>
+                                    :
+                                    <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />
+                            }
                         </Link>
                     )
                 } else {
@@ -109,8 +118,16 @@ class ProjectsPage extends Component {
                         <Link className='projects-project-thumbnail' to={`/collab/${id}`}>
                             <h1>{name}</h1>
                             <h1>You helped {first_name} {last_name} complete this project.</h1>
-                            <img className='projects-project-image' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ" alt={name} />
-                        </Link>
+                            {
+                                imageAdded ?
+                                    <Image publicId={image}
+                                        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                        className='projects-project-image'>
+                                        <Transformation width="280" height="150" crop="fill" />
+                                    </Image>
+                                    :
+                                    <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />
+                            }                        </Link>
                     )
                 }
             }

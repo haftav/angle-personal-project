@@ -5,6 +5,12 @@
     border: 1px solid rgb(255, 0, 0);
 }
 
+.profile-image {
+    height: 200px;
+    width: 200px;
+    border-radius: 0px;
+}
+
 .profile-user-content {
     margin: 50px;
     display: grid;
@@ -18,7 +24,6 @@
 .profile-user-content img {
     background: lightcoral;
     height: 200px;
-    border-radius: 50%;
 }
 
 .profile-description {
