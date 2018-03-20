@@ -105,20 +105,20 @@ export default class Portfolio extends Component {
                 {
                     artist_type === 'Both' ?
                         <div className='portfolio-media-tabs'>
-                            <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
-                            <h2 onClick={() => this.changeTab('videos')}>Videos</h2>
-                            <h2 onClick={() => this.changeTab('music')}>Music</h2>
+                            <h2 onClick={() => this.changeTab('angle')} className={this.state.active === 'angle' ? 'portfolio-tab-active' : ''}>Angle Projects</h2>
+                            <h2 onClick={() => this.changeTab('videos')} className={this.state.active === 'videos' ? 'portfolio-tab-active' : ''}>Videos</h2>
+                            <h2 onClick={() => this.changeTab('music')} className={this.state.active === 'music' ? 'portfolio-tab-active' : ''}>Music</h2>
                         </div>
                         :
                         artist_type === 'Filmmaker' ?
                             <div className='portfolio-media-tabs'>
-                                <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
-                                <h2 onClick={() => this.changeTab('videos')}>Videos</h2>
+                                <h2 onClick={() => this.changeTab('angle')} className={this.state.active === 'angle' ? 'portfolio-tab-active' : ''}>Angle Projects</h2>
+                                <h2 onClick={() => this.changeTab('videos')} className={this.state.active === 'videos' ? 'portfolio-tab-active' : ''}>Videos</h2>
                             </div>
                             :
                             <div className='portfolio-media-tabs'>
-                                <h2 onClick={() => this.changeTab('angle')}>Angle Projects</h2>
-                                <h2 onClick={() => this.changeTab('music')}>Music</h2>
+                                <h2 onClick={() => this.changeTab('angle')} className={this.state.active === 'angle' ? 'portfolio-tab-active' : ''}>Angle Projects</h2>
+                                <h2 onClick={() => this.changeTab('music')} className={this.state.active === 'music' ? 'portfolio-tab-active' : ''}>Music</h2>
                             </div>
                 }
                 {

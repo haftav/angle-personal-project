@@ -4,7 +4,9 @@ const express = require('express')
     , passport = require('passport')
     , Auth0Strategy = require('passport-auth0')
     , massive = require('massive')
-    , bodyParser = require('body-parser');
+    , bodyParser = require('body-parser')
+    , socket = require('socket.io');
+    
 
 const projects_controller = require('./controllers/projects_controller');
 const connections_controller = require('./controllers/connections_controller');
@@ -170,4 +172,19 @@ app.post('/api/reviews/add', reviews_controller.addReview);
 app.put('/api/reviews/edit', reviews_controller.editReview);
 app.delete('/api/reviews/delete/:id/:user_id', reviews_controller.deleteReview);
 
-app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
+const io = socket(app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)));
+
+io.on('connection', socket => {
+    socket.emit('welcome', {userID: socket.id})
+
+    socket.on('message sent', function(data) {
+        console.log(data);
+        data.user = this.id;
+        io.to(data.room).emit('message dispatched', data)
+    })
+
+    socket.on('join room', data => {
+        socket.join(data.room);
+        io.to(data.room).emit('room joined', data.room)
+    })
+})

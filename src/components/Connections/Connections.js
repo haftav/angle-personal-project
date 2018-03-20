@@ -21,6 +21,8 @@ class Connections extends Component {
         })
     }
 
+
+
     render() {
         console.log(this.props);
         const connections = this.state.connections.map((el, idx) => {
