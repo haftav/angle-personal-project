@@ -10,10 +10,27 @@ export default class ProjectThumbnail extends Component {
         this.state = {
             bids: []
         }
+
+        this.getTimeRemaining = this.getTimeRemaining.bind(this);
     }
 
     componentDidMount() {
 
+    }
+
+    getTimeRemaining(endtime) {
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days + 1,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
     }
 
     render() {
@@ -21,9 +38,14 @@ export default class ProjectThumbnail extends Component {
             price, image, first_name,
             last_name, user_image, project_id, bidding_deadline } = this.props
         let userImageAdded = false;
+        let days, hours, minutes;
         if (bidding_deadline) {
             bidding_deadline = new Date(bidding_deadline)
             bidding_deadline = bidding_deadline.toISOString().split('T')[0];
+            let countdown = this.getTimeRemaining(bidding_deadline);
+            days = countdown.days;
+            hours = countdown.hours;
+            minutes = countdown.minutes;
         }
 
         if (/https:\/\/res.cloudinary.com\//.test(user_image)) {
@@ -54,8 +76,19 @@ export default class ProjectThumbnail extends Component {
                             {
                                 bidding_deadline ?
                                     <div>
-                                        <h4>Bidding Deadline:</h4>
-                                        <p>{bidding_deadline}</p>
+                                        {
+                                            bidding_deadline ? (
+                                                days >= 1 ?
+                                                    <h3>{days} {days === 1 ? 'day' : 'days'} remaining</h3>
+                                                    :
+                                                    hours >= 1 ?
+                                                        <h3>{hours} {hours === 1 ? 'hour' : 'hours'} remaining</h3>
+                                                        :
+                                                        <h3>{minutes} {minutes === 1 ? 'minute' : 'minutes'} remaining</h3>
+                                            )
+                                                :
+                                                null
+                                        }
                                     </div>
                                     :
                                     null

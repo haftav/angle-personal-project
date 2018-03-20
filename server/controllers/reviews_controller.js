@@ -15,7 +15,19 @@ module.exports = {
                 return el.user_id === user_id || el.collab_id === user_id;
             })
             if (found) {
-                res.status(200).send(true);
+                db.get_reviews([id]).then(reviews => {
+                    let result = reviews.find((el) => {
+                        return el.reviewer_id == user_id;
+                    })
+                    console.log(result);
+                    if (result) {
+                        console.log('sending false');
+                        res.status(200).send(false);
+                    } else {
+                        console.log('sending true');
+                        res.status(200).send(true);
+                    }
+                })
             } else {
                 res.status(200).send(false)
             }

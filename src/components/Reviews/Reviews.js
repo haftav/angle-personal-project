@@ -60,7 +60,8 @@ class Reviews extends Component {
         axios.post('/api/reviews/add', info).then(res => {
             this.setState({
                 reviews: res.data,
-                reviewText: ''
+                reviewText: '',
+                canAdd: false
             })
         })
     }
@@ -98,7 +99,8 @@ class Reviews extends Component {
     deleteReview(id) {
         axios.delete(`/api/reviews/delete/${id}/${this.props.match.params.id}`).then(res => {
             this.setState({
-                reviews: res.data
+                reviews: res.data,
+                canAdd: true
             })
         })
     }

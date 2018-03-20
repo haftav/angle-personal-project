@@ -58,9 +58,13 @@
 
 .project-bidding-deadline {
     grid-column: 4 / span 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 1;
     font-family: 'Fira Sans', sans-serif;
-    font-size: 15px;
+    font-size: 12px;
+    font-weight: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .project-thumbnail-description {

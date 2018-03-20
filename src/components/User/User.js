@@ -162,7 +162,7 @@ class User extends Component {
                                 <Image publicId={image}
                                     cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
                                     className='profile-image'>
-                                    <Transformation width="280" height="150" crop="fill" />
+                                    <Transformation width="200" height="200" crop="fill" />
                                 </Image>
                                 :
                                 <img src={image}
@@ -170,7 +170,6 @@ class User extends Component {
                                     className='profile-image' />
                         }
                         <div className='profile-description'>
-                            <h1>{user_name || 'username'}</h1>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
                             <h2>{artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>

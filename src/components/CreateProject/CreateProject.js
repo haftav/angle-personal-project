@@ -106,7 +106,9 @@ class CreateProject extends Component {
 
 render() {
     console.log(this.state.image_data instanceof FormData)
-    let today = new Date().toISOString().split('T')[0];
+    let today = new Date();
+    today.setDate(today.getDate() + 1)
+    today = today.toISOString().split('T')[0];
     let deadline = this.state.project.bidding_deadline ? new Date(this.state.project.bidding_deadline) : null;
     if (deadline) {
         deadline.setDate(deadline.getDate() + this.state.completion_time);

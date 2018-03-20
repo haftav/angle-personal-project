@@ -69,7 +69,7 @@ class ProjectsPage extends Component {
                                     <Image publicId={image}
                                         cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
                                         className='projects-project-image'>
-                                        <Transformation width="280" height="5" crop="fill" />
+                                        <Transformation width="280" height="150" crop="fill" />
                                     </Image>
                                     :
                                     <img className='projects-project-image' src='http://www.publicdomainpictures.net/pictures/130000/velka/aqua-blue-gradient-background.jpg' alt={name} />

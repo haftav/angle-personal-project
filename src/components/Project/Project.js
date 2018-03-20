@@ -122,7 +122,7 @@ class Project extends Component {
         var days = Math.floor(t / (1000 * 60 * 60 * 24));
         return {
             'total': t,
-            'days': days,
+            'days': days + 1,
             'hours': hours,
             'minutes': minutes,
             'seconds': seconds
@@ -137,11 +137,13 @@ class Project extends Component {
             bidding_deadline, project_deadline, finished_url } = this.state.project;
         let days, hours, minutes;
         if (bidding_deadline) {
+            console.log(bidding_deadline);
             bidding_deadline = bidding_deadline.split('T')[0]
             let countdown = this.getTimeRemaining(bidding_deadline);
             days = countdown.days;
             hours = countdown.hours;
             minutes = countdown.minutes;
+            console.log('days: ', days, 'hours: ', hours, 'minutes: ', minutes)
         }
         if (project_deadline) {
             project_deadline = project_deadline.split('T')[0]
