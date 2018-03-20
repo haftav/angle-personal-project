@@ -34,8 +34,8 @@
 }
 
 .project-thumbnail-projectimage {
-    padding: 15px;
-    height: 100%;
+    padding: 2px 15px 15px 15px;
+    height: 125px;
     width: 200px;
     grid-column: 2 / span 1;
     grid-row: 2 / span 1;
@@ -64,8 +64,10 @@
 }
 
 .project-thumbnail-description {
-    padding: 3px 10px;
-    margin: 15px;
+    padding: 2px 15px 15px 15px;
+    height: 108.5px;
+    margin-right: 12px;
+    margin-top: 2px;
     grid-column: 3 / span 2;
     grid-row: 2 / span 2;
     border: 1px solid #b3b3b37a;

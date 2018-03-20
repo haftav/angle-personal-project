@@ -27,6 +27,7 @@ class Dashboard extends Component {
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.toggleFeedLoading = this.toggleFeedLoading.bind(this);
+        this.getRandomArrayElements = this.getRandomArrayElements.bind(this);
     }
 
     componentDidMount() {
@@ -84,6 +85,18 @@ class Dashboard extends Component {
         })
     }
 
+    getRandomArrayElements(arr, count) {
+        var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+        while (i-- > min) {
+            index = Math.floor((i + 1) * Math.random());
+            temp = shuffled[index];
+            shuffled[index] = shuffled[i];
+            shuffled[i] = temp;
+        }
+        return shuffled.slice(min);
+    }
+
+
     render() {
         const projects = this.state.projects.map((el, idx) => {
             const { name, type, description,
@@ -138,7 +151,7 @@ class Dashboard extends Component {
             )
         })
 
-        const connections = this.state.connections.map((el, idx) => {
+        let connections = this.state.connections.map((el, idx) => {
             let imageAdded = false;
             let { first_name, last_name, image, user_id } = el
             if (/https:\/\/res.cloudinary.com\//.test(image)) {
@@ -155,11 +168,15 @@ class Dashboard extends Component {
                                 <Transformation width="50" height="50" crop="fill" />
                             </Image>
                             :
-                            <img src={image} alt="" />
+                            <img src={image} alt="" title={first_name + " " + last_name} />
                     }
                 </Link>
             )
         })
+
+        if (connections.length > 15) {
+            connections = this.getRandomArrayElements(connections, 12);
+        }
 
         let image = this.props.user.image;
         let imageAdded = false;
@@ -241,7 +258,9 @@ class Dashboard extends Component {
                                     <h3>NETWORK</h3>
                                     <hr />
                                     <div className='dashboard-network-connections'>
-                                        {connections}
+                                        <div className='dashboard-network-connections-container'>
+                                            {connections}
+                                        </div>
                                     </div>
                                     <h3>RECENT HEADLINES</h3>
                                     <hr />

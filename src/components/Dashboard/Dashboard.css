@@ -206,12 +206,21 @@ input[type="radio"]:checked + label span.radio::after {
 }
 
 .dashboard-network-connections {
-    display: flex;
     height: 45%;
     width: 215px;
+    display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    align-content: flex-start;
     margin: auto;
+}
+
+.dashboard-network-connections-container {
+    width: 190px;
+    margin: 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: flex-start;
 }
 
 .dashboard-connection-link {

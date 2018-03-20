@@ -9,6 +9,7 @@ const express = require('express')
 const projects_controller = require('./controllers/projects_controller');
 const connections_controller = require('./controllers/connections_controller');
 const bids_controller = require('./controllers/bids_controller');
+const reviews_controller = require('./controllers/reviews_controller');
 
 const {
     SERVER_PORT,
@@ -160,5 +161,9 @@ app.post('/api/connections/user/accepted', connections_controller.addFriendFromP
 
 app.post('/api/bids/add', bids_controller.addBid);
 app.delete('/api/bids/:id', bids_controller.removeBid);
+
+/* REVIEWS ENDPOINTS */
+
+app.get('/api/reviews/check/:id', reviews_controller.checkReviewStatus);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));
