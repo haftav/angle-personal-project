@@ -37,12 +37,12 @@ class Dashboard extends Component {
                 loading: false
             })
         })
-        // axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
-        //     let articles = res.data.articles.slice(0, 5);
-        //     this.setState({
-        //         articles: articles
-        //     })
-        // })
+        axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
+            let articles = res.data.articles.slice(0, 5);
+            this.setState({
+                articles: articles
+            })
+        })
 
 
 
@@ -139,10 +139,24 @@ class Dashboard extends Component {
         })
 
         const connections = this.state.connections.map((el, idx) => {
+            let imageAdded = false;
             let { first_name, last_name, image, user_id } = el
+            if (/https:\/\/res.cloudinary.com\//.test(image)) {
+                image = image.split('/')[7];
+                imageAdded = true;
+            }
             return (
-                <Link to={`/user/${user_id}`}>
-                    <h1>{first_name} {last_name}</h1>
+                <Link className='dashboard-connection-link' to={`/user/${user_id}`}>
+                    {
+                        imageAdded ?
+                            <Image publicId={image}
+                                cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                title={first_name + " " + last_name}>
+                                <Transformation width="50" height="50" crop="fill" />
+                            </Image>
+                            :
+                            <img src={image} alt="" />
+                    }
                 </Link>
             )
         })
@@ -213,18 +227,23 @@ class Dashboard extends Component {
                             </div>
                             <div className='dashboard'>
                                 <div className='dashboard-feed'>
-                                {
-                                    this.state.feedLoading ?
-                                    <div className='feed-loading-animation'></div>
-                                    :
-                                    <Infinite elementHeight={220}
-                                        containerHeight={710}>
-                                        {projects}
-                                    </Infinite>
-                                }
+                                    {
+                                        this.state.feedLoading ?
+                                            <div className='feed-loading-animation'></div>
+                                            :
+                                            <Infinite elementHeight={220}
+                                                containerHeight={710}>
+                                                {projects}
+                                            </Infinite>
+                                    }
                                 </div>
                                 <div className='dashboard-network'>
-                                    {connections}
+                                    <h3>NETWORK</h3>
+                                    <hr />
+                                    <div className='dashboard-network-connections'>
+                                        {connections}
+                                    </div>
+                                    <h3>RECENT HEADLINES</h3>
                                     <hr />
                                     {articles}
                                 </div>
