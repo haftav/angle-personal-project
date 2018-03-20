@@ -26,26 +26,67 @@
 
 .dashboard-top {
     display: grid;
-    grid-template-columns: 1fr 8fr 3fr;
+    grid-template-columns: .5fr .5fr 4fr .5fr .5fr;
     grid-template-rows: 60px 50px;
     padding: 25px 25px 0px 25px;
     height: 150px;
+    color: rgb(53, 53, 53);
 }
 
 .dashboard-top h1 {
-    margin-left: 0px;
-    font-family: 'Open Sans', sans-serif;
+    grid-column: 3 / 3;
+    margin-left: 15px;
+    font-family: 'Fira Sans', sans-serif;
     font-size: 28px;
     font-weight: 400;
-    letter-spacing: -1px;
+    letter-spacing: 0px;
 }
 
-.dashboard-top label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 17px;
-    color: #707070;
-    margin: 0px 5px;
+.filter-buttons label {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #414141;
+    letter-spacing: .5px;
+    position: relative;
+    margin-right: 50px;
 }
+
+.filter-buttons span::before,
+.filter-buttons span::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+
+.filter-buttons span.radio:hover {
+    cursor: pointer;
+  }
+
+.filter-buttons span.radio::before {
+    right: -44px;
+    width: 35px;
+    height: 20px;
+    background-color: #b3b3b3;
+    border-radius: 50px;
+  }
+
+.filter-buttons span.radio::after {
+    right: -26px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50px;
+    background-color: rgb(134, 134, 134);
+    transition: left .15s, background-color .25s;
+  }
+
+input[type="radio"]:checked + label span.radio::after {
+    right: -41px;
+    background-color: rgb(255, 255, 255);
+  }
 
 .dashboard-top img {
     grid-row-start: 1;
@@ -55,50 +96,67 @@
 }
 
 .create-button {
-    grid-column-start: 3;
+    grid-column-start: 4;
+    grid-column-end: 6;
     grid-row-start: 1;
+    grid-row-end: 2;
     padding: 0px 50px 0px 0px;
-
-
+    width: 300px;
+    height: 70px;
+    justify-self: center;
+    align-self: center;
+    margin-right: 5px;
 }
 
 .create-button button {
     background: #003C5E;
     height: 70px;
-    width: 327px;
+    width: 300px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 100;
     letter-spacing: .1em;
     font-size: 24px;
     cursor: pointer;
+    margin: auto;
 }
 
 .filter-buttons {
     grid-row-start: 2;
-    grid-column-start: 2;
+    grid-column-start: 3;
     margin-left: 0px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
-.filter-buttons > h2 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
+.filter-buttons p {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    margin-right: 10px;
+
+}
+
+
+.filter-buttons input {
     margin: 0px 10px;
 }
 
-.filter-buttons input {
-    margin: 0px 5px;
+.filter-buttons input[type='radio'],
+.filter-buttons input[type='checkbox'] {
+    display: none;
 }
 
 .dashboard {
     display: grid;
-    grid-template-columns: 1fr 1fr 325px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    margin: 0px;
+    margin: auto;
     height: calc(100vh - 255px);
     overflow: hidden;
+    padding: 0px 125px;
+    border-bottom: 1px solid gray;
 }
 
 .dashboard > input {
@@ -109,7 +167,7 @@
 
 .dashboard-feed {
     grid-row-start: 2;
-    grid-column: 1 / span 2;
+    grid-column: 2 / span 2;
     height: calc(100vh - 255px);
     overflow: scroll;
 }
@@ -117,7 +175,7 @@
 .dashboard-network {
     border: 1px solid green;
     grid-row: 1 / 3;
-    grid-column-start: 3;
+    grid-column-start: 4;
     margin: 0px 25px 0px 25px;
 }
 
@@ -126,8 +184,3 @@
     color: black;
 }
 
-.filter-buttons input[type=radio] {
-    height: 25px;
-    width: 25px;
-    border-radius: 0px;
-}

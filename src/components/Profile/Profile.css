@@ -2,7 +2,27 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr;
-    border: 1px solid rgb(255, 0, 0);
+}
+
+.profile-submenu {
+    width: 100%;
+    height: 65px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(63, 101, 133, 0.548);
+}
+
+.profile-submenu a {
+    display: flex;
+    width: 125px;
+    height: 100%;
+    align-items: center;
+    padding: 0px 10px;
+    text-decoration: none;
+    color: white;
+    justify-content: center;
+
 }
 
 .profile-image {

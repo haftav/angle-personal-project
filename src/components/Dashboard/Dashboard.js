@@ -165,29 +165,29 @@ class Dashboard extends Component {
                                 }
                                 <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>
                                 <div className='filter-buttons'>
-                                    <h2>Project Status</h2>
+                                    <p>Project Status</p>
                                     <input type='radio'
                                         name='status'
                                         id='statusChoice1'
                                         value='all'
                                         checked={this.state.statusOption === 'all'}
                                         onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice1'>All</label>
+                                    <label htmlFor='statusChoice1'><span className='radio'>All</span></label>
                                     <input type='radio'
                                         name='status'
                                         id='statusChoice2'
                                         value='pending'
                                         checked={this.state.statusOption === 'pending'}
                                         onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice2'>Bidding Open</label>
+                                    <label htmlFor='statusChoice2'><span className='radio'>Bidding Open</span></label>
                                     <input type='radio'
                                         name='status'
                                         id='statusChoice3'
                                         value='completed'
                                         checked={this.state.statusOption === 'completed'}
                                         onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice3'>Completed</label>
-                                    <h2>Type</h2>
+                                    <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
+                                    <p>Type</p>
                                     <select id='typeChoice' onChange={(e) => this.handleTypeChange(e.target.value)}>
                                         <option value='all'>All</option>
                                         <option value='Filmmaker'>Film</option>
@@ -202,7 +202,7 @@ class Dashboard extends Component {
                             <div className='dashboard'>
                                 <div className='dashboard-feed'>
                                     <Infinite elementHeight={220}
-                                        containerHeight={700}>
+                                        containerHeight={710}>
                                         {projects}
                                     </Infinite>
                                 </div>
