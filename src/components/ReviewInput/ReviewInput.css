@@ -1,0 +1,19 @@
+.review-input {
+    width: 1000px;
+    height: 200px;
+    background: lightblue;
+    margin: auto;
+}
+
+.review-input textarea {
+    display: block;
+    margin: auto;
+    width: 800px;
+    height: 160px;
+    padding: 3px;
+}
+
+.review-input button {
+    display: block;
+    margin: auto;
+}
