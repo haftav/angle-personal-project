@@ -28,5 +28,23 @@ module.exports = {
         db.add_review([description, post_date, reviewer_id, user_id]).then(reviews => {
             res.status(200).send(reviews);
         })
+    },
+    editReview: (req, res) => {
+        const db = req.app.get('db');
+        const { description, post_date, id, user_id } = req.body;
+        console.log(req.body);
+        console.log(description, post_date, id, user_id);
+        db.edit_review([description, post_date, id, user_id]).then(reviews => {
+            console.log(reviews);
+            res.status(200).send(reviews);
+        })
+    },
+    deleteReview: (req, res) => {
+        const db = req.app.get('db');
+        console.log(req.params);
+        const { id, user_id } = req.params;
+        db.delete_review([id, user_id]).then(reviews => {
+            res.status(200).send(reviews);
+        })
     }
 }

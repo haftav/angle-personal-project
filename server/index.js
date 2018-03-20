@@ -167,5 +167,7 @@ app.delete('/api/bids/:id', bids_controller.removeBid);
 app.get('/api/reviews/check/:id', reviews_controller.checkReviewStatus);
 app.get('/api/reviews/:id', reviews_controller.getReviews);
 app.post('/api/reviews/add', reviews_controller.addReview);
+app.put('/api/reviews/edit', reviews_controller.editReview);
+app.delete('/api/reviews/delete/:id/:user_id', reviews_controller.deleteReview);
 
 app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`));

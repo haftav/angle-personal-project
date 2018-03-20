@@ -19,6 +19,7 @@ class Reviews extends Component {
         this.submitReview = this.submitReview.bind(this);
         this.editReview = this.editReview.bind(this);
         this.toggleEdit = this.toggleEdit.bind(this);
+        this.deleteReview = this.deleteReview.bind(this);
     }
 
     componentDidMount() {
@@ -79,7 +80,27 @@ class Reviews extends Component {
     }
 
     editReview(info) {
+        let date = new Date();
+        date = date.toISOString().split('T')[0];
+        info.description = this.state.reviewText;
+        info.post_date = date;
+        info.user_id = this.props.match.params.id;
+        console.log(info);
+        axios.put('/api/reviews/edit', info).then(res => {
+            this.setState({
+                reviews: res.data,
+                reviewText: '',
+                editID: null
+            })
+        })
+    }
 
+    deleteReview(id) {
+        axios.delete(`/api/reviews/delete/${id}/${this.props.match.params.id}`).then(res => {
+            this.setState({
+                reviews: res.data
+            })
+        })
     }
 
 
@@ -95,7 +116,7 @@ class Reviews extends Component {
                             <h3>{date}</h3>
                             <textarea onChange={(e) => this.handleChange(e.target.value)} 
                                         value={this.state.reviewText}></textarea>
-                            <button>Submit</button>
+                            <button onClick={() => this.editReview({ id })}>Submit</button>
                             <button onClick={() => this.toggleEdit(id, description)}>Cancel</button>
                         </div>
                     )
@@ -106,7 +127,7 @@ class Reviews extends Component {
                         <h3>{date}</h3>
                         <p>{description}</p>
                         <button onClick={() => this.toggleEdit(id, description)}>Edit</button>
-                        <button>Delete</button>
+                        <button onClick={() => this.deleteReview(id)}>Delete</button>
                     </div>
                 )
             } else {
