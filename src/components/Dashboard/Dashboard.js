@@ -20,11 +20,13 @@ class Dashboard extends Component {
             connections: [],
             statusOption: 'all',
             typeOption: 'all',
-            loading: true
+            loading: true,
+            feedLoading: false
         }
 
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
+        this.toggleFeedLoading = this.toggleFeedLoading.bind(this);
     }
 
     componentDidMount() {
@@ -46,6 +48,12 @@ class Dashboard extends Component {
 
     }
 
+    toggleFeedLoading() {
+        this.setState({
+            feedLoading: true
+        })
+    }
+
     componentWillReceiveProps(newProps) {
         axios.get(`/api/connections/user/${newProps.user.id}`).then(res => {
             this.setState({
@@ -55,19 +63,23 @@ class Dashboard extends Component {
     }
 
     handleStatusChange(val) {
+        this.toggleFeedLoading();
         axios.get(`/api/projects?status=${val}&type=${this.state.typeOption}`).then(res => {
             this.setState({
                 projects: res.data,
-                statusOption: val
+                statusOption: val,
+                feedLoading: false
             })
         })
     }
 
     handleTypeChange(val) {
+        this.toggleFeedLoading();
         axios.get(`/api/projects?status=${this.state.statusOption}&type=${val}`).then(res => {
             this.setState({
                 projects: res.data,
-                typeOption: val
+                typeOption: val,
+                feedLoading: false
             })
         })
     }
@@ -201,10 +213,15 @@ class Dashboard extends Component {
                             </div>
                             <div className='dashboard'>
                                 <div className='dashboard-feed'>
+                                {
+                                    this.state.feedLoading ?
+                                    <div className='feed-loading-animation'></div>
+                                    :
                                     <Infinite elementHeight={220}
                                         containerHeight={710}>
                                         {projects}
                                     </Infinite>
+                                }
                                 </div>
                                 <div className='dashboard-network'>
                                     {connections}

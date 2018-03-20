@@ -30,7 +30,7 @@
 
 .project-thumbnail h2 {
     padding: 5px;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .project-thumbnail-projectimage {
@@ -46,6 +46,8 @@
     grid-row: 1 / 2;
 }
 
+
+
 .project-thumbnail-name hr {
     width: 95%;
     border: none;
@@ -57,6 +59,8 @@
 .project-bidding-deadline {
     grid-column: 4 / span 1;
     grid-row: 1 / span 2;
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 15px;
 }
 
 .project-thumbnail-description {
@@ -79,6 +83,12 @@
 .project-thumbnail-content h2 {
     font-size: 16px;
     font-weight: 400;
+}
+
+.project-thumbnail-name h2 {
+    font-family: 'Fira Sans', sans-serif;
+    letter-spacing: .4px;
+    font-size: 15px;
 }
 
 .project-thumbnail-description p {

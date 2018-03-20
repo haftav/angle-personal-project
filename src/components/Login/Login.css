@@ -4,9 +4,9 @@
 }
 
 .login-header {
-    height: 8vh;
+    height: 105px;
     width: 100%;
-    background: rgb(63, 63, 63);
+    background: #003C5E;
     display: flex;
     align-items: center;
 }
@@ -26,9 +26,10 @@
 }
 
 .login-main {
-    height: 92vh;
+    height: calc(100vh - 105px);
     width: 100%;
-    background: rgb(6, 20, 34);
+    /* background: rgb(6, 20, 34); */
+    background-image: url('./piano.jpg');
     background-size: cover;
     overflow: hidden;
     position: relative;
@@ -36,10 +37,12 @@
 }
 
 .login-main > h1 {
-    font-size: 50px;
-    width: 70%;
-    font-weight: 400;
-    margin: 50px auto 30px auto;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    letter-spacing: .4px;
+    width: 60%;
+    margin: 80px auto 30px auto;
 }
 
 .login-main > p {
@@ -49,29 +52,37 @@
 }
 
 .login-button {
+    font-family: 'Fira Sans', sans-serif;
     border-radius: none;
     border: none;
     margin-top: 15px;
-    width: 360px;
-    height: 65px;
+    width: 440px;
+    height: 85px;
     font-size: 27px;
     padding-top: 2px;
     color: white;
-    font-weight: 400;
+    font-weight: 200;
+    letter-spacing: .5px;
     background-image: linear-gradient(to bottom, rgb(67, 108, 161) 0%, rgb(37, 56, 94) 100%);
     cursor: pointer;
 }
 
 .login-main-info {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 35px;
     width: 100%;
     height: 200px;
-    background: rgba(0, 0, 0, 0.61);
+    background: rgba(196, 196, 196, 0.616);
     margin: auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
     position: absolute;
     bottom: 0;
+}
+
+.login-main-info h1 {
+    font-weight: 300;
 }
 
 .login-main-info > div {
@@ -85,18 +96,6 @@
     justify-content: center;
 }
 
-.login-main-info > div h3 {
-    color: orange;
-    padding: 10px 0px 5px 10px;
-    font-size: 25px;
-}
-
-.login-main-info > div p {
-    padding: 10px 0px 5px 10px;
-    color: rgb(235, 231, 231);
-    font-weight: 500;
-    line-height: 1.6em;
-}
 
 
 /*middle*/

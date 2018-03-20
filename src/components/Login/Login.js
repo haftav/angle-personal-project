@@ -1,31 +1,19 @@
 import React, { Component } from 'react';
 import './Login.css';
+import logo from './whitelogo.png'
 
 export default class Login extends Component {
     render() {
         return (
             <div className='login'>
                 <div className='login-header'>
-                    <div className='logo'>ANGLE</div>
-                    <div className='angle-motto'>THERE'S MORE THAN ONE SIDE TO EVERY STORY</div>
+                    <img src={logo} alt="logo" />
                 </div>
                 <section className='login-main'>
-                    <h1>Connect with other film and music entrepreneurs to reach your potential</h1>
-                    <p>We believe there should be more than one side to every story. Help others complete their creative projects and help yourself in the process. It's a win-win situation.</p>
-                    <a href={process.env.REACT_APP_LOGIN}><button className="login-button">Join the Angle Network</button></a>
+                    <h1>Connect with other film and music entrepreneurs to reach your potential.</h1>
+                    <a href={process.env.REACT_APP_LOGIN}><button className="login-button">JOIN THE ANGLE NETWORK</button></a>
                     <div className='login-main-info'>
-                        <div>
-                            <h3>CONNECT.</h3>
-                            <p>POST YOUR PROJECT ON ANGLE, AND RECEIVE A MESSAGE FROM A CREATIVE WILLING TO HELP.</p>
-                        </div>
-                        <div>
-                            <h3>COLLABORATE.</h3>
-                            <p>WITH THE HELP OF YOUR NEW PARTNER, COMPLETE YOUR PROJECT ON TIME AND FOR FREE.</p>
-                        </div>
-                        <div>
-                            <h3>SHARE.</h3>
-                            <p>SHOW OFF YOUR COMPLETED PROJECT TO YOUR CLIENT AND THE REST OF THE ANGLE COMMUNITY</p>
-                        </div>
+                        <h1>There's more than one side to every story.</h1>
                     </div>
                 </section>
                 <section className='login-middle'>
