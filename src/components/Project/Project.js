@@ -117,10 +117,7 @@ class Project extends Component {
     getTimeRemaining(endtime) {
         console.log(endtime);
         let end = new Date(endtime.replace(/-/g, '\/'));
-        // end.setHours(end.getHours() + 6)
-        console.log(end);
         let newDate = new Date()
-        console.log(newDate);
         var t = Date.parse(end) - Date.parse(newDate);
         console.log(t);
         var seconds = Math.floor((t / 1000) % 60);
@@ -144,7 +141,6 @@ class Project extends Component {
             bidding_deadline, project_deadline, finished_url } = this.state.project;
         let time, days, hours, minutes;
         if (bidding_deadline) {
-            console.log(bidding_deadline);
             bidding_deadline = bidding_deadline.split('T')[0]
             let countdown = this.getTimeRemaining(bidding_deadline);
             time = countdown.total;

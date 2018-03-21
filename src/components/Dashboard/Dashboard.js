@@ -267,9 +267,9 @@ class Dashboard extends Component {
                                     </div>
                                 </div>
                                 <div className='dashboard-user-stats'>
-                                    <p>Projects: {project_count}</p>
-                                    <p>Connections: {connection_count}</p>
-                                    <p>Reviews: {review_count}</p>
+                                    <Link to={`/profile/${this.props.user.id}`}><p>Projects: {project_count}</p></Link>
+                                    <Link to={`/profile/${this.props.user.id}/connections`}><p>Connections: {connection_count}</p></Link>
+                                    <Link to={`/profile/${this.props.user.id}/reviews`}><p>Reviews: {review_count}</p></Link>
                                 </div>
                             </div>
                             <div className='dashboard'>

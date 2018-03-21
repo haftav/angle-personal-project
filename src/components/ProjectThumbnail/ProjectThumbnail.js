@@ -40,6 +40,7 @@ export default class ProjectThumbnail extends Component {
         let { name, type, description,
             price, image, first_name,
             last_name, user_image, project_id, bidding_deadline } = this.props
+        price = price.substr(1)
         let userImageAdded = false;
         let days, hours, minutes, time;
         if (bidding_deadline) {
@@ -57,7 +58,10 @@ export default class ProjectThumbnail extends Component {
             userImageAdded = true;
         }
 
-        image = image.split('/')[7];
+        if (/https:\/\/res.cloudinary.com\//.test(image)) {
+            image = image.split('/')[7];
+        }
+
         return (
             this.props.status === 'pending' ?
                 <div className='project-thumbnail'>
@@ -77,24 +81,7 @@ export default class ProjectThumbnail extends Component {
                             <hr />
                         </div>
                         <div className='project-bidding-deadline'>
-                            {
-                                bidding_deadline ?
-                                    <div>
-                                        {
-                                            time <= 0 ? <p>Bidding Closed.</p>
-                                                :
-                                                days >= 1 ?
-                                                    <p>{days} {days === 1 ? 'day' : 'days'} remaining</p>
-                                                    :
-                                                    hours >= 1 ?
-                                                        <p>{hours} {hours === 1 ? 'hour' : 'hours'} remaining</p>
-                                                        :
-                                                        <p>{minutes} {minutes === 1 ? 'minute' : 'minutes'} remaining</p>
-                                        }
-                                    </div>
-                                    :
-                                    null
-                            }
+
                         </div>
                         {
                             image ?
@@ -111,12 +98,41 @@ export default class ProjectThumbnail extends Component {
                             <h1>{name}</h1>
                             <p>{description}</p>
                         </div>
-                        {/* <h2>{price}</h2> */}
+                        <div className='project-thumbnail-bottom'>
+                            <div>
+                                <i className="fa fa-calendar calendar-icon"></i>
+                                {
+                                    bidding_deadline ?
+                                        <div>
+                                            {
+                                                time <= 0 ? <p>Bidding Closed</p>
+                                                    :
+                                                    days >= 1 ?
+                                                        <p>{days} {days === 1 ? 'day' : 'days'}</p>
+                                                        :
+                                                        hours >= 1 ?
+                                                            <p>{hours} {hours === 1 ? 'hour' : 'hours'}</p>
+                                                            :
+                                                            <p>{minutes} {minutes === 1 ? 'minute' : 'minutes'}</p>
+                                            }
+                                        </div>
+                                        :
+                                        null
+                                }
+                            </div>
+                            <div>
+                                <i class="fa fa-users users-icon"></i>
+                            </div>
+                            <div>
+                                <i class="fa fa-usd dollar-icon"></i>
+                                <p>{price}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 :
                 <div className='project-thumbnail'>
-                    <div className='project-thumbnail-content'>
+                    <div className='project-thumbnail-content' style={{ height: "175px" }}>
                         {
                             userImageAdded ?
                                 <Image publicId={user_image}
@@ -132,7 +148,17 @@ export default class ProjectThumbnail extends Component {
                             <hr />
                         </div>
 
-                        <img className='project-thumbnail-projectimage' src={image ? image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ'} alt={name} />
+                        {
+                            image ?
+                                <Image publicId={image}
+                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
+                                    className='project-thumbnail-projectimage'>
+                                    <Transformation width="200" height="125" crop="fill" />
+                                </Image>
+                                :
+                                <img className='project-thumbnail-projectimage' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMAwiRlHwczue4fP90IgImSVnJOUQaj7LG51N31Ar2aI252sEpBQ' alt={name} />
+
+                        }
                         <div className='project-thumbnail-description'>
                             <h1>{name}</h1>
                         </div>

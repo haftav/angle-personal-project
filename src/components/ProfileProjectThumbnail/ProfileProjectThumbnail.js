@@ -11,7 +11,7 @@ export default function ProfileProjectThumbnail({ name, type, description, image
             <Link to={`/project/${id}`}>
                 <Image publicId={image}
                     cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME} >
-                    <Transformation width="50" height="50" crop="fill" />
+                    <Transformation width="200" height="165" crop="fill" />
                 </Image>
                 <h2>{position}</h2>
                 <h1>{name}</h1>

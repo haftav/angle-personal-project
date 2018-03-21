@@ -106,6 +106,10 @@ module.exports = {
             })
         })
     },
+    closeBidding: (req, res) => {
+        const db = req.app.get('db');
+        const id = req.params;
+    },
     chooseBid: (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;

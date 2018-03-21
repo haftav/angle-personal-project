@@ -63,7 +63,7 @@ class Collab extends Component {
     completeProject() {
         const project_id = this.props.match.params.id;
         axios.put(`/api/projects/completed/${project_id}`, {}).then(res => {
-            console.log(res.data);
+            this.props.history.push(`/project/${project_id}`)
         })
     }
 

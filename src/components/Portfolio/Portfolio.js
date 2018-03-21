@@ -124,7 +124,9 @@ export default class Portfolio extends Component {
                 {
                     this.state.active === 'angle' ?
                         <div className='portfolio-angle'>
-                            { this.props.user_projects }
+                            <div>
+                                {this.props.user_projects}
+                            </div>
                         </div>
                         :
                         this.state.active === 'videos' ?
@@ -147,7 +149,7 @@ export default class Portfolio extends Component {
                             <div className='portfolio-music'>
                                 {
                                     soundcloud_profile ?
-                                        <ReactPlayer url={this.props.user.soundcloud_profile}   
+                                        <ReactPlayer url={this.props.user.soundcloud_profile}
                                             config={{
                                                 soundcloud: {
                                                     options: { visual: false }

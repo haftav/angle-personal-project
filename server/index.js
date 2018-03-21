@@ -147,6 +147,7 @@ app.put('/api/projects/submit/:id', projects_controller.submitUrl)
 app.get('/api/projects/collab/:id', projects_controller.getCollab);
 app.get('/api/collabs', projects_controller.getCollabs);
 app.put('/api/projects/collab/:id', projects_controller.chooseBid);
+app.put('/api/projects/closebidding/:id')
 app.put('/api/projects/completed/:id', projects_controller.completeProject);
 app.delete('/api/projects/:id', projects_controller.deleteProject);
 
