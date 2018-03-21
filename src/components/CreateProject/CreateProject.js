@@ -105,7 +105,7 @@ class CreateProject extends Component {
     }
 
 render() {
-    console.log(this.state.image_data instanceof FormData)
+    console.log(this.state.project);
     let today = new Date();
     today.setDate(today.getDate() + 1)
     today = today.toISOString().split('T')[0];

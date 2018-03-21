@@ -19,14 +19,17 @@ export default class ProjectThumbnail extends Component {
     }
 
     getTimeRemaining(endtime) {
-        var t = Date.parse(endtime) - Date.parse(new Date());
+        let end = new Date(endtime.replace(/-/g, '\/'));
+        // end.setHours(end.getHours() + 6)
+        let newDate = new Date()
+        var t = Date.parse(end) - Date.parse(newDate);
         var seconds = Math.floor((t / 1000) % 60);
         var minutes = Math.floor((t / 1000 / 60) % 60);
         var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
         var days = Math.floor(t / (1000 * 60 * 60 * 24));
         return {
             'total': t,
-            'days': days + 1,
+            'days': days,
             'hours': hours,
             'minutes': minutes,
             'seconds': seconds
@@ -38,7 +41,7 @@ export default class ProjectThumbnail extends Component {
             price, image, first_name,
             last_name, user_image, project_id, bidding_deadline } = this.props
         let userImageAdded = false;
-        let days, hours, minutes;
+        let days, hours, minutes, time;
         if (bidding_deadline) {
             bidding_deadline = new Date(bidding_deadline)
             bidding_deadline = bidding_deadline.toISOString().split('T')[0];
@@ -46,6 +49,7 @@ export default class ProjectThumbnail extends Component {
             days = countdown.days;
             hours = countdown.hours;
             minutes = countdown.minutes;
+            time = countdown.total;
         }
 
         if (/https:\/\/res.cloudinary.com\//.test(user_image)) {
@@ -77,7 +81,8 @@ export default class ProjectThumbnail extends Component {
                                 bidding_deadline ?
                                     <div>
                                         {
-                                            bidding_deadline ? (
+                                            time <= 0 ? <p>Bidding Closed.</p>
+                                                :
                                                 days >= 1 ?
                                                     <p>{days} {days === 1 ? 'day' : 'days'} remaining</p>
                                                     :
@@ -85,9 +90,6 @@ export default class ProjectThumbnail extends Component {
                                                         <p>{hours} {hours === 1 ? 'hour' : 'hours'} remaining</p>
                                                         :
                                                         <p>{minutes} {minutes === 1 ? 'minute' : 'minutes'} remaining</p>
-                                            )
-                                                :
-                                                null
                                         }
                                     </div>
                                     :

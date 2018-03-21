@@ -115,7 +115,13 @@ class Project extends Component {
     }
 
     getTimeRemaining(endtime) {
-        var t = Date.parse(endtime) - Date.parse(new Date());
+        console.log(endtime);
+        let end = new Date(endtime.replace(/-/g, '\/'));
+        // end.setHours(end.getHours() + 6)
+        console.log(end);
+        let newDate = new Date()
+        console.log(newDate);
+        var t = Date.parse(end) - Date.parse(newDate);
         console.log(t);
         var seconds = Math.floor((t / 1000) % 60);
         var minutes = Math.floor((t / 1000 / 60) % 60);
@@ -136,15 +142,16 @@ class Project extends Component {
             image, status, user_id, user_name,
             first_name, last_name, artist_type,
             bidding_deadline, project_deadline, finished_url } = this.state.project;
-        let days, hours, minutes;
+        let time, days, hours, minutes;
         if (bidding_deadline) {
             console.log(bidding_deadline);
             bidding_deadline = bidding_deadline.split('T')[0]
             let countdown = this.getTimeRemaining(bidding_deadline);
+            time = countdown.total;
             days = countdown.days;
             hours = countdown.hours;
             minutes = countdown.minutes;
-            console.log('days: ', days, 'hours: ', hours, 'minutes: ', minutes)
+            console.log('days: ', days, 'hours: ', hours, 'minutes: ', minutes, 'time: ', time)
         }
         if (project_deadline) {
             project_deadline = project_deadline.split('T')[0]
@@ -194,32 +201,47 @@ class Project extends Component {
                                 height='300px' />
                             :
                             <div>
-                                <h3>Bidding Deadline: {bidding_deadline}</h3>
                                 {
-                                    bidding_deadline ? (
-                                        days >= 1 ?
-                                            <h3>Days remaining: {days}</h3>
-                                            :
-                                            hours >= 1 ?
-                                                <h3>Hours remaining: {hours}</h3>
-                                                :
-                                                <h3>Minutes remaining: {minutes}</h3>
-                                    )
+                                    time > 0 ?
+                                        <h3>Bidding Deadline: {bidding_deadline}</h3>
                                         :
                                         null
                                 }
-
-                                <h3>Project Deadline: {project_deadline}</h3>
+                                {
+                                    time > 0 ?
+                                        bidding_deadline ? (
+                                            days >= 1 ?
+                                                <h3>Days remaining: {days}</h3>
+                                                :
+                                                hours >= 1 ?
+                                                    <h3>Hours remaining: {hours}</h3>
+                                                    :
+                                                    <h3>Minutes remaining: {minutes}</h3>
+                                        )
+                                            :
+                                            null
+                                        :
+                                        null
+                                }
+                                {
+                                    time > 0 ?
+                                        <h3>Project Deadline: {project_deadline}</h3>
+                                        :
+                                        null
+                                }
                                 {this.props.user.id === user_id
                                     ?
                                     <div>
                                         <button onClick={this.modalClick}>Edit</button>
                                         <button onClick={this.deleteClick}>Delete</button>
                                     </div>
-                                    : bid_placed ?
-                                        <button onClick={this.removeBid}>Remove Bid</button>
+                                    : time > 0 ?
+                                        bid_placed ?
+                                            <button onClick={this.removeBid}>Remove Bid</button>
+                                            :
+                                            <button onClick={this.addBid}>Add Bid</button>
                                         :
-                                        <button onClick={this.addBid}>Add Bid</button>
+                                        <h3>Bidding Closed.</h3>
                                 }
                                 <div>
                                     <h1>BIDS</h1>
