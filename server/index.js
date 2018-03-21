@@ -172,15 +172,26 @@ app.post('/api/reviews/add', reviews_controller.addReview);
 app.put('/api/reviews/edit', reviews_controller.editReview);
 app.delete('/api/reviews/delete/:id/:user_id', reviews_controller.deleteReview);
 
+/* MESSAGES ENDPOINTS */
+
+app.get('/api/messages/:id', (req, res) => {
+    const db = app.get('db');
+    const id = req.params.id;
+    db.get_messages([id]).then(messages => {
+        res.status(200).send(messages);
+    })
+})
+
 const io = socket(app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)));
 
 io.on('connection', socket => {
     socket.emit('welcome', {userID: socket.id})
 
     socket.on('message sent', function(data) {
-        console.log(data);
-        data.user = this.id;
-        io.to(data.room).emit('message dispatched', data)
+        const db = app.get('db');
+        db.add_message([data.message, data.post_time, data.name, data.room, data.user_id]).then(() => {
+            io.to(data.room).emit('message dispatched', data)
+        })
     })
 
     socket.on('join room', data => {

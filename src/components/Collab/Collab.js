@@ -5,6 +5,7 @@ import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
 import ReactPlayer from 'react-player';
 import io from 'socket.io-client';
+import date from '../../helper/Date';
 import './Collab.css';
 
 class Collab extends Component {
@@ -38,6 +39,11 @@ class Collab extends Component {
             console.log(res.data);
             this.setState({
                 project: res.data
+            })
+        })
+        axios.get(`/api/messages/${this.props.match.params.id}`).then(res => {
+            this.setState({
+                messages: res.data
             })
         })
     }
@@ -79,11 +85,13 @@ class Collab extends Component {
     }
 
     sendMessage() {
-        console.log(this.refs.message.value);
+        let post_time = date();
         this.socket.emit('message sent', {
             message: this.refs.message.value,
             name: this.props.user.first_name,
-            room: this.props.match.params.id
+            room: this.props.match.params.id,
+            post_time: post_time,
+            user_id: this.props.user.id
         })
 
         this.refs.message.value = '';
@@ -100,12 +108,12 @@ class Collab extends Component {
             collab_image = collab_user.image;
 
         const messages = this.state.messages.map((el, idx) => {
-            const styles = el.user === this.state.userID ?
+            const styles = el.user_id === this.props.user.id ?
                 { textAlign: "right", backgroundColor: "white" }
                 :
                 { textAlign: "left", backgroundColor: "#F5F5F5" }
             return (
-                <p style={styles}>{el.name} {el.message}</p>
+                <p style={styles}>{el.name} {el.message} {el.post_time}</p>
             )
         })
         return (
