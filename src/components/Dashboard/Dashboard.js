@@ -279,7 +279,7 @@ class Dashboard extends Component {
                                         this.state.feedLoading ?
                                             <div className='feed-loading-animation'></div>
                                             :
-                                            <div>
+                                            <div className='dashboard-links'>
                                                 {projects}
                                             </div>
 

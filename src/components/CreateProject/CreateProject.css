@@ -1,0 +1,49 @@
+.create-project {
+    width: 850px;
+    margin: auto;
+    text-align: center;
+    background: white;
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.075);
+    overflow: auto;
+}
+
+.create-project h1 {
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    margin: 25px auto;
+    color: rgb(54, 54, 54);
+}
+
+.create-project h2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: rgb(54, 54, 54);
+    margin: 5px auto;
+}
+
+.create-project textarea {
+    width: 250px;
+    height: 100px;
+}
+
+.create-project button {
+    width: 100px;
+    height: 35px;
+    font-size: 18px;
+}
+
+.create-project .dropzone {
+    margin: auto;
+    padding: 25px 0px;
+    width: 270px;
+    border: 2px dashed #dadada;
+    border-radius: 5px;
+    background: rgb(179, 179, 179);
+    margin-bottom: 10px;
+}

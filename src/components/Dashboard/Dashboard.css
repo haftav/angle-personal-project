@@ -242,6 +242,7 @@ input[type="radio"]:checked + label span.radio::after {
     margin: auto;
     padding: 0px 25px;
     border-bottom: 0px solid gray;
+    width: 100%;
 }
 
 .dashboard > input {
@@ -254,6 +255,21 @@ input[type="radio"]:checked + label span.radio::after {
     grid-row-start: 1;
     grid-column: 2 / span 3;
     min-height: calc(100vh - 180px);
+}
+
+.dashboard-links {
+    width: 100%;
+}
+
+.dashboard-links a {
+    margin: 0px auto 15px auto;
+    display: grid;
+    grid-template-rows: 1fr;
+    background: white;
+    font-family: 'Open Sans', sans-serif;
+    width: 700px;
+    height: 265px;
+
 }
 
 
