@@ -108,7 +108,7 @@ class Dashboard extends Component {
             const { name, type, description,
                 price, image, id, first_name,
                 last_name, user_image, user_id,
-                bidding_deadline, status } = el;
+                bidding_deadline, status, bid_count } = el;
             if (status === 'completed') {
                 return (
                     <Link to={`/project/${id}`}>
@@ -140,6 +140,7 @@ class Dashboard extends Component {
                             user_image={user_image}
                             bidding_deadline={bidding_deadline}
                             project_id={id}
+                            bid_count={bid_count}
                             status='pending' />
                     </Link>
                 )

@@ -39,7 +39,7 @@ export default class ProjectThumbnail extends Component {
     render() {
         let { name, type, description,
             price, image, first_name,
-            last_name, user_image, project_id, bidding_deadline } = this.props
+            last_name, user_image, project_id, bidding_deadline, bid_count } = this.props
         price = price.substr(1)
         let userImageAdded = false;
         let days, hours, minutes, time;
@@ -122,6 +122,7 @@ export default class ProjectThumbnail extends Component {
                             </div>
                             <div>
                                 <i class="fa fa-users users-icon"></i>
+                                <p>{bid_count} {bid_count === 1 ? 'bid' : 'bids'}</p>
                             </div>
                             <div>
                                 <i class="fa fa-usd dollar-icon"></i>
