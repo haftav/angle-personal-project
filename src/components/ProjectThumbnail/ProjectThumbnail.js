@@ -79,12 +79,12 @@ export default class ProjectThumbnail extends Component {
                                         {
                                             bidding_deadline ? (
                                                 days >= 1 ?
-                                                    <h3>{days} {days === 1 ? 'day' : 'days'} remaining</h3>
+                                                    <p>{days} {days === 1 ? 'day' : 'days'} remaining</p>
                                                     :
                                                     hours >= 1 ?
-                                                        <h3>{hours} {hours === 1 ? 'hour' : 'hours'} remaining</h3>
+                                                        <p>{hours} {hours === 1 ? 'hour' : 'hours'} remaining</p>
                                                         :
-                                                        <h3>{minutes} {minutes === 1 ? 'minute' : 'minutes'} remaining</h3>
+                                                        <p>{minutes} {minutes === 1 ? 'minute' : 'minutes'} remaining</p>
                                             )
                                                 :
                                                 null
