@@ -133,7 +133,11 @@ export default class Portfolio extends Component {
                             <div >
                                 {
                                     vimeo_profile ?
-                                        <div className='portfolio-videos'>{vimeo_projects}</div>
+                                        <div className='portfolio-videos'>
+                                            <div>
+                                                {vimeo_projects}
+                                            </div>
+                                        </div>
                                         :
                                         this.props.type === 'profile' ?
                                             <div>

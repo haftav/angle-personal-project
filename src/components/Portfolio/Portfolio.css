@@ -1,6 +1,7 @@
 .portfolio {
     text-align: center;
     width: 80%;
+    min-height: 500px;
     margin: auto;
     background: rgb(248, 248, 248);
     border: 1px solid #d6d6d6;
@@ -57,21 +58,33 @@
     z-index: 1;
     display: flex;
     flex-direction: row;
-    justify-content: left;
+    justify-content: center;
+    align-items: flex-start;
     width: 1000px;
-    min-height: 500px;
+    min-height: 250px;
     margin: auto;
     padding: 35px;
     background: white;
 }
 
 .portfolio-angle > div {
-    width: 840px;
+    width: 880px;
+    height: 100%;
     margin: auto;
     display: flex;
     justify-content: left;
+    align-items: flex-start;
     flex-wrap: wrap;
-    background: blue;
+}
+
+.portfolio-videos > div {
+    width: 880px;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .portfolio-videos div {

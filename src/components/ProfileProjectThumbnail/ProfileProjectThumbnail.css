@@ -1,10 +1,25 @@
 .profile-project-thumbnail {
-    width: 200px; 
+    width: 210px; 
     height: 300px;
     background: white;
+    border: 1px solid #d6d6d6;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
 }
 
 .profile-project-thumbnail img  {
     width: 200px;
     height: 165px;
+    margin: 5px auto;
+    border-radius: 3px;
+}
+
+.profile-project-thumbnail h1 {
+    font-weight: 200;
+    font-size: 22px;
+}
+
+.profile-project-thumbnail p {
+    font-weight: 200;
+    font-size: 18px;
+    padding-top: 15px;
 }

@@ -13,8 +13,8 @@ export default function ProfileProjectThumbnail({ name, type, description, image
                     cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME} >
                     <Transformation width="200" height="165" crop="fill" />
                 </Image>
-                <h2>{position}</h2>
                 <h1>{name}</h1>
+                <p>{position}</p>
             </Link>
         </div>
     )
