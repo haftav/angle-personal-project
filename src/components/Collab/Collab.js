@@ -119,9 +119,11 @@ class Collab extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id} />
-                <h1>{name}</h1>
-                <h2>Collab between {first_name} {last_name} and {collab_first} {collab_last}</h2>
-                <p>{description}</p>
+                <div className='collab-info'>
+                    <h1>{name}</h1>
+                    <h2>Collab between {first_name} {last_name} and {collab_first} {collab_last}</h2>
+                    <p>{description}</p>
+                </div>
                 {
                     this.props.user.id === collab_id ?
                         <div>

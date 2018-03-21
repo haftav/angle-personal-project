@@ -104,6 +104,7 @@ class Dashboard extends Component {
 
 
     render() {
+        console.log(this.state.projects);
         const projects = this.state.projects.map((el, idx) => {
             const { name, type, description,
                 price, image, id, first_name,
@@ -111,7 +112,8 @@ class Dashboard extends Component {
                 bidding_deadline, status, bid_count } = el;
             if (status === 'completed') {
                 return (
-                    <Link to={`/project/${id}`}>
+                    <Link to={`/project/${id}`}
+                        style={{height: "175px"}}>
                         <ProjectThumbnail name={name}
                             type={type}
                             description={description}

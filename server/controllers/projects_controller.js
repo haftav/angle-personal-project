@@ -20,6 +20,9 @@ module.exports = {
                 })
                 Promise.all(results).then(function(values) {
                     projects = [...projects, ...values]
+                    projects.sort((a, b) => {
+                        return b.id - a.id
+                    })
                     if (!req.query.status && !req.query.type) {
                         res.status(200).send(projects);
                     } else {            

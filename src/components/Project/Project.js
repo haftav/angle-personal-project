@@ -7,6 +7,7 @@ import ModalContainer from '../ModalContainer/ModalContainer';
 import Bid from '../Bid/Bid';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import './Project.css';
 
 class Project extends Component {
     constructor(props) {
@@ -175,14 +176,14 @@ class Project extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id} />
-                <div>
+                <div className='project-creator'>
                     <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
                         <h2>{first_name}</h2>
                         <h2>{last_name}</h2>
                     </Link>
                     <h2>{artist_type}</h2>
                 </div>
-                <div>
+                <div className='project'> 
                     <h1>{name}</h1>
                     <h2>{type}</h2>
                     <p>{description}</p>

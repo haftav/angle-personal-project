@@ -86,27 +86,19 @@ class CreateProject extends Component {
 
     createProject() {
         let { name, type, price, description, image, bidding_deadline, project_deadline } = this.state.project;
-        if (name && type && price && description && bidding_deadline && project_deadline) {
+        if (name && type && price && description && bidding_deadline && project_deadline && this.state.image_data instanceof FormData) {
             const user_id = this.props.user.id;
-            if (this.state.image_data instanceof FormData) {
-                axios.post(process.env.REACT_APP_CLOUDINARY_URL, this.state.image_data, {
-                    headers: { "X-Requested-With": "XMLHttpRequest" },
-                }).then(res => {
-                    const data = res.data;
-                    image = data.secure_url // You should store this URL for future references in your app
-                    axios.post('/api/projects', { user_id, name, type, price, description, image, bidding_deadline, project_deadline }).then(res => {
-                        this.props.history.push('/dashboard')
-                    })
-                })
-
-            } else {
-                image = ''
+            axios.post(process.env.REACT_APP_CLOUDINARY_URL, this.state.image_data, {
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+            }).then(res => {
+                const data = res.data;
+                image = data.secure_url // You should store this URL for future references in your app
                 axios.post('/api/projects', { user_id, name, type, price, description, image, bidding_deadline, project_deadline }).then(res => {
                     this.props.history.push('/dashboard')
                 })
-            }
+            })
         } else {
-            alert('Please fill out all fields.');
+            alert('Please make sure all fields are filled and image is uploaded.');
         }
     }
 
