@@ -182,6 +182,25 @@ app.get('/api/messages/:id', (req, res) => {
     })
 })
 
+/* GET USER STATS */
+
+app.get('/api/stats/:id', (req, res) => {
+    const db = app.get('db');
+    const id = req.params.id;
+    let output = {}
+    db.get_project_stats([id]).then(projects => {
+        output.project_count = projects[0].project_count;
+        db.get_review_stats([id]).then(reviews => {
+            output.review_count = reviews[0].review_count;
+            db.get_connection_stats([id]).then(connections => {
+                output.connection_count = connections[0].connection_count;
+                console.log(output);
+                res.status(200).send(output)
+            }) 
+        })
+    })
+})
+
 const io = socket(app.listen(SERVER_PORT, () => console.log(`Listening on port ${SERVER_PORT}`)));
 
 io.on('connection', socket => {

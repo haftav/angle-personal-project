@@ -19,7 +19,6 @@ module.exports = {
                     return item;
                 })
                 Promise.all(results).then(function(values) {
-                    console.log(values);
                     projects = [...projects, ...values]
                     if (!req.query.status && !req.query.type) {
                         res.status(200).send(projects);
@@ -61,10 +60,8 @@ module.exports = {
         })
     },
     getCollabs: (req, res) => {
-        console.log('here');
         const db = req.app.get('db');
         const userid = req.user.id;
-        console.log(userid);
         db.get_collabs_user([userid]).then(usercollabs => {
             db.get_collabs_other([userid]).then(othercollabs => {
                 db.get_collabs_pending([userid]).then(pendingcollabs => {
@@ -90,7 +87,6 @@ module.exports = {
     updateProject: (req, res) => {
         const { id, name, description, image } = req.body;
         const db = req.app.get('db');
-        console.log('you hit me')
         db.update_project([id, name, description]).then(project1 => {
             if (image) {
                 db.update_project_image([id, image]).then(project2 => {

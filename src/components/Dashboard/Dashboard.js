@@ -21,7 +21,8 @@ class Dashboard extends Component {
             statusOption: 'all',
             typeOption: 'all',
             loading: true,
-            feedLoading: false
+            feedLoading: false,
+            userInfo: {}
         }
 
         this.handleStatusChange = this.handleStatusChange.bind(this);
@@ -59,6 +60,11 @@ class Dashboard extends Component {
         axios.get(`/api/connections/user/${newProps.user.id}`).then(res => {
             this.setState({
                 connections: res.data
+            })
+        })
+        axios.get(`/api/stats/${newProps.user.id}`).then(res => {
+            this.setState({
+                userInfo: Object.assign({}, this.state.userInfo, res.data)
             })
         })
     }
@@ -178,7 +184,8 @@ class Dashboard extends Component {
             connections = this.getRandomArrayElements(connections, 9);
         }
 
-        let image = this.props.user.image;
+        let { first_name, last_name, image, artist_type } = this.props.user;
+        let { review_count, project_count, connection_count } = this.state.userInfo;
         let imageAdded = false;
 
         if (/https:\/\/res.cloudinary.com\//.test(image)) {
@@ -197,50 +204,73 @@ class Dashboard extends Component {
                         <div className='dashboard-all'>
 
                             <div className='dashboard-top'>
-                                {
-                                    imageAdded ?
-                                        <Image publicId={image}
-                                            cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
-                                            <Transformation width="100" height="100" crop="fill" />
-                                        </Image>
-                                        :
-                                        <img src={this.props.user.image || 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} alt="" />
-                                }
-                                <h1>WELCOME BACK, {this.props.user.first_name || 'TAV'}!</h1>
-                                <div className='filter-buttons'>
-                                    <p>Project Status</p>
-                                    <input type='radio'
-                                        name='status'
-                                        id='statusChoice1'
-                                        value='all'
-                                        checked={this.state.statusOption === 'all'}
-                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice1'><span className='radio'>All</span></label>
-                                    <input type='radio'
-                                        name='status'
-                                        id='statusChoice2'
-                                        value='pending'
-                                        checked={this.state.statusOption === 'pending'}
-                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice2'><span className='radio'>Bidding Open</span></label>
-                                    <input type='radio'
-                                        name='status'
-                                        id='statusChoice3'
-                                        value='completed'
-                                        checked={this.state.statusOption === 'completed'}
-                                        onChange={(e) => this.handleStatusChange(e.target.value)} />
-                                    <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
-                                    <p>Type</p>
-                                    <select id='typeChoice' onChange={(e) => this.handleTypeChange(e.target.value)}>
-                                        <option value='all'>All</option>
-                                        <option value='Filmmaker'>Film</option>
-                                        <option value='Musician'>Music</option>
-                                    </select>
+                                <div className='dashboard-top-left'>
+
+                                </div>
+                                <div className='dashboard-top-middle'>
+                                    <h1>Welcome Back, {this.props.user.first_name || 'Tav'}!</h1>
+                                    <div className='filter-buttons'>
+                                        <p>Project Status</p>
+                                        <input type='radio'
+                                            name='status'
+                                            id='statusChoice1'
+                                            value='all'
+                                            checked={this.state.statusOption === 'all'}
+                                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                        <label htmlFor='statusChoice1'><span className='radio'>All</span></label>
+                                        <input type='radio'
+                                            name='status'
+                                            id='statusChoice2'
+                                            value='pending'
+                                            checked={this.state.statusOption === 'pending'}
+                                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                        <label htmlFor='statusChoice2'><span className='radio'>Bidding Open</span></label>
+                                        <input type='radio'
+                                            name='status'
+                                            id='statusChoice3'
+                                            value='completed'
+                                            checked={this.state.statusOption === 'completed'}
+                                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                                        <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
+                                        <p>Type</p>
+                                        <select id='typeChoice' onChange={(e) => this.handleTypeChange(e.target.value)}>
+                                            <option value='all'>All</option>
+                                            <option value='Filmmaker'>Film</option>
+                                            <option value='Musician'>Music</option>
+                                        </select>
+                                    </div>
+
                                 </div>
 
+                                {/* 
                                 <Link className='create-button' to='/create'>
                                     <button>+ START PROJECT</button>
-                                </Link>
+                                </Link> */}
+                                <div className='create-button'>
+
+                                </div>
+                            </div>
+                            <div className='dashboard-top-image'>
+                                <div>
+                                    {
+                                        imageAdded ?
+                                            <Image publicId={image}
+                                                cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}>
+                                                <Transformation width="80" height="80" crop="fill" />
+                                            </Image>
+                                            :
+                                            <img src={this.props.user.image || 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'} alt="" />
+                                    }
+                                    <div>
+                                        <h1>{first_name || "Tav"} {last_name || "Hafner"}</h1>
+                                        <p>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || "Filmmaker"}</p>
+                                    </div>
+                                </div>
+                                <div className='dashboard-user-stats'>
+                                    <p>Projects: {project_count}</p>
+                                    <p>Connections: {connection_count}</p>
+                                    <p>Reviews: {review_count}</p>
+                                </div>
                             </div>
                             <div className='dashboard'>
                                 <div className='dashboard-feed'>
