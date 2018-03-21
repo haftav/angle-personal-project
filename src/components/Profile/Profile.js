@@ -93,7 +93,7 @@ class Profile extends Component {
                                 <Image publicId={image}
                                     cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
                                     className='profile-image'>
-                                    <Transformation width="200" height="200" crop="fill" />
+                                    <Transformation width="175" height="175" crop="fill" />
                                 </Image>
                                 :
                                 <img src={image}

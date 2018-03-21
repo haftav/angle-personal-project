@@ -95,7 +95,7 @@ export default class Portfolio extends Component {
             return (
                 <ReactPlayer url={`https://vimeo.com/${el}`}
                     playing={false}
-                    width='350px'
+                    width='400px'
                     height='225px' />
             )
         })
@@ -128,10 +128,10 @@ export default class Portfolio extends Component {
                         </div>
                         :
                         this.state.active === 'videos' ?
-                            <div className='portfolio-videos'>
+                            <div >
                                 {
                                     vimeo_profile ?
-                                        <div>{vimeo_projects}</div>
+                                        <div className='portfolio-videos'>{vimeo_projects}</div>
                                         :
                                         this.props.type === 'profile' ?
                                             <div>

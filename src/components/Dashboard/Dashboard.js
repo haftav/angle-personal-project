@@ -7,7 +7,7 @@ import { getUser } from '../../ducks/users';
 import Header from '../Header/Header';
 import ProjectThumbnail from '../ProjectThumbnail/ProjectThumbnail';
 import { Image, Transformation, CloudinaryContext } from 'cloudinary-react';
-
+import InfiniteAnyHeight from 'react-infinite-any-height';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -165,7 +165,7 @@ class Dashboard extends Component {
                             <Image publicId={image}
                                 cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
                                 title={first_name + " " + last_name}>
-                                <Transformation width="50" height="50" crop="fill" />
+                                <Transformation width="40" height="40" crop="fill" />
                             </Image>
                             :
                             <img src={image} alt="" title={first_name + " " + last_name} />
@@ -174,8 +174,8 @@ class Dashboard extends Component {
             )
         })
 
-        if (connections.length > 15) {
-            connections = this.getRandomArrayElements(connections, 12);
+        if (connections.length > 9) {
+            connections = this.getRandomArrayElements(connections, 9);
         }
 
         let image = this.props.user.image;
@@ -248,10 +248,10 @@ class Dashboard extends Component {
                                         this.state.feedLoading ?
                                             <div className='feed-loading-animation'></div>
                                             :
-                                            <Infinite elementHeight={220}
-                                                containerHeight={710}>
+                                            <div>
                                                 {projects}
-                                            </Infinite>
+                                            </div>
+
                                     }
                                 </div>
                                 <div className='dashboard-network'>
