@@ -25,7 +25,7 @@ export default function Header({ userid }) {
                     <i class="fa fa-book"></i>
                     Projects
                 </Link>
-                <a href='#'>
+                <a >
                 <i class="fa fa-sign-out"></i>
                     Log Out
                     </a>

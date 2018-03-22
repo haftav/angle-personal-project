@@ -20,7 +20,9 @@ const {
     CLIENT_ID,
     CLIENT_SECRET,
     CALLBACK_URL,
-    CONNECTION_STRING
+    CONNECTION_STRING,
+    SUCCESS_URL,
+    FAILURE_URL
 } = process.env;
 
 massive(CONNECTION_STRING).then(db => {
@@ -78,9 +80,8 @@ passport.deserializeUser((id, done) => {
 
 app.get('/api/auth', passport.authenticate('auth0'));
 app.get('/api/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/info',
-    failureRedirect: 'http://localhost:3000/#/'
-
+    successRedirect: SUCCESS_URL,
+    failureRedirect: FAILURE_URL
 }))
 
 app.get('/api/user', (req, res) => {
@@ -134,7 +135,7 @@ app.put('/api/user/media', (req, res) => {
 
 // app.get('/auth/logout', function(req, res){
 //     req.logOut();
-//     res.redirect('http://localhost:3535/');
+//     res.redirect(login page here);
 // });
 
 /* PROJECT ENDPOINTS */
