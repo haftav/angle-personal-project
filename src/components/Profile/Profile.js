@@ -80,10 +80,10 @@ class Profile extends Component {
             <div>
                 <Header userid={this.props.user.id} />
                 <div className='profile-submenu'>
-                    <Link to={`/profile/${this.props.user.id || 1}`}>Profile Home</Link>
-                    <Link to={`/profile/${this.props.user.id || 1}/reviews`}>Reviews</Link>
-                    <Link to={`/profile/${this.props.user.id || 1}/connections`}>Connections</Link>
-                    <Link to={`/profile/${this.props.user.id}/requests`}>Requests</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}`}>PROFILE HOME</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}/reviews`}>REVIEWS</Link>
+                    <Link to={`/profile/${this.props.user.id || 1}/connections`}>CONNECTIONS</Link>
+                    <Link to={`/profile/${this.props.user.id}/requests`}>REQUESTS</Link>
                 </div>
                 <div className='profile'>
                     <div className='profile-user-content'>

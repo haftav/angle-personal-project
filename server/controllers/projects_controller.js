@@ -58,6 +58,7 @@ module.exports = {
             const { collab_id } = project[0];
             db.find_id_user([collab_id]).then(user => {
                 project[0].collab_user = user[0]
+                console.log(project[0])
                 res.status(200).send(project[0])
             })
         })
@@ -65,6 +66,7 @@ module.exports = {
     getCollabs: (req, res) => {
         const db = req.app.get('db');
         const userid = req.user.id;
+        // CHANGE THIS BACK WHEN DONE STYLING PROJECTS PAGE
         db.get_collabs_user([userid]).then(usercollabs => {
             db.get_collabs_other([userid]).then(othercollabs => {
                 db.get_collabs_pending([userid]).then(pendingcollabs => {

@@ -9,10 +9,10 @@ export default function ProfileProjectThumbnail({ name, type, description, image
     return (
         <div className='profile-project-thumbnail'>
             <Link to={`/project/${id}`}>
-                <Image publicId={image}
-                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME} >
-                    <Transformation width="200" height="150" crop="fill" />
-                </Image>
+                <div className='profile-project-thumbnail-image'
+                    style={{ backgroundImage: `url('${image}')` }}>
+
+                </div>
                 <h1>{name}</h1>
                 <p>{position}</p>
             </Link>

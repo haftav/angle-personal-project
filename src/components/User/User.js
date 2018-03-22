@@ -116,7 +116,7 @@ class User extends Component {
         })
 
         var { first_name, last_name, user_name, description, artist_type, image, id } = this.state.user;
-        
+
         const projects = this.state.projects.map((el, idx) => {
             let { name, type, description, image, id, collab_id } = el;
             return (
@@ -138,22 +138,27 @@ class User extends Component {
             <div>
                 <Header />
                 <div className='profile-submenu'>
-                    <Link to={`/user/${this.props.match.params.id}`}>Profile</Link>
-                    <Link to={`/user/${this.props.match.params.id}/reviews`}>Reviews</Link>
-                    <Link to={`/user/${this.props.match.params.id}/connections`}>Connections</Link>
+                    <Link to={`/user/${this.props.match.params.id}`}>PROFILE</Link>
+                    <Link to={`/user/${this.props.match.params.id}/reviews`}>REVIEWS</Link>
+                    <Link to={`/user/${this.props.match.params.id}/connections`}>CONNECTIONS</Link>
                 </div>
-                {this.state.request_status === 'requesting' ?
-                    <div>
-                        <p>
-                            {first_name} has requested to connect.
+                <div className='profile-request'>
+                    {
+                        this.state.request_status === 'requesting' ?
+                            <p>
+                                {first_name} has requested to connect.
                         </p>
-                        <button onClick={this.addFriend}>Connect</button>
-                    </div>
-                    :
-                    !this.state.connection_status ? <button onClick={this.addConnection}>ADD CONNECTION</button> :
-                        this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
-                            <p>Connected!</p>
-                }
+
+                            :
+                            !this.state.connection_status ?
+                                <p>
+                                    You have not yet connected with {first_name}.
+                        </p>
+                                :
+                                this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
+                                    <p>You are connected with {first_name}</p>
+                    }
+                </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
                         {
@@ -173,6 +178,12 @@ class User extends Component {
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
                             <h2>{artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>
+                            {
+                                this.state.connection_status === 'friends' ?
+                                    null
+                                    :
+                                    <button onClick={this.addConnection}>Connect</button>
+                            }
                         </div>
                         <div className='profile-stats'>
                             <div>
