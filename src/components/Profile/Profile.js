@@ -23,7 +23,8 @@ class Profile extends Component {
 
         this.state = {
             modalActive: false,
-            projects: []
+            projects: [],
+            userInfo: {}
         }
 
         this.modalClick = this.modalClick.bind(this);
@@ -35,6 +36,11 @@ class Profile extends Component {
         axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
             this.setState({
                 projects: res.data
+            })
+        })
+        axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
+            this.setState({
+                userInfo: Object.assign({}, this.state.userInfo, res.data)
             })
         })
 
@@ -55,6 +61,7 @@ class Profile extends Component {
     }
 
     render() {
+        console.log(this.state);
 
         var { first_name, last_name, user_name, description, artist_type, image, id } = this.props.user;
         let imageAdded = false;
@@ -71,15 +78,13 @@ class Profile extends Component {
             )
         })
 
-        if (/https:\/\/res.cloudinary.com\//.test(image)) {
-            image = image.split('/')[7];
-            imageAdded = true;
-        }
+        let {project_count, connection_count, review_count} = this.state.userInfo
 
         return (
             <div>
                 <Header userid={this.props.user.id} />
                 <div className='profile-submenu'>
+
                     <Link to={`/profile/${this.props.user.id || 1}`}>PROFILE HOME</Link>
                     <Link to={`/profile/${this.props.user.id || 1}/reviews`}>REVIEWS</Link>
                     <Link to={`/profile/${this.props.user.id || 1}/connections`}>CONNECTIONS</Link>
@@ -87,19 +92,9 @@ class Profile extends Component {
                 </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
-                        {
-                            imageAdded
-                                ?
-                                <Image publicId={image}
-                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
-                                    className='profile-image'>
-                                    <Transformation width="175" height="175" crop="fill" />
-                                </Image>
-                                :
-                                <img src={image}
-                                    alt={`user/${id}`}
-                                    className='profile-image' />
-                        }
+                        <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                        </div>
 
                         <div className='profile-description'>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
@@ -109,13 +104,13 @@ class Profile extends Component {
                         </div>
                         <div className='profile-stats'>
                             <div>
-                                Projects
+                                {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
                             </div>
                             <div>
-                                Reviews
+                                {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
                             </div>
                             <div>
-                                Connections
+                                {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
                             </div>
                         </div>
                     </div>

@@ -23,25 +23,33 @@
     align-items: center;
 }
 
+.profile-submenu hr {
+    width: 35px;
+    margin: 0px 5px;
+    border: .5px solid #d6d6d6;
+    outline: none;
+}
+
 .profile-submenu a {
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     font-weight: 300;
     display: flex;
-    width: 160px;
     height: 100%;
+    width: 175px;
     align-items: center;
     padding: 0px 10px;
     text-decoration: none;
-    text-shadow: 1px 1px 1px rgba(201, 201, 201, 0.26);
-    color: rgb(85, 85, 85);
+    text-shadow: 1px 1px 1px rgba(201, 201, 201, 0.178);
+    color: rgb(121, 121, 121);
     justify-content: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
-    transition: border-bottom .2s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 .profile-submenu a:hover {
     border-bottom: 1px solid rgb(211, 211, 211);
+    color: rgb(71, 71, 71);
 }
 
 .profile-image {
@@ -66,20 +74,30 @@
 
 .profile-user-content img {
     height: 175px;
+    width: 50px;
+}
+
+.profile-user-image {
+    grid-column: 1 / 2;
+    grid-row-start: 1;
+    background-size: cover;
+    background-position: center
 }
 
 .profile-description {
     grid-column: 2 / 4;
-    padding: 5px;
+    padding: 0px;
     position: relative;
 }
 
 .profile-description h2:first-of-type {
     font-size: 22px;
     font-weight: 600;
+    padding: 5px;
 }
 
 .profile-description h2:last-of-type {
+    padding: 5px;
     font-size: 20px;
     font-weight: 400;
 }
@@ -92,6 +110,7 @@
     font-weight: 400;
     border-top: 1px solid #b3b3b37a;
     border-radius: 2px;
+    padding: 5px;
 }
 
 .profile-description button {
@@ -103,10 +122,17 @@
 
 
 .profile-stats {
+    font-size: 18px;
+    font-weight: 200;
+    height: 100%;
+    border-left: 1px solid #b3b3b37a;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
+    align-items: left;
+    text-align: left;
+    padding-left: 30px;
+    color: rgb(41, 122, 177);
 }
 
 .profile-projects {

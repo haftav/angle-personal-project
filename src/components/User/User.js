@@ -23,7 +23,8 @@ class User extends Component {
             user: {},
             connection_status: '',
             request_status: '',
-            connections: []
+            connections: [],
+            userInfo: {}
         }
 
         this.getInfo = this.getInfo.bind(this);
@@ -72,6 +73,11 @@ class User extends Component {
                     request_status: ''
                 })
             }
+        })
+        axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
+            this.setState({
+                userInfo: Object.assign({}, this.state.userInfo, res.data)
+            })
         })
     }
 
@@ -129,10 +135,8 @@ class User extends Component {
             )
         })
 
-        if (/https:\/\/res.cloudinary.com\//.test(image)) {
-            image = image.split('/')[7];
-            imageAdded = true;
-        }
+
+        let { project_count, connection_count, review_count } = this.state.userInfo
 
         return (
             <div>
@@ -161,19 +165,9 @@ class User extends Component {
                 </div>
                 <div className='profile'>
                     <div className='profile-user-content'>
-                        {
-                            imageAdded
-                                ?
-                                <Image publicId={image}
-                                    cloudName={process.env.REACT_APP_CLOUDINARY_CLOUDNAME}
-                                    className='profile-image'>
-                                    <Transformation width="200" height="200" crop="fill" />
-                                </Image>
-                                :
-                                <img src={image}
-                                    alt={`user/${id}`}
-                                    className='profile-image' />
-                        }
+                        <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                        </div>
                         <div className='profile-description'>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
                             <h2>{artist_type || 'specialty'}</h2>
@@ -187,13 +181,13 @@ class User extends Component {
                         </div>
                         <div className='profile-stats'>
                             <div>
-                                Projects
+                                {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
                             </div>
                             <div>
-                                Reviews
+                                {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
                             </div>
                             <div>
-                                Connections
+                                {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
                             </div>
                         </div>
                     </div>

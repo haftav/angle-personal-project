@@ -101,7 +101,7 @@ export default class Portfolio extends Component {
         })
         return (
             <div className='portfolio'>
-                <h1>Portfolio</h1>
+                <h1>PORTFOLIO</h1>
                 {
                     artist_type === 'Both' ?
                         <div className='portfolio-media-tabs'>
