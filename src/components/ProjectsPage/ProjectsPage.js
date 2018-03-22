@@ -12,7 +12,8 @@ class ProjectsPage extends Component {
         super(props);
 
         this.state = {
-            projects: []
+            projects: [],
+            statusOption: 'pending',
         }
     }
 
@@ -23,6 +24,18 @@ class ProjectsPage extends Component {
                 projects: res.data
             })
         })
+    }
+
+    handleStatusChange(val) {
+        console.log(val);
+        // this.toggleFeedLoading();
+        // axios.get(`/api/projects?status=${val}`).then(res => {
+        //     this.setState({
+        //         projects: res.data,
+        //         statusOption: val,
+        //         feedLoading: false
+        //     })
+        // })
     }
 
     render() {
@@ -48,10 +61,10 @@ class ProjectsPage extends Component {
                             <p>You opened this project up for bidding.</p>
                         </div>
                         <div style={{ backgroundImage: `url('${image}')` }}>
-                                <div class="layer"> 
-                                    <p>Bidding Deadline: {bidding_deadline}</p>
-                                </div>
+                            <div class="layer">
+                                <p>Bidding Deadline: {bidding_deadline}</p>
                             </div>
+                        </div>
                     </Link>
                 )
             } else if (status === 'collab') {
@@ -133,6 +146,30 @@ class ProjectsPage extends Component {
                                 </div>
                             </div>
                         </Link> */}
+                    <div className='filter-buttons'>
+                        <p>Project Status</p>
+                        <input type='radio'
+                            name='status'
+                            id='statusChoice1'
+                            value='pending'
+                            checked={this.state.statusOption === 'pending'}
+                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                        <label htmlFor='statusChoice1'><span className='radio'>Bidding Open</span></label>
+                        <input type='radio'
+                            name='status'
+                            id='statusChoice2'
+                            value='collab'
+                            checked={this.state.statusOption === 'collab'}
+                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                        <label htmlFor='statusChoice2'><span className='radio'>Collaboration</span></label>
+                        <input type='radio'
+                            name='status'
+                            id='statusChoice3'
+                            value='completed'
+                            checked={this.state.statusOption === 'completed'}
+                            onChange={(e) => this.handleStatusChange(e.target.value)} />
+                        <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
+                    </div>
                     {projects}
                 </div>
             </div>

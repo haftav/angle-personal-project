@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { updateUser, getUser } from '../../ducks/users';
 import Dropzone from 'react-dropzone';
-import './ModalInfo.css'
+import '../ModalContainer/ModalStyle.css';
 
 class ModalInfo extends Component {
     constructor(props) {
@@ -75,24 +75,25 @@ class ModalInfo extends Component {
         const { toggleModal, active } = this.props;
         return (
             <div ref={node => this.node = node}
-                className={active ? 'modal modal-active' : 'modal'}>
+                className={active ? 'modal modal-info modal-active' : 'modal modal-info'}>
                 <div>
                     <h1>Edit Info</h1>
-                    <h3>First Name</h3>
+                    <h2>First Name</h2>
                     <input placeholder={this.state.user.first_name}
                         onChange={(e) => this.updateUser(e.target.value, 'first_name')} />
-                    <h3>Last Name</h3>
+                    <h2>Last Name</h2>
                     <input placeholder={this.state.user.last_name}
                         onChange={(e) => this.updateUser(e.target.value, 'last_name')} />
-                    <h3>Description</h3>
+                    <h2>Description</h2>
                     <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
-                    <h3>Artist Type</h3>
+                    <h2>Artist Type</h2>
                     <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
                         <option selected={this.props.user.artist_type === 'Both' ? 'selected' : ''} value='Both'>Both</option>
                         <option selected={this.props.user.artist_type === 'Filmmaker' ? 'selected' : ''} value='Filmmaker'>Filmmaker</option>
                         <option selected={this.props.user.artist_type === 'Musician' ? 'selected' : ''} value='Musician'>Musician</option>
                     </select>
                     <Dropzone
+                        className='dropzone'
                         onDrop={this.handleDrop}
                         accept="image/*" >
                         <p>Drop your files or click here to upload</p>

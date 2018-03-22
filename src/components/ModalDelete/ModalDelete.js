@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
-import './ModalDelete.css';
+import '../ModalContainer/ModalStyle.css';
 
 class ModalDelete extends Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class ModalDelete extends Component {
         const { name, type, description, price, image } = this.props.project
         return (
             <div ref={node => this.node = node}
-                className={active ? 'modal modal-active' : 'modal'}>
+                className={active ? 'modal modal-delete modal-active' : 'modal modal-delete'}>
                 <div>
                     <h1>Are you sure you want to delete this project?</h1>
                     <h2>This cannot be undone.</h2>

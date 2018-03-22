@@ -1,17 +1,18 @@
 .modal-container {
     width: 100%;
-    height: 100vh;
+    min-height: 125vh;
     text-align: center;
     background: rgb(112, 112, 112);
     display: flex;
     position: absolute;
     opacity: .4;
-    z-index: 1;
+    z-index: 5;
     top: 0;
     left: 0;
     visibility: hidden;
     transition: all .2s ease;
     opacity: 0;
+    margin-top: 55px;
   }
   
   .modal-container-active {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
-import './ModalProject.css'
+import '../ModalContainer/ModalStyle.css';
 import Dropzone from 'react-dropzone';
 
 class ModalProject extends Component {
@@ -87,11 +87,13 @@ class ModalProject extends Component {
                         value={this.state.project.name}
                         onChange={(e) => this.updateProject(e.target.value, 'name')} />
                     <h2>Description</h2>
-                    <input placeholder={description}
+                    <textarea placeholder={description}
                         value={this.state.project.description}
-                        onChange={(e) => this.updateProject(e.target.value, 'description')} />
+                        onChange={(e) => this.updateProject(e.target.value, 'description')} >
+                    </textarea>
                     <h2>Image</h2>
                     <Dropzone
+                        className='dropzone'
                         onDrop={this.handleDrop}
                         accept="image/*" >
                         <p>Drop your files or click here to upload</p>

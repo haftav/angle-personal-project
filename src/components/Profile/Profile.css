@@ -72,16 +72,15 @@
     border-radius: 3px;
 }
 
-.profile-user-content img {
-    height: 175px;
-    width: 50px;
-}
+
 
 .profile-user-image {
     grid-column: 1 / 2;
     grid-row-start: 1;
     background-size: cover;
-    background-position: center
+    background-position: center;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
 }
 
 .profile-description {
@@ -94,12 +93,14 @@
     font-size: 22px;
     font-weight: 600;
     padding: 5px;
+    padding-left: 10px;
 }
 
 .profile-description h2:last-of-type {
     padding: 5px;
     font-size: 20px;
     font-weight: 400;
+    padding-left: 10px;
 }
 
 .profile-description p {
@@ -111,6 +112,7 @@
     border-top: 1px solid #b3b3b37a;
     border-radius: 2px;
     padding: 5px;
+    padding-left: 10px;
 }
 
 .profile-description button {

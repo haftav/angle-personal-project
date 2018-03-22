@@ -114,6 +114,9 @@ class Profile extends Component {
                             </div>
                         </div>
                     </div>
+                    <ModalContainer toggleModal={this.modalClick}
+                        active={this.state.modalActive}
+                        info='edit' />
                 </div>
                 <Switch>
                     <Route exact path='/profile/:id' render={() =>
@@ -122,9 +125,6 @@ class Profile extends Component {
                     <Route path='/profile/:id/connections' component={Connections} />
                     <Route path='/profile/:id/requests' component={Requests} />
                 </Switch>
-                <ModalContainer toggleModal={this.modalClick}
-                    active={this.state.modalActive}
-                    info='edit' />
             </div>
         )
     }
