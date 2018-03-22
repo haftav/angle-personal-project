@@ -98,7 +98,7 @@ class Profile extends Component {
 
                         <div className='profile-description'>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
-                            <h2>{artist_type || 'specialty'}</h2>
+                            <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>
                             <button onClick={this.modalClick}>Edit Info</button>
                         </div>

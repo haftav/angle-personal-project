@@ -270,9 +270,9 @@ class Dashboard extends Component {
                                     </div>
                                 </div>
                                 <div className='dashboard-user-stats'>
-                                    <Link to={`/profile/${this.props.user.id}`}><p>Projects: {project_count}</p></Link>
-                                    <Link to={`/profile/${this.props.user.id}/connections`}><p>Connections: {connection_count}</p></Link>
-                                    <Link to={`/profile/${this.props.user.id}/reviews`}><p>Reviews: {review_count}</p></Link>
+                                    <Link to={`/profile/${this.props.user.id}`}><p>{project_count} {project_count === "1" ? 'Project' : 'Projects'}</p></Link>
+                                    <Link to={`/profile/${this.props.user.id}/connections`}><p>{connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}</p></Link>
+                                    <Link to={`/profile/${this.props.user.id}/reviews`}><p>{review_count} {review_count === "1" ? 'Review' : 'Reviews'}</p></Link>
                                 </div>
                             </div>
                             <div className='dashboard'>

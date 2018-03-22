@@ -170,7 +170,7 @@ class User extends Component {
                         </div>
                         <div className='profile-description'>
                             <h2>{first_name || 'first'} {last_name || 'last'}</h2>
-                            <h2>{artist_type || 'specialty'}</h2>
+                            <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
                             <p>{description || 'description description description description etc.'}</p>
                             {
                                 this.state.connection_status === 'friends' ?

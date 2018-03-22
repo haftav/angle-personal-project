@@ -91,15 +91,19 @@
     /* font-family: 'Open Sans', sans-serif; */
     padding: 5px 10px;
     margin: 5px 5px;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 200;
     width: 85px;
+}
+
+.project-button-remove {
+    width: 125px;
 }
 
 .project-bids {
     margin-top: 35px;
     width: 100%;
-    min-height: 100px;
+    min-height: 250px;
     border-top: 4px double rgba(101, 163, 199, 0.37);
 }
 

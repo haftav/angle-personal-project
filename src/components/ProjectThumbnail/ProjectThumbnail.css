@@ -49,6 +49,11 @@
     grid-row: 1 / 2;
 }
 
+.project-thumbnail-name span {
+    color: rgb(2, 90, 148);
+    font-size: 16px;
+}
+
 
 
 .project-thumbnail-name hr {
@@ -88,7 +93,10 @@
 }
 
 .project-thumbnail-description h1 {
-    font-size: 14px;
+    font-size: 18px;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 400;
+    margin-top: 3px;
     margin-bottom: 5px;
 }
 
@@ -106,7 +114,10 @@
 .project-thumbnail-description p {
     margin-right: 10px;
     font-family: 'Fira Sans', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.2em;
+    color: rgb(80, 80, 80);
 }
 
 .project-thumbnail-bottom {

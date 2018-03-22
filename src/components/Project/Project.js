@@ -264,7 +264,7 @@ class Project extends Component {
                                     </div>
                                     : time > 0 ?
                                         bid_placed ?
-                                            <button className='project-button' onClick={this.removeBid}>Remove Bid</button>
+                                            <button className='project-button project-button-remove' onClick={this.removeBid}>Remove Bid</button>
                                             :
                                             <button className='project-button' onClick={this.addBid}>Add Bid</button>
                                         :

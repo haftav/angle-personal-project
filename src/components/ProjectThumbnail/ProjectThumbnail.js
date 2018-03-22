@@ -77,7 +77,7 @@ export default class ProjectThumbnail extends Component {
                                 <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
                         }
                         <div className='project-thumbnail-name'>
-                            <h2><strong>{first_name} {last_name}</strong> is looking for a <strong>{type.toLowerCase()}</strong></h2>
+                            <h2><span>{first_name} {last_name}</span> is looking for a <strong>{type.toLowerCase()}</strong></h2>
                             <hr />
                         </div>
                         <div className='project-bidding-deadline'>
@@ -145,7 +145,7 @@ export default class ProjectThumbnail extends Component {
                                 <img className='project-thumbnail-userimage' src={user_image} alt={first_name} />
                         }
                         <div className='project-thumbnail-name'>
-                            <h2><strong>{first_name} {last_name}</strong> and <strong>{this.props.collab_first} {this.props.collab_last}</strong> completed a project.</h2>
+                            <h2><span>{first_name} {last_name}</span> and <span>{this.props.collab_first} {this.props.collab_last}</span> completed a project.</h2>
                             <hr />
                         </div>
 
