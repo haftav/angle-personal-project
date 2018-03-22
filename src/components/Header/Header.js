@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from './bigwhite.png'
 
 export default function Header({ userid }) {
+    console.log(process.env.REACT_APP_LOGOUT)
     return (
         <div className='header'>
             <div className='header-left'>
@@ -25,7 +26,7 @@ export default function Header({ userid }) {
                     <i class="fa fa-book"></i>
                     Projects
                 </Link>
-                <a >
+                <a href={process.env.REACT_APP_LOGOUT}>
                 <i class="fa fa-sign-out"></i>
                     Log Out
                     </a>
