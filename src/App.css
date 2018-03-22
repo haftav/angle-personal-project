@@ -17,6 +17,7 @@ button {
   background: #2274A5;
   color: white;
   cursor: pointer;
+  /* box-shadow: 1px 1px 5px 0px rgba(70, 70, 70, 0.466); */
 }
 
 input {

@@ -140,6 +140,9 @@ class Project extends Component {
             image, status, user_id, user_name,
             first_name, last_name, artist_type,
             bidding_deadline, project_deadline, finished_url } = this.state.project;
+        if (price) {
+            price = price.substr(1)
+        }
         let time, days, hours, minutes;
         if (bidding_deadline) {
             bidding_deadline = bidding_deadline.split('T')[0]
@@ -176,74 +179,107 @@ class Project extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id} />
-                <div className='project-creator'>
-                    <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
-                        <h2>{first_name}</h2>
-                        <h2>{last_name}</h2>
-                    </Link>
-                    <h2>{artist_type}</h2>
-                </div>
-                <div className='project'> 
-                    <h1>{name}</h1>
-                    <h2>{type}</h2>
-                    <p>{description}</p>
-                    <h2>{price}</h2>
-                    <img src={image} alt="project-image" />
-                    <h3>{status}</h3>
+                <div className='project'>
+                    <div className='project-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                    </div>
+                    <h1 className='project-name'>{name}</h1>
+                    <div className='project-creator'>
+                        <h1>
+                            <span>
+                                <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
+                                    {first_name} {last_name}
+                                </Link>
+                                &nbsp;is looking for a {type}.
+                        </span>
+                        </h1>
+                    </div>
+                    {status === 'completed' ?
+                        null
+                        :
+                        time > 0 ?
+                            bidding_deadline ? (
+                                days >= 1 ?
+                                    <div className='project-deadline'>
+                                        <h3><span><i className="fa fa-calendar project-calendar-icon"></i></span> {days} {days === 1 ? 'DAY' : 'DAYS'} REMAINING</h3>
+                                        <h3>Bidding Deadline: {bidding_deadline}</h3>
+                                    </div>
+                                    :
+                                    hours >= 1 ?
+                                        <div className='project-deadline'>
+                                            <i className="fa fa-calendar project-calendar-icon"></i>
+                                            <h3>{hours} {hours === 1 ? 'HOUR' : 'HOURS'} REMAINING</h3>
+                                            <h3>Bidding Deadline: {bidding_deadline}</h3>
+                                        </div>
+                                        :
+                                        <div className='project-deadline'>
+                                            <i className="fa fa-calendar project-calendar-icon"></i>
+                                            <h3>{minutes} {minutes === 1 ? 'MINUTE' : 'MINUTES'} REMAINING</h3>
+                                            <h3>Bidding Deadline: {bidding_deadline}</h3>
+                                        </div>
+                            )
+                                :
+                                null
+                            :
+                            <div className='project-deadline'>
+                                <h3>BIDDING CLOSED</h3>
+                            </div>
+                    }
+                    <div className='project-description'>
+                        <p >{description}</p>
+                    </div>
                     {
                         status === 'completed' ?
-                            <ReactPlayer url={finished_url}
-                                playing={false}
-                                width='500px'
-                                height='300px' />
+                            null :
+                            <div className='project-price'>
+                                <h2><i class="fa fa-usd project-dollar-icon"></i> {price}</h2>
+                            </div>
+                    }
+                    {
+                        status === 'completed' ?
+                            null
+                            :
+                            time > 0 ?
+                                <h3 className='project-end-deadline'>Project Deadline: {project_deadline}</h3>
+                                :
+                                null
+                    }
+                    {
+                        status === 'completed' ?
+                            <div className='project-complete'>
+                                <h1>Finished Project</h1>
+                                <ReactPlayer url={finished_url}
+                                    className='project-complete-media'
+                                    playing={false}
+                                    width='500px'
+                                    height='300px' />
+                            </div>
                             :
                             <div>
-                                {
-                                    time > 0 ?
-                                        <h3>Bidding Deadline: {bidding_deadline}</h3>
-                                        :
-                                        null
-                                }
-                                {
-                                    time > 0 ?
-                                        bidding_deadline ? (
-                                            days >= 1 ?
-                                                <h3>Days remaining: {days}</h3>
-                                                :
-                                                hours >= 1 ?
-                                                    <h3>Hours remaining: {hours}</h3>
-                                                    :
-                                                    <h3>Minutes remaining: {minutes}</h3>
-                                        )
-                                            :
-                                            null
-                                        :
-                                        null
-                                }
-                                {
-                                    time > 0 ?
-                                        <h3>Project Deadline: {project_deadline}</h3>
-                                        :
-                                        null
-                                }
                                 {this.props.user.id === user_id
                                     ?
                                     <div>
-                                        <button onClick={this.modalClick}>Edit</button>
-                                        <button onClick={this.deleteClick}>Delete</button>
+                                        <button className='project-button' onClick={this.modalClick}>Edit</button>
+                                        <button className='project-button' onClick={this.deleteClick}>Delete</button>
                                     </div>
                                     : time > 0 ?
                                         bid_placed ?
-                                            <button onClick={this.removeBid}>Remove Bid</button>
+                                            <button className='project-button' onClick={this.removeBid}>Remove Bid</button>
                                             :
-                                            <button onClick={this.addBid}>Add Bid</button>
+                                            <button className='project-button' onClick={this.addBid}>Add Bid</button>
                                         :
-                                        <h3>Bidding Closed.</h3>
+                                        null
                                 }
-                                <div>
-                                    <h1>BIDS</h1>
-                                    {bids}
-                                </div>
+
+                            </div>
+                    }
+                    {
+                        status === 'completed' ?
+                            null
+                            :
+                            <div className='project-bids'>
+                                <h1>BIDS</h1>
+                                {bids}
                             </div>
                     }
 

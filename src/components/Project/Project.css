@@ -1,3 +1,138 @@
-.project-creator {
+.project {
+    width: 600px;
+    min-height: 100vh;
+    margin: auto;
     margin-top: 55px;
+    background: white;
+    border: 1px solid #d6d6d6;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+    color: rgb(54, 54, 54);
+    border-radius: 3px;
+    text-align: center;
+    border-top: none;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
 }
+
+.project-image {
+    width: 100%;
+    height: 275px;
+    background-size: cover;
+    background-position: center;
+}
+
+.project-name {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 40px;
+    margin: 20px auto;
+}
+
+.project-creator {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 25px;
+    font-weight: 200;
+    width: 80%;
+    margin: auto;
+    border-bottom: 1px solid #b3b3b37a;
+    padding-bottom: 10px;
+}
+
+.project-calendar-icon {
+    font-size: 25px;
+}
+
+.project-deadline {
+    margin: 20px auto;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 300;
+    font-size: 25px;
+}
+
+.project-deadline h3 {
+    margin: 10px auto;
+}
+
+.project-deadline h3:last-of-type {
+    font-size: 20px;
+}
+
+.project-description {
+    width: 90%;
+    margin: 20px auto;
+    border: 1px solid #b3b3b37a;
+    border-radius: 3px;
+    min-height: 100px;
+    padding: 10px;
+    text-align: left;
+    background: rgb(248, 248, 248);
+}
+
+.project-dollar-icon {
+    font-size: 28px;
+    color: rgb(3, 94, 146);
+}
+
+.project-price {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: rgb(3, 94, 146);
+}
+
+.project-end-deadline {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgb(73, 73, 73);
+    margin: 15px auto;
+}
+
+.project-button {
+    /* font-family: 'Open Sans', sans-serif; */
+    padding: 5px 10px;
+    margin: 5px 5px;
+    font-size: 17px;
+    font-weight: 200;
+    width: 85px;
+}
+
+.project-bids {
+    margin-top: 35px;
+    width: 100%;
+    min-height: 100px;
+    border-top: 4px double rgba(101, 163, 199, 0.37);
+}
+
+.project-bids h1 {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 200;
+    margin-top: 25px;
+}
+
+.project-complete {
+    margin: auto;
+    margin-top: 35px;
+    border-top: 4px double rgba(101, 163, 199, 0.37);
+}
+
+.project-complete h1 {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 300;
+    margin: 25px auto;
+    padding-bottom: 10px;
+    width: 235px;
+    border-bottom: 1px solid #b3b3b37a;
+}
+
+.project-complete-media {
+    margin: auto;
+}
+
+/* .project-description p {
+    border: 1px solid black;
+    width: 80%;
+    margin: auto;
+    text-align: left;
+} */
