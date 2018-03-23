@@ -198,6 +198,16 @@
     font-size: 32px;
     font-weight: 200;
     margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.project-bids-container {
+    display: flex;
+    margin: auto;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
 }
 
 .project-complete {

@@ -169,17 +169,21 @@ class Project extends Component {
         if (project_deadline) {
             project_deadline = project_deadline.split('T')[0]
         }
+        console.log(this.state.project.bids);
         const bids = this.state.project.bids.map((el, idx) => {
             let { first_name, last_name, image, votes, bidder_id, project_id } = el;
+            let bid_artist_type = el.artist_type;
             return (
                 <Bid image={image}
+                    artist_type={bid_artist_type}
                     first_name={first_name}
                     last_name={last_name}
                     votes={votes}
                     bidder_id={bidder_id}
                     user_id={user_id}
                     project_id={project_id}
-                    chooseBid={this.chooseBid} />
+                    chooseBid={this.chooseBid}
+                    user={this.props.user} />
             )
         })
         let bid_placed = false;
@@ -194,15 +198,15 @@ class Project extends Component {
                 <Header userid={this.props.user.id} />
                 {
                     this.state.loading ?
-                    <div>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                        <h1>loading</h1>
-                    </div>
+                        <div>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                            <h1>loading</h1>
+                        </div>
                         :
                         <div>
 
@@ -351,7 +355,9 @@ class Project extends Component {
                                         :
                                         <div className='project-bids'>
                                             <h1>BIDS</h1>
-                                            {bids}
+                                            <div className='project-bids-container'>
+                                                {bids}
+                                            </div>
                                         </div>
                                 }
 
