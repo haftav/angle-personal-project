@@ -7,6 +7,7 @@ import ReactPlayer from 'react-player';
 import io from 'socket.io-client';
 import date from '../../helper/Date';
 import './Collab.css';
+import { Link } from 'react-router-dom';
 
 class Collab extends Component {
     constructor(props) {
@@ -18,7 +19,8 @@ class Collab extends Component {
             },
             finished_url: '',
             messages: [],
-            userID: null
+            userID: null,
+            scroll: false
         }
 
         this.completeProject = this.completeProject.bind(this);
@@ -27,6 +29,7 @@ class Collab extends Component {
         this.sendMessage = this.sendMessage.bind(this);
         this.setUserId = this.setUserId.bind(this);
         this.updateMessages = this.updateMessages.bind(this);
+        this.scrollToBottom = this.scrollToBottom.bind(this);
     }
 
     componentDidMount() {
@@ -42,9 +45,9 @@ class Collab extends Component {
             })
         })
         axios.get(`/api/messages/${this.props.match.params.id}`).then(res => {
-            console.log(res.data);
             this.setState({
-                messages: res.data
+                messages: res.data,
+                scroll: true
             })
         })
     }
@@ -59,6 +62,7 @@ class Collab extends Component {
         this.setState({
             messages: updateMessages
         })
+        this.scrollToBottom();
     }
 
     completeProject() {
@@ -99,11 +103,18 @@ class Collab extends Component {
         this.refs.message.value = '';
     }
 
+    scrollToBottom() {
+        console.log(this.container.scrollTop);
+        console.log(this.container.scrollHeight);
+        this.container.scrollTop = this.container.scrollHeight;
+    }
+
     render() {
+        // this.state.scroll = true ? this.scrollToBottom() : null
         console.log(this.state);
-        const { name, description, type, image,
+        const { name, description, type, image, user_id,
             first_name, last_name, price, user_image, collab_user,
-            finished_url, collab_id, status } = this.state.project;
+            finished_url, collab_id, status, project_deadline } = this.state.project;
 
         const collab_first = collab_user.first_name,
             collab_last = collab_user.last_name,
@@ -111,21 +122,21 @@ class Collab extends Component {
 
         const messages = this.state.messages.map((el, idx) => {
             const styles = el.user_id === this.props.user.id ?
-                { backgroundColor: "white", alignSelf: "flex-end", alignItems: "flex-end" }
+                { alignSelf: "flex-end", alignItems: "flex-end" }
                 :
-                { backgroundColor: "#F5F5F5", alignSelf: "flex-start", alignItems: "flex-start" };
+                { alignSelf: "flex-start", alignItems: "flex-start" };
             return (
                 <div className='chat-message' style={styles}>
 
                     <div className='chat-message-info'
                         style={el.user_id === this.props.user.id ?
                             {
-                                
+
                                 flexDirection: "row-reverse"
                             }
                             :
                             {
-                                
+
                                 flexDirection: "row"
                             }}>
                         <div className='chat-message-image' style={el.user_id === this.props.user.id ?
@@ -136,74 +147,103 @@ class Collab extends Component {
                             {
                                 backgroundImage: `url('${el.user_image}')`,
                                 alignSelf: "flex-start"
-                            }
-                            }></div>
-                    <div>
-                        <p>{el.message}</p>
-                        <p >{el.name} {el.post_time}</p>
+                            }}>
+                        </div>
+                        <div className='chat-message-info-text' style={el.user_id === this.props.user.id ?
+                            { backgroundColor: "white" } : { backgroundColor: "#F5F5F5" }}>
+                            <p>{el.message}</p>
+                            <p >{el.name} {el.post_time}</p>
+                        </div>
                     </div>
-                </div>
                 </div >
             )
-    })
-    return(
+        })
+        return (
             <div>
-            <Header userid={this.props.user.id} />
-            <div className='collab-info'>
-                <h1>{name}</h1>
-                <h2>Collab between {first_name} {last_name} and {collab_first} {collab_last}</h2>
-                <p>{description}</p>
-            </div>
-                {
-                    this.props.user.id === collab_id ?
-                <div>
-                    {
-                        status === 'completed' ?
-                            <h3>This project has been completed.</h3>
-                            :
-                            <div>
-                                <h3>Enter the link to the finished project below.</h3>
-                                <input placeholder='Project URL'
-                                    value={this.setState.finished_url}
-                                    onChange={(e) => this.handleChange(e.target.value)} />
-                                <button onClick={this.submitProject}>Submit</button>
-                            </div>
-                    }
+                <Header userid={this.props.user.id} />
+                <div className='project'>
+                    <div style={{ minHeight: "calc(100vh - 55px)" }}>
 
+                        <div className='project-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                        </div>
+                        <h1 className='project-name'>{name}</h1>
+                        <div className='project-creator' style={{ width: "90%" }}>
+                            <h1>Collab between&nbsp;
+                        <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
+                                    {first_name} {last_name}
+                                </Link>
+                                &nbsp;and&nbsp;
+                        <Link to={this.props.user.id === user_id ? `/profile/${collab_id}` : `/user/${collab_id}`}>
+                                    {collab_first} {collab_last}
+                                </Link></h1>
+                        </div>
+                        <div className='project-description'>
+                            <p>{description}</p>
+                        </div>
+                        <div className='project-deadline'>
+                            <h3>Deadline: {project_deadline}</h3>
+                        </div>
+                    </div>
                     {
-                        finished_url ?
-                            <ReactPlayer url={finished_url}
-                                playing={false}
-                                width='500px'
-                                height='300px' />
+                        this.props.user.id === collab_id ?
+                            <div>
+                                {
+                                    status === 'completed' ?
+                                        <h3>This project has been completed.</h3>
+                                        :
+                                        <div>
+                                            <h3>Enter the link to the finished project below.</h3>
+                                            <input placeholder='Project URL'
+                                                value={this.setState.finished_url}
+                                                onChange={(e) => this.handleChange(e.target.value)} />
+                                            <button onClick={this.submitProject}>Submit</button>
+                                        </div>
+                                }
+
+                                {
+                                    finished_url ?
+                                        <div className='project-complete'>
+                                            <h1>Your Submission</h1>
+                                            <ReactPlayer url={finished_url}
+                                                playing={false}
+                                                width='500px'
+                                                height='300px' />
+                                        </div>
+                                        :
+                                        null
+                                }
+                            </div>
                             :
-                            null
+                            finished_url ?
+                                <div className='project-complete'>
+                                    <h1>{collab_first}'s Submission</h1>
+                                    <ReactPlayer url={finished_url}
+                                        playing={false}
+                                        width='500px'
+                                        height='300px' />
+                                    <button onClick={this.completeProject}>Finish Project</button>
+                                </div>
+                                :
+                                <div className='project-complete'>
+                                    <h1 style={{ width: "90%", fontSize: "22px" }}>Your collaborator has not yet finished the project.</h1>
+                                </div>
                     }
                 </div>
-                :
-                finished_url ?
-                    <div>
-                        <ReactPlayer url={finished_url}
-                            playing={false}
-                            width='500px'
-                            height='300px' />
-                        <button onClick={this.completeProject}>Finish Project</button>
+                <h1 className='chat-title'>Chat with {this.props.user.id === user_id ? collab_first : first_name}!</h1>
+                <div className='collab-chat' >
+                    <div className='chat-messages-container'
+                        ref={el => this.container = el}>
+                        {messages}
                     </div>
-                    :
-                    <h3>Your collaborator has not yet finished the project.</h3>
-                }
-                <div className = 'collab-chat' >
-            <div className='chat-messages-container'>
-                {messages}
-            </div>
-            <div className='collab-chat-input'>
-                <input maxlength='200' ref='message' />
-                <button onClick={this.sendMessage}>Send</button>
-            </div>
+                    <div className='collab-chat-input'>
+                        <input maxlength='200' ref='message' />
+                        <button onClick={this.sendMessage}>Send</button>
+                    </div>
                 </div>
             </div>
         )
-}
+    }
 }
 
 function mapStateToProps(state) {
