@@ -83,11 +83,15 @@ class ModalProject extends Component {
                 <div>
                     <h1>Edit Info</h1>
                     <h2>Name</h2>
-                    <input placeholder={name}
+                    <input 
+                        maxlength='75'
+                        placeholder={name}
                         value={this.state.project.name}
                         onChange={(e) => this.updateProject(e.target.value, 'name')} />
                     <h2>Description</h2>
-                    <textarea placeholder={description}
+                    <textarea 
+                        maxlength='700'
+                        placeholder={description}
                         value={this.state.project.description}
                         onChange={(e) => this.updateProject(e.target.value, 'description')} >
                     </textarea>

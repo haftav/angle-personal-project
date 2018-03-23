@@ -253,7 +253,7 @@ class Dashboard extends Component {
 
                                 </div>
                             </div>
-                            <div className='dashboard-top-image'>
+                            <div className={this.state.loading ? '' : 'dashboard-top-image'}>
                                 <div>
                                     {
                                         imageAdded ?

@@ -14,34 +14,36 @@
     border-top-left-radius: 0px;
 }
 
+
 .project-people {
     position: absolute;
     width: 275px;
     height: 450px;
-    left: 0px;
+    left: -275px;
     top: 55px;
     background: white;
     border: 1px solid #d6d6d6;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
     color: rgb(54, 54, 54);
-    border-radius: 3px;
-    padding: 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.project-people > div {
-    position: relative;
-    float: none;
-    display: block;
-    width: 80%;
-    height: 100%;
+    border-bottom-right-radius: 5px;
     margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: stretch;
+    animation-name: image-slide;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay: 1s;
+}
+
+@keyframes image-slide {
+    from {left: -275px;}
+    to {left: 0px;}
+}
+
+.project-people-creator {
+    height: 235px;
 }
 
 .project-people hr {

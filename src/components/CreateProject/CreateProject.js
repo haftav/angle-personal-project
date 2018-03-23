@@ -118,7 +118,7 @@ class CreateProject extends Component {
                 <div className='create-project'>
                     <h1>CREATE YOUR PROJECT</h1>
                     <h2>Name</h2>
-                    <input onChange={(e) => this.updateProject(e.target.value, 'name')} />
+                    <input maxlength='75' onChange={(e) => this.updateProject(e.target.value, 'name')} />
                     <h2>Looking For</h2>
                     <select onChange={(e) => this.updateProject(e.target.value, 'type')}>
                         <option>Select an option</option>
@@ -126,7 +126,7 @@ class CreateProject extends Component {
                         <option>Musician</option>
                     </select>
                     <h2>Description</h2>
-                    <textarea onChange={(e) => this.updateProject(e.target.value, 'description')} ></textarea>
+                    <textarea maxlength='700' onChange={(e) => this.updateProject(e.target.value, 'description')} ></textarea>
                     {/* <h2>Deadline</h2>
                 <input onChange={(e) => this.updateProject(e.target.value, 'deadline')}/> */}
                     <h2>Bidding Deadline</h2>

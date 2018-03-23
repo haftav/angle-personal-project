@@ -79,13 +79,17 @@ class ModalInfo extends Component {
                 <div>
                     <h1>Edit Info</h1>
                     <h2>First Name</h2>
-                    <input placeholder={this.state.user.first_name}
+                    <input 
+                        maxlength='200'
+                        placeholder={this.state.user.first_name}
                         onChange={(e) => this.updateUser(e.target.value, 'first_name')} />
                     <h2>Last Name</h2>
-                    <input placeholder={this.state.user.last_name}
+                    <input 
+                        maxlength='200'
+                        placeholder={this.state.user.last_name}
                         onChange={(e) => this.updateUser(e.target.value, 'last_name')} />
                     <h2>Description</h2>
-                    <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
+                    <textarea maxlength='500' onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
                     <h2>Artist Type</h2>
                     <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
                         <option selected={this.props.user.artist_type === 'Both' ? 'selected' : ''} value='Both'>Both</option>

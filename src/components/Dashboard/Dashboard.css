@@ -128,7 +128,7 @@ input[type="radio"]:checked + label span.radio::after {
 
 .dashboard-top-image {
     position: fixed;
-    top: 55px;
+    top: -200px;
     left: 0;
     height: 270px;
     width: 265px;
@@ -140,6 +140,14 @@ input[type="radio"]:checked + label span.radio::after {
     border-radius: 3px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 0px;
+    animation-name: image-drop;
+    animation-fill-mode: forwards;
+    animation-duration: 2s;
+}
+
+@keyframes image-drop {
+    from {top: -200px;}
+    to {top: 55px;}
 }
 
 .dashboard-top-image > div:first-of-type {
