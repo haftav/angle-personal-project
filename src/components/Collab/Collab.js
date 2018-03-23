@@ -8,6 +8,7 @@ import io from 'socket.io-client';
 import date from '../../helper/Date';
 import './Collab.css';
 import { Link } from 'react-router-dom';
+import _ from 'underscore';
 
 class Collab extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ class Collab extends Component {
     }
 
     componentDidMount() {
+        this.props.getUser();
         this.socket = io('/');
         this.socket.emit('join room', { room: this.props.match.params.id })
         this.socket.on('welcome', this.setUserId)
@@ -50,6 +52,14 @@ class Collab extends Component {
                 scroll: true
             })
         })
+    }
+
+    componentWillReceiveProps(newProps) {
+        console.log(newProps);
+    }
+
+    componentWillUnmount() {
+        this.socket.emit('leave room', {})
     }
 
     setUserId(user) {

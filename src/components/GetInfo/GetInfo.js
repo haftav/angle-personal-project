@@ -4,6 +4,7 @@ import { getUser, updateUser } from '../../ducks/users';
 import Dropzone from 'react-dropzone';
 import axios from 'axios';
 import _ from 'underscore';
+import logo from './whitelogo.png'
 
 class GetInfo extends Component {
     constructor(props) {
@@ -34,9 +35,15 @@ class GetInfo extends Component {
 
     componentWillReceiveProps(newProps) {
         if (!_.isEqual(this.props, newProps)) {
-            this.setState({
-                user: Object.assign({}, newProps.user, { artist_type: 'Both', image_data: {} }),
-                loading: false
+            axios.get('/api/user/info').then(res => {
+                if (res.data) {
+                    this.props.history.push('/dashboard')
+                } else {
+                    this.setState({
+                        user: Object.assign({}, newProps.user, { artist_type: 'Both', image_data: {} }),
+                        loading: false
+                    })
+                }
             })
         }
     }
@@ -61,8 +68,8 @@ class GetInfo extends Component {
     }
 
     handleUpdate() {
-        const { user_name, first_name, last_name, description, artist_type } = this.state.user;
-        if (user_name && first_name && last_name && description && artist_type) {
+        const { first_name, last_name, description, artist_type } = this.state.user;
+        if (first_name && last_name && description && artist_type) {
             this.props.updateUser(this.state.user);
         } else {
             alert('Please fill in the required information.')
@@ -74,42 +81,44 @@ class GetInfo extends Component {
         console.log(this.state);
         return (
             this.state.loading ?
-            <h1>Loading</h1>
-            :
-            <div>
-                {/* {
+                <h1>Loading</h1>
+                :
+                <div>
+                    {/* {
                     this.props.loading ?
                     <h1>Loading</h1>
                     : */}
-                <div>
-                    <h1>Get Info</h1>
-                    <h3>Please fill in some more info about yourself.</h3>
-                    <h3>Username</h3>
-                    <input placeholder={this.state.user.user_name}
-                        onChange={(e) => this.updateUser(e.target.value, 'user_name')} />
-                    <h3>First Name</h3>
-                    <input placeholder={this.state.user.first_name}
-                        onChange={(e) => this.updateUser(e.target.value, 'first_name')} />
-                    <h3>Last Name</h3>
-                    <input placeholder={this.state.user.last_name}
-                        onChange={(e) => this.updateUser(e.target.value, 'last_name')} />
-                    <h3>Description</h3>
-                    <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
-                    <h3>Artist Type</h3>
-                    <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}>
-                        <option selected='selected' value='Both'>Both</option>
-                        <option value='Filmmaker'>Filmmaker</option>
-                        <option value='Musician'>Musician</option>
-                    </select>
-                    <Dropzone
-                        onDrop={this.handleDrop}
-                        accept="image/*" >
-                        <p>Drop your files or click here to upload</p>
-                    </Dropzone>
-                    <button onClick={this.handleUpdate}>Submit</button>
+                    <div className='login-header'>
+                        <img src={logo} alt="logo" />
+                    </div>
+                    <div className='create-project' style={{marginTop: "0px", height: "calc(100vh - 95px"}}>
+                        <h1 style={{marginBottom: "25px"}}>Please fill in some more info about yourself.</h1>
+                        <h2>First Name</h2>
+                        <input placeholder={this.state.user.first_name}
+                            onChange={(e) => this.updateUser(e.target.value, 'first_name')} />
+                        <h2>Last Name</h2>
+                        <input placeholder={this.state.user.last_name}
+                            onChange={(e) => this.updateUser(e.target.value, 'last_name')} />
+                        <h2>Description</h2>
+                        <textarea onChange={(e) => this.updateUser(e.target.value, 'description')}></textarea>
+                        <h2>Artist Type</h2>
+                        <select onChange={(e) => this.updateUser(e.target.value, 'artist_type')}
+                                style={{marginBottom: "10px"}}>
+                            <option selected='selected' value='Both'>Both</option>
+                            <option value='Filmmaker'>Filmmaker</option>
+                            <option value='Musician'>Musician</option>
+                        </select>
+                        <h2>Image</h2>
+                        <Dropzone
+                            className='dropzone'
+                            onDrop={this.handleDrop}
+                            accept="image/*" >
+                            <p>Drop your files or click here to upload</p>
+                        </Dropzone>
+                        <button onClick={this.handleUpdate} style={{marginBottom: "15px"}}>Submit</button>
+                    </div>
+                    {/* // } */}
                 </div>
-                {/* // } */}
-            </div>
         )
     }
 }

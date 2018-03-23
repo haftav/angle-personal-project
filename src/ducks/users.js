@@ -35,19 +35,19 @@ export function getUser() {
 
 
 export function updateUser(user) {
-    const { user_name, first_name, last_name, description, artist_type, image_data } = user
+    const { first_name, last_name, description, artist_type, image_data } = user
     if (image_data instanceof FormData) {
         var userData = axios.post(process.env.REACT_APP_CLOUDINARY_URL, image_data, {
             headers: { "X-Requested-With": "XMLHttpRequest" },
         }).then(res => {
             const data = res.data;
             let image = data.secure_url // You should store this URL for future references in your app
-            return axios.put('/api/user', { user_name, first_name, last_name, description, artist_type, image }).then(res => {
+            return axios.put('/api/user', { first_name, last_name, description, artist_type, image }).then(res => {
                 return res.data;
             })
         })
     } else {
-        var userData = axios.put('/api/user', { user_name, first_name, last_name, description, artist_type }).then(res => {
+        var userData = axios.put('/api/user', { first_name, last_name, description, artist_type }).then(res => {
             return res.data;
         })
     }

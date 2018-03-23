@@ -106,16 +106,16 @@ app.get('/api/user/info', (req, res) => {
 
 app.put('/api/user', (req, res) => {
     console.log('body: ', req.body)
-    const { user_name, first_name, last_name, description, artist_type, image } = req.body;
+    const { first_name, last_name, description, artist_type, image } = req.body;
     const db = app.get('db');
     if (image) {
-        db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(res1 => {
+        db.update_user([req.user.id, first_name, last_name, description, artist_type]).then(res1 => {
             db.update_user_image([req.user.id, image]).then(user => {
                 res.status(200).send(user[0])
             })
         })
     } else {
-        db.update_user([req.user.id, user_name, first_name, last_name, description, artist_type]).then(user => {
+        db.update_user([req.user.id, first_name, last_name, description, artist_type]).then(user => {
             res.status(200).send(user[0])
         })
     }
@@ -230,5 +230,10 @@ io.on('connection', socket => {
     socket.on('join room', data => {
         socket.join(data.room);
         io.to(data.room).emit('room joined', data.room)
+    })
+
+    socket.on('leave room', function(data) {
+        console.log('you hit this')
+        socket.disconnect();
     })
 })
