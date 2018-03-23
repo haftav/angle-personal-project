@@ -111,21 +111,21 @@ class Collab extends Component {
 
         const messages = this.state.messages.map((el, idx) => {
             const styles = el.user_id === this.props.user.id ?
-                { alignSelf: "flex-end", alignItems: "flex-end" }
+                { backgroundColor: "white", alignSelf: "flex-end", alignItems: "flex-end" }
                 :
-                { alignSelf: "flex-start", alignItems: "flex-start" };
+                { backgroundColor: "#F5F5F5", alignSelf: "flex-start", alignItems: "flex-start" };
             return (
                 <div className='chat-message' style={styles}>
 
                     <div className='chat-message-info'
                         style={el.user_id === this.props.user.id ?
                             {
-                                backgroundColor: "white",
+                                
                                 flexDirection: "row-reverse"
                             }
                             :
                             {
-                                backgroundColor: "#F5F5F5",
+                                
                                 flexDirection: "row"
                             }}>
                         <div className='chat-message-image' style={el.user_id === this.props.user.id ?

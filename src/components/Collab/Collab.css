@@ -22,7 +22,6 @@
     display: block;
     height: 40px;
     width: 40px;
-    padding: 5px;
     background-size: cover;
     background-position: center;
     align-self: flex-end;
@@ -40,13 +39,12 @@
 .chat-message {
     border-radius: 3px;
     font-family: 'Roboto', sans-serif;
-    border: 1px solid black;
+    border: 1px solid #b3b3b3; 
+    margin: 10px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.288);
 }
 
 .chat-message-info {
-    border: 1px solid red;
-    /* border: 1px solid #b3b3b3;  */
-    background: red;
     padding: 5px;
     margin: 5px;
     min-height: 80%;
@@ -55,7 +53,6 @@
 }
 
 .chat-message-info div:last-of-type{
-    border: 1px solid blue;
     max-width: 90%;
 }
 
