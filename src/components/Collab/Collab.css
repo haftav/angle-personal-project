@@ -2,6 +2,20 @@
     margin-top: 55px;
 }
 
+.submit-project-input {
+
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 30px;
+}
+
+.submit-project-button {
+    height: 30px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    font-size: 16px;
+}
+
 .chat-title {
     font-family: 'Open Sans', sans-serif;
     font-size: 28px;

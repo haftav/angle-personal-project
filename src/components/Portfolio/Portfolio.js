@@ -12,6 +12,8 @@ export default class Portfolio extends Component {
             soundcloud: '',
             user: {},
             vimeo_projects: [],
+            video_buttons: null,
+            button_index: 1,
             active: 'angle'
         }
 
@@ -19,6 +21,7 @@ export default class Portfolio extends Component {
         this.getMediaProfile = this.getMediaProfile.bind(this);
         this.changeTab = this.changeTab.bind(this);
         this.getData = this.getData.bind(this);
+        this.changeVideoPage = this.changeVideoPage.bind(this);
     }
 
     getData(props) {
@@ -31,7 +34,8 @@ export default class Portfolio extends Component {
                     })
                     this.setState({
                         user: props.user,
-                        vimeo_projects: projects
+                        vimeo_projects: projects,
+                        video_buttons: Math.ceil(projects.length / 4)
                     })
                 })
             } else {
@@ -88,10 +92,17 @@ export default class Portfolio extends Component {
         }
     }
 
+    changeVideoPage(val) {
+        this.setState({
+            button_index: val
+        })
+    }
+
     render() {
+        console.log(this.state)
         const { artist_type } = this.props.user;
         const { vimeo_profile, soundcloud_profile } = this.state.user;
-        const vimeo_projects = this.state.vimeo_projects.map((el, idx) => {
+        let vimeo_projects = this.state.vimeo_projects.map((el, idx) => {
             return (
                 <ReactPlayer url={`https://vimeo.com/${el}`}
                     playing={false}
@@ -99,6 +110,14 @@ export default class Portfolio extends Component {
                     height='225px' />
             )
         })
+
+        let buttons = [];
+        for (let i=0; i < this.state.video_buttons; i++) {
+            buttons.push((
+                <button onClick={() => this.changeVideoPage(i + 1)} key={`video-button-${i + 1}`}>{i + 1}</button>
+            ))
+        }
+        vimeo_projects = vimeo_projects.slice(((this.state.button_index - 1) * 4), this.state.button_index * 4);
         return (
             <div className='portfolio'>
                 <h1>PORTFOLIO</h1>
@@ -133,9 +152,19 @@ export default class Portfolio extends Component {
                             <div className='portfolio-videos'>
                                 {
                                     vimeo_profile ?
-                                        <div>
+                                    <div>
+                                        <div >
                                             {vimeo_projects}
                                         </div>
+                                            {
+                                                this.state.video_buttons > 1 ?
+                                                <div>
+                                                    {buttons}
+                                                </div>
+                                                :
+                                                null
+                                            }
+                                    </div>
                                         :
                                         this.props.type === 'profile' ?
                                             <div>

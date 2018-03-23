@@ -77,7 +77,7 @@
     flex-wrap: wrap;
 }
 
-.portfolio-videos > div {
+.portfolio-videos > div > div:first-of-type {
     width: 880px;
     height: 100%;
     margin: auto;
@@ -89,4 +89,10 @@
 
 .portfolio-videos div {
     margin: 5px;
+}
+
+.portfolio-videos button {
+    width: 50px;
+    height: 25px;
+    margin: 10px;
 }

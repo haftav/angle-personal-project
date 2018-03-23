@@ -166,7 +166,12 @@ class ProjectsPage extends Component {
                                         onChange={(e) => this.handleStatusChange(e.target.value)} />
                                     <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
                                 </div>
-                                {projects}
+                                {
+                                    this.state.projects.length === 0 ?
+                                        <h1>No projects to display.</h1>
+                                        :
+                                        projects
+                                }
                             </div>
                     }
                 </div>

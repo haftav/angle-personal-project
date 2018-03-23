@@ -174,7 +174,7 @@ class Collab extends Component {
                                     {first_name} {last_name}
                                 </Link>
                                 &nbsp;and&nbsp;
-                        <Link to={this.props.user.id === user_id ? `/profile/${collab_id}` : `/user/${collab_id}`}>
+                        <Link to={this.props.user.id === collab_id ? `/profile/${collab_id}` : `/user/${collab_id}`}>
                                     {collab_first} {collab_last}
                                 </Link></h1>
                         </div>
@@ -182,22 +182,25 @@ class Collab extends Component {
                             <p>{description}</p>
                         </div>
                         <div className='project-deadline'>
-                            <h3>Deadline: {project_deadline}</h3>
+                            <h3 style={{paddingTop: "35px"}}>Deadline: {project_deadline}</h3>
                         </div>
                     </div>
                     {
                         this.props.user.id === collab_id ?
-                            <div>
+                            <div className='project-complete'>
                                 {
                                     status === 'completed' ?
-                                        <h3>This project has been completed.</h3>
+                                        <h1 style={{ width: "90%", fontSize: "22px" }}>This project has been completed.</h1>
                                         :
-                                        <div>
-                                            <h3>Enter the link to the finished project below.</h3>
-                                            <input placeholder='Project URL'
-                                                value={this.setState.finished_url}
-                                                onChange={(e) => this.handleChange(e.target.value)} />
-                                            <button onClick={this.submitProject}>Submit</button>
+                                        <div >
+                                            <h1 style={{ width: "90%", fontSize: "22px" }}>Enter the link to the finished project below.</h1>
+                                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "25px" }}>
+                                                <input placeholder='Project URL'
+                                                    className='submit-project-input'
+                                                    value={this.setState.finished_url}
+                                                    onChange={(e) => this.handleChange(e.target.value)} />
+                                                <button className='submit-project-button' onClick={this.submitProject}>Submit</button>
+                                            </div>
                                         </div>
                                 }
 
@@ -206,6 +209,7 @@ class Collab extends Component {
                                         <div className='project-complete'>
                                             <h1>Your Submission</h1>
                                             <ReactPlayer url={finished_url}
+                                                className='project-complete-media'
                                                 playing={false}
                                                 width='500px'
                                                 height='300px' />
@@ -219,10 +223,13 @@ class Collab extends Component {
                                 <div className='project-complete'>
                                     <h1>{collab_first}'s Submission</h1>
                                     <ReactPlayer url={finished_url}
+                                        className='project-complete-media'
                                         playing={false}
                                         width='500px'
                                         height='300px' />
-                                    <button onClick={this.completeProject}>Finish Project</button>
+                                    <button className='submit-project-button' 
+                                    style={{marginBottom: "15px"}} 
+                                    onClick={this.completeProject}>Finish Project</button>
                                 </div>
                                 :
                                 <div className='project-complete'>
