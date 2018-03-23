@@ -55,7 +55,24 @@ class Collab extends Component {
     }
 
     componentWillReceiveProps(newProps) {
+        console.log(this.props);
         console.log(newProps);
+        console.log(_.isEqual(this.props, newProps));
+        if (!_.isEqual(this.props, newProps)) {
+            axios.get(`/api/projects/collab/${newProps.match.params.id}`).then(res => {
+                console.log(res.data);
+                this.setState({
+                    project: res.data
+                })
+            })
+            axios.get(`/api/messages/${newProps.match.params.id}`).then(res => {
+                this.socket.emit('join room', { room: this.props.match.params.id })
+                this.setState({
+                    messages: res.data,
+                    scroll: true
+                })
+            })
+        }
     }
 
     componentWillUnmount() {

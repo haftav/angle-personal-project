@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
 import ReviewInput from '../ReviewInput/ReviewInput';
 import axios from 'axios';
+import './Reviews.css';
+import _ from 'underscore';
 
 class Reviews extends Component {
     constructor(props) {
@@ -39,6 +41,29 @@ class Reviews extends Component {
                 }
             })
 
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        console.log('old props: ', this.props)
+        console.log('new props: ', newProps);
+        console.log(_.isEqual(this.props, newProps));
+        if (!_.isEqual(this.props, newProps)) {
+            axios.get(`/api/reviews/${newProps.match.params.id}`).then(res => {
+                this.setState({
+                    reviews: res.data
+                })
+            })
+            if (this.props.user.id != newProps.match.params.id) {
+                axios.get(`/api/reviews/check/${newProps.match.params.id}`).then(res => {
+                    if (res.data === true) {
+                        this.setState({
+                            canAdd: true
+                        })
+                    }
+                })
+    
+            }
         }
     }
 
@@ -109,15 +134,19 @@ class Reviews extends Component {
     render() {
         console.log(this.state);
         const reviews = this.state.reviews.map((el, idx) => {
-            const { description, date, first_name, last_name, image, id, reviewer_id } = el;
+            let { description, post_date, first_name, last_name, image, id, reviewer_id } = el;
+            post_date = post_date.split('T')[0]
             if (this.props.user.id == reviewer_id) {
                 if (this.state.editID == id) {
                     return (
                         <div className='review-edit'>
+                            <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                            </div>
                             <h1>{first_name} {last_name}</h1>
-                            <h3>{date}</h3>
-                            <textarea onChange={(e) => this.handleChange(e.target.value)} 
-                                        value={this.state.reviewText}></textarea>
+                            <h3>{post_date}</h3>
+                            <textarea onChange={(e) => this.handleChange(e.target.value)}
+                                value={this.state.reviewText}></textarea>
                             <button onClick={() => this.editReview({ id })}>Submit</button>
                             <button onClick={() => this.toggleEdit(id, description)}>Cancel</button>
                         </div>
@@ -125,9 +154,14 @@ class Reviews extends Component {
                 }
                 return (
                     <div className='review'>
-                        <h1>{first_name} {last_name}</h1>
-                        <h3>{date}</h3>
-                        <p>{description}</p>
+                        <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                        </div>
+                        <div>
+                            <h1>{first_name} {last_name}</h1>
+                            <h3>{post_date}</h3>
+                            <p>{description}</p>
+                        </div>
                         <button onClick={() => this.toggleEdit(id, description)}>Edit</button>
                         <button onClick={() => this.deleteReview(id)}>Delete</button>
                     </div>
@@ -135,16 +169,21 @@ class Reviews extends Component {
             } else {
                 return (
                     <div className='review'>
-                        <h1>{first_name} {last_name}</h1>
-                        <h3>{date}</h3>
-                        <p>{description}</p>
+                        <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
+
+                        </div>
+                        <div>
+                            <h1>{first_name} {last_name}</h1>
+                            <h3>{post_date}</h3>
+                            <p>{description}</p>
+                        </div>
                     </div>
                 )
             }
         })
         return (
-            <div>
-                <h1>Reviews</h1>
+            <div className='portfolio'>
+                <h1>REVIEWS</h1>
                 {
                     this.state.canAdd ?
                         <div>
