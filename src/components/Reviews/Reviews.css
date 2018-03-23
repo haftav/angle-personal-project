@@ -1,3 +1,9 @@
+.add-review {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
 .review {
     border: 1px solid rgba(101, 163, 199, 0.37);
     background: white;
@@ -5,26 +11,114 @@
     margin: auto;
     display: grid;
     width: 600px;
-    min-height: 200px;
     grid-template-columns: 100px 500px;
-    grid-template-rows: 1fr;
+    grid-template-rows: 1fr 40px;
+    position: relative;
+}
+
+.review-edit {
+    border: 1px solid rgba(101, 163, 199, 0.37);
+    background: white;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+    margin: auto;
+    display: grid;
+    width: 600px;
+    grid-template-columns: 100px 500px;
+    grid-template-rows: 1fr 40px;
+    position: relative;
 }
 
 .review-image {
-    width: 100px;
-    height: 100px;
     background-size: cover;
     background-position: center;
     grid-column-start: 1;
     grid-column-end: 2;
+    height: 75px;
+    width: 75px;
+    margin: 10px;
 }
 
-.review div:last-of-type {
+
+.review-user {
     text-align: left;
+    padding: 5px;
+    width: 95%;
+    min-height: 80%;
+    grid-column-start: 2;
+}
+
+.review h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding-bottom: 2px;
+}
+
+.review-edit h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding-bottom: 2px;   
+}
+
+.review h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgb(150, 150, 150);
+}
+
+.review-edit h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: rgb(150, 150, 150);
 }
 
 
 
 .review p {
-    border: 1px solid black;
+    border: 1px solid rgb(206, 206, 206);
+    background: rgb(245, 245, 245);
+    font-family: 'Fira Sans', sans-serif;
+    padding: 5px;
+    font-weight: 300;
+    border-radius: 3px;
+    font-size: 16px;
 } 
+
+.review-edit textarea {
+    border: 1px solid rgb(206, 206, 206);
+    background: rgb(245, 245, 245);
+    font-family: 'Fira Sans', sans-serif;
+    padding: 5px;
+    font-weight: 300;
+    border-radius: 3px;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    height: 60%;
+
+} 
+
+.review-buttons {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    margin: auto;
+    width: 100%;
+    padding: 5px 0px;
+}
+
+.review-buttons button {
+    margin: 0px 5px;
+    width: 50px;
+}

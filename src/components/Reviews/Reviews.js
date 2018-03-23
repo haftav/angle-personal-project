@@ -25,6 +25,7 @@ class Reviews extends Component {
     }
 
     componentDidMount() {
+        this.props.getUser();
         console.log(this.props.user.id);
         console.log(this.props.match.params.id);
         axios.get(`/api/reviews/${this.props.match.params.id}`).then(res => {
@@ -62,7 +63,7 @@ class Reviews extends Component {
                         })
                     }
                 })
-    
+
             }
         }
     }
@@ -143,12 +144,16 @@ class Reviews extends Component {
                             <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
 
                             </div>
-                            <h1>{first_name} {last_name}</h1>
-                            <h3>{post_date}</h3>
-                            <textarea onChange={(e) => this.handleChange(e.target.value)}
-                                value={this.state.reviewText}></textarea>
-                            <button onClick={() => this.editReview({ id })}>Submit</button>
-                            <button onClick={() => this.toggleEdit(id, description)}>Cancel</button>
+                            <div className='review-user'>
+                                <h1>{first_name} {last_name}</h1>
+                                <h3>{post_date}</h3>
+                                <textarea onChange={(e) => this.handleChange(e.target.value)}
+                                    value={this.state.reviewText}></textarea>
+                            </div>
+                            <div className='review-buttons'>
+                                <button onClick={() => this.editReview({ id })}>Submit</button>
+                                <button onClick={() => this.toggleEdit(id, description)}>Cancel</button>
+                            </div>
                         </div>
                     )
                 }
@@ -157,13 +162,15 @@ class Reviews extends Component {
                         <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
 
                         </div>
-                        <div>
+                        <div className='review-user'>
                             <h1>{first_name} {last_name}</h1>
                             <h3>{post_date}</h3>
                             <p>{description}</p>
                         </div>
-                        <button onClick={() => this.toggleEdit(id, description)}>Edit</button>
-                        <button onClick={() => this.deleteReview(id)}>Delete</button>
+                        <div className='review-buttons'>
+                            <button onClick={() => this.toggleEdit(id, description)}>Edit</button>
+                            <button onClick={() => this.deleteReview(id)}>Delete</button>
+                        </div>
                     </div>
                 )
             } else {
@@ -172,7 +179,7 @@ class Reviews extends Component {
                         <div className='review-image' style={{ backgroundImage: `url('${image}')` }}>
 
                         </div>
-                        <div>
+                        <div className='review-user'>
                             <h1>{first_name} {last_name}</h1>
                             <h3>{post_date}</h3>
                             <p>{description}</p>
@@ -187,16 +194,15 @@ class Reviews extends Component {
                 {
                     this.state.canAdd ?
                         <div>
-                            <h1>You can add a review</h1>
                             <ReviewInput submit={this.submitReview}
                                 handleChange={this.handleChange}
                                 user={this.props.user} />
                         </div>
                         :
                         this.props.user.id == this.props.match.params.id ?
-                            <h1>Here are your reviews.</h1>
+                            <h1>Your reviews</h1>
                             :
-                            <h1>You may not add a review.</h1>
+                            null
                 }
                 {reviews}
             </div>

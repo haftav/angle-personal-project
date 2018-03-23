@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/users';
+import _ from 'underscore';
 
 class Connections extends Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class Connections extends Component {
     }
 
     componentDidMount() {
+        this.props.getUser();
         axios.get(`/api/connections/user/${this.props.match.params.id}`).then(res => {
             this.setState({
                 connections: res.data
@@ -21,6 +23,15 @@ class Connections extends Component {
         })
     }
 
+    componentWillReceiveProps(newProps) {
+        if (!_.isEqual(this.props, newProps)) {
+            axios.get(`/api/connections/user/${newProps.match.params.id}`).then(res => {
+                this.setState({
+                    connections: res.data
+                })
+            }) 
+        }
+    }
 
 
     render() {

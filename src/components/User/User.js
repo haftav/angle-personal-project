@@ -140,7 +140,7 @@ class User extends Component {
 
         return (
             <div>
-                <Header />
+                <Header userid={this.props.user.id}/>
                 <div className='profile-submenu'>
                     <Link to={`/user/${this.props.match.params.id}`}>PROFILE</Link>
                     <Link to={`/user/${this.props.match.params.id}/reviews`}>REVIEWS</Link>
