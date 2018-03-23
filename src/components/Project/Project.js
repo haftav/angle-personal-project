@@ -15,7 +15,8 @@ class Project extends Component {
 
         this.state = {
             project: {
-                bids: []
+                bids: [],
+                collab_user: {}
             },
             modalActive: false,
             deleteActive: false
@@ -33,9 +34,9 @@ class Project extends Component {
     }
 
     componentDidMount() {
-
         const project_id = this.props.match.params.id;
         axios.get(`/api/projects/${project_id}`).then(res => {
+            console.log(res.data);
             this.setState({
                 project: res.data
             })
@@ -138,8 +139,17 @@ class Project extends Component {
         console.log(this.state.project);
         let { name, type, price, description,
             image, status, user_id, user_name,
-            first_name, last_name, artist_type,
-            bidding_deadline, project_deadline, finished_url } = this.state.project;
+            first_name, last_name, artist_type, user_image,
+            bidding_deadline, project_deadline, finished_url, collab_user } = this.state.project;
+        // let collab_first, collab_last, collab_image, collab_user_id, collab_artist_type;
+        if (collab_user) {
+            var collab_first = collab_user.first_name,
+                collab_last = collab_user.last_name,
+                collab_image = collab_user.image,
+                collab_user_id = collab_user.id,
+                collab_artist_type = collab_user.artist_type
+        }
+
         if (price) {
             price = price.substr(1)
         }
@@ -179,6 +189,49 @@ class Project extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id} />
+                <div className='project-people'>
+                    {
+                        status === 'pending' ?
+                            <div >
+                                <div className='project-creator-info'>
+                                    <h1>CREATOR</h1>
+                                    <div className='project-creator-image' style={{ backgroundImage: `url('${user_image}')` }}>
+
+                                    </div>
+                                    <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
+                                        {first_name} {last_name}
+                                    </Link>
+                                    <p>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type}</p>
+                                </div>
+                            </div>
+                            :
+                            <div>
+                                <div className='project-creator-info'>
+                                    <h1>CREATOR</h1>
+                                    <div className='project-creator-image' style={{ backgroundImage: `url('${user_image}')` }}>
+
+                                    </div>
+                                    <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
+                                        {first_name} {last_name}
+                                    </Link>
+                                    <p>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type}</p>
+                                </div>
+
+                                <hr />
+
+                                <div className='project-collab-info'>
+                                    <h1>COLLABORATOR</h1>
+                                    <div className='project-collaborator-image' style={{ backgroundImage: `url('${collab_image}')` }}>
+
+                                    </div>
+                                    <Link to={this.props.user.id === collab_user_id ? `/profile/${collab_user_id}` : `/user/${collab_user_id}`}>
+                                        {collab_first} {collab_last}
+                                    </Link>
+                                    <p>{artist_type === 'Both' ? 'Filmmaker/Musician' : collab_artist_type}</p>
+                                </div>
+                            </div>
+                    }
+                </div>
                 <div className='project'>
                     <div className='project-image' style={{ backgroundImage: `url('${image}')` }}>
 

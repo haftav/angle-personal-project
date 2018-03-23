@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser, updateUser } from '../../ducks/users';
 import Dropzone from 'react-dropzone';
+import axios from 'axios';
+import _ from 'underscore';
 
 class GetInfo extends Component {
     constructor(props) {
@@ -10,7 +12,8 @@ class GetInfo extends Component {
         this.state = {
             user: {
                 image_data: {}
-            }
+            },
+            loading: true
         }
 
         this.updateUser = this.updateUser.bind(this);
@@ -18,16 +21,23 @@ class GetInfo extends Component {
         this.handleDrop = this.handleDrop.bind(this);
     }
 
+
     componentDidMount() {
-        this.props.getUser();
-        this.setState({
-            user: Object.assign({}, this.state.user, { artist_type: 'Both', image_data: {} })
+        axios.get('/api/user/info').then(res => {
+            if (res.data) {
+                this.props.history.push('/dashboard')
+            } else {
+                this.props.getUser();
+            }
         })
     }
 
     componentWillReceiveProps(newProps) {
-        if (newProps.user.info === 'true') {
-            this.props.history.push('/dashboard')
+        if (!_.isEqual(this.props, newProps)) {
+            this.setState({
+                user: Object.assign({}, newProps.user, { artist_type: 'Both', image_data: {} }),
+                loading: false
+            })
         }
     }
 
@@ -63,6 +73,9 @@ class GetInfo extends Component {
     render() {
         console.log(this.state);
         return (
+            this.state.loading ?
+            <h1>Loading</h1>
+            :
             <div>
                 {/* {
                     this.props.loading ?

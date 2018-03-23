@@ -22,7 +22,8 @@ const {
     CALLBACK_URL,
     CONNECTION_STRING,
     SUCCESS_URL,
-    FAILURE_URL
+    FAILURE_URL,
+    DASHBOARD_URL
 } = process.env;
 
 massive(CONNECTION_STRING).then(db => {
@@ -90,6 +91,16 @@ app.get('/api/user', (req, res) => {
         res.status(200).send(req.user);
     } else {
         res.status(401).send('nah');
+    }
+})
+
+app.get('/api/user/info', (req, res) => {
+    console.log('here', req.user);
+    if (req.user.info === 'true') {
+        res.status(200).send(true)
+    } else {
+        console.log('else');
+        res.status(200).send(false);
     }
 })
 

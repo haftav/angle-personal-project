@@ -47,7 +47,15 @@ module.exports = {
         db.get_project([id]).then(project => {
             db.get_bids([id]).then(bids => {
                 project[0].bids = bids;
-                res.status(200).send(project[0])
+                if (project[0].status !== 'pending') {
+                    const { collab_id } = project[0]
+                    db.find_id_user([collab_id]).then(user => {
+                        project[0].collab_user = user[0];
+                        res.status(200).send(project[0]);
+                    })
+                } else {
+                    res.status(200).send(project[0])
+                }
             })
         })
     },
@@ -74,7 +82,15 @@ module.exports = {
                     collabs.sort((a, b) => {
                         return a.project_deadline - b.project_deadline;
                     })
-                    res.status(200).send(collabs);
+                    if (!req.query.status) {
+                        res.status(200).send(collabs);
+                    } else {
+                        let status = req.query.status;
+                        collabs = collabs.filter((el) => {
+                            return el.status === status;
+                        })   
+                        res.status(200).send(collabs);
+                    }
                 })
             })
         })

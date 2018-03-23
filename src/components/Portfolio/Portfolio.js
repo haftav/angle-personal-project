@@ -130,13 +130,11 @@ export default class Portfolio extends Component {
                         </div>
                         :
                         this.state.active === 'videos' ?
-                            <div >
+                            <div className='portfolio-videos'>
                                 {
                                     vimeo_profile ?
-                                        <div className='portfolio-videos'>
-                                            <div>
-                                                {vimeo_projects}
-                                            </div>
+                                        <div>
+                                            {vimeo_projects}
                                         </div>
                                         :
                                         this.props.type === 'profile' ?
@@ -149,6 +147,7 @@ export default class Portfolio extends Component {
                                             <h3>This user has not connected their Vimeo profile.</h3>
                                 }
                             </div>
+
                             :
                             <div className='portfolio-music'>
                                 {

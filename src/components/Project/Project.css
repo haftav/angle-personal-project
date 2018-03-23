@@ -14,6 +14,84 @@
     border-top-left-radius: 0px;
 }
 
+.project-people {
+    position: absolute;
+    width: 275px;
+    height: 450px;
+    left: 0px;
+    top: 55px;
+    background: white;
+    border: 1px solid #d6d6d6;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+    color: rgb(54, 54, 54);
+    border-radius: 3px;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-people > div {
+    position: relative;
+    float: none;
+    display: block;
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+.project-people hr {
+    border: .5px solid rgb(216, 216, 216);
+}
+
+.project-creator-info,
+.project-collab-info {
+    margin: 10px auto;
+    height: 45%;
+    width: 100%;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.project-creator-info h1,
+.project-collab-info h1 {
+    font-size: 25px;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.project-creator-info a,
+.project-collab-info a {
+    color: rgb(3, 94, 146);
+    font-size: 22px;
+    text-decoration: none;
+    margin: 5px auto;
+}
+
+.project-creator-info p,
+.project-collab-info p {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 300;
+    margin: 5px auto;
+}
+
+.project-creator-image,
+.project-collaborator-image {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50px;
+    border: 1px solid rgb(178, 227, 255);;
+    margin: 5px auto;
+}
+
+
 .project-image {
     width: 100%;
     height: 275px;
@@ -35,6 +113,12 @@
     margin: auto;
     border-bottom: 1px solid #b3b3b37a;
     padding-bottom: 10px;
+}
+
+.project-creator a {
+    text-decoration: none;
+    color: rgb(3, 94, 146);
+    font-weight: 400;
 }
 
 .project-calendar-icon {

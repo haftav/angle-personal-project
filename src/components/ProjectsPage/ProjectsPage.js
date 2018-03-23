@@ -19,7 +19,7 @@ class ProjectsPage extends Component {
     }
 
     componentDidMount() {
-        axios.get('/api/collabs').then(res => {
+        axios.get(`/api/collabs/?status=${this.state.statusOption}`).then(res => {
             console.log(res.data);
             this.setState({
                 projects: res.data,
@@ -31,13 +31,13 @@ class ProjectsPage extends Component {
     handleStatusChange(val) {
         console.log(val);
         // this.toggleFeedLoading();
-        // axios.get(`/api/projects?status=${val}`).then(res => {
-        this.setState({
-            // projects: res.data,
-            statusOption: val,
-            // feedLoading: false
+        axios.get(`/api/collabs/?status=${val}`).then(res => {
+            console.log(res.data);
+            this.setState({
+                projects: res.data,
+                statusOption: val
+            })
         })
-        // })
     }
 
     render() {
