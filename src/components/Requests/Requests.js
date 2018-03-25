@@ -5,13 +5,15 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { getUser } from '../../ducks/users';
 import { request } from 'http';
+import { Link } from 'react-router-dom'
 
 class Requests extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            requests: []
+            requests: [],
+            loading: true
         }
 
         this.addConnection = this.addConnection.bind(this);
@@ -20,7 +22,8 @@ class Requests extends Component {
     componentDidMount() {
         axios.get('/api/connections/pending').then(res => {
             this.setState({
-                requests: res.data
+                requests: res.data,
+                loading: false
             })
         })
     }
@@ -29,7 +32,7 @@ class Requests extends Component {
         let userid = this.props.user.id;
         axios.post('/api/connections/accepted', { userid, id, connection_id }).then(res => {
             this.setState({
-                requests: res.data
+                requests: res.data,
             })
         })
     }
@@ -39,21 +42,35 @@ class Requests extends Component {
         const requests = this.state.requests.map((el, idx) => {
             let { first_name, last_name, image, user_id, connection_id } = el;
             return (
-                <div>
-                    <img src={image} alt={first_name} />
-                    <h1>{first_name} {last_name}</h1>
-                    <button onClick={() => this.addConnection(user_id, connection_id)}>Add Connection</button>
+                <div className='request'>
+
+                    <div className='request-image' style={{ backgroundImage: `url(${image})` }}>
+
+                    </div>
+                    <div className='request-info'>
+                        <Link to={user_id === this.props.user.id ? `/profile/${this.props.user.id}` : `/user/${user_id}`}>
+                            <h1>{first_name} {last_name}</h1>
+                        </Link>
+                        <button onClick={() => this.addConnection(user_id, connection_id)}>Add Connection</button>
+                    </div>
                 </div>
             )
         })
         return (
-            <div>
+            <div className='portfolio'>
                 <h1>Requests</h1>
                 {
-                    requests[0] ?
-                    requests
-                    :
-                    <h1>You have no requests at this time.</h1>
+                    this.state.loading ?
+                        <div className='requests-loading'></div>
+                        :
+                        <div className='requests-container'>
+                            {
+                                requests[0] ?
+                                    requests
+                                    :
+                                    <h1>You have no requests at this time.</h1>
+                            }
+                        </div>
                 }
 
             </div>

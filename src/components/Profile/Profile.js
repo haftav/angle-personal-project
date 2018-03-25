@@ -24,7 +24,8 @@ class Profile extends Component {
         this.state = {
             modalActive: false,
             projects: [],
-            userInfo: {}
+            userInfo: {},
+            loading: true
         }
 
         this.modalClick = this.modalClick.bind(this);
@@ -35,7 +36,8 @@ class Profile extends Component {
         console.log('userid: ', this.props.user.id)
         axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
             this.setState({
-                projects: res.data
+                projects: res.data,
+                loading: false
             })
         })
         axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
@@ -78,53 +80,63 @@ class Profile extends Component {
             )
         })
 
-        let {project_count, connection_count, review_count} = this.state.userInfo
+        let { project_count, connection_count, review_count } = this.state.userInfo
 
         return (
+
             <div>
                 <Header userid={this.props.user.id} />
-                <div className='profile-submenu'>
+                {
+                    this.state.loading ?
+                        <div className='profile-loading'></div>
+                        :
+                        <div>
 
-                    <Link to={`/profile/${this.props.user.id || 1}`}>PROFILE HOME</Link>
-                    <Link to={`/profile/${this.props.user.id || 1}/reviews`}>REVIEWS</Link>
-                    <Link to={`/profile/${this.props.user.id || 1}/connections`}>CONNECTIONS</Link>
-                    <Link to={`/profile/${this.props.user.id}/requests`}>REQUESTS</Link>
-                </div>
-                <div className='profile'>
-                    <div className='profile-user-content'>
-                        <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
+                            <div className='profile-submenu'>
 
-                        </div>
+                                <Link to={`/profile/${this.props.user.id || 1}`}>PROFILE HOME</Link>
+                                <Link to={`/profile/${this.props.user.id || 1}/reviews`}>REVIEWS</Link>
+                                <Link to={`/profile/${this.props.user.id || 1}/connections`}>CONNECTIONS</Link>
+                                <Link to={`/profile/${this.props.user.id}/requests`}>REQUESTS</Link>
+                            </div>
+                            <div className='profile'>
+                                <div className='profile-user-content'>
+                                    <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
 
-                        <div className='profile-description'>
-                            <h2>{first_name || 'first'} {last_name || 'last'}</h2>
-                            <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
-                            <p>{description || 'description description description description etc.'}</p>
-                            <button onClick={this.modalClick}>Edit Info</button>
+                                    </div>
+
+                                    <div className='profile-description'>
+                                        <h2>{first_name || 'first'} {last_name || 'last'}</h2>
+                                        <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
+                                        <p>{description || 'description description description description etc.'}</p>
+                                        <button onClick={this.modalClick}>Edit Info</button>
+                                    </div>
+                                    <div className='profile-stats'>
+                                        <div>
+                                            {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
+                                        </div>
+                                        <div>
+                                            {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
+                                        </div>
+                                        <div>
+                                            {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
+                                        </div>
+                                    </div>
+                                </div>
+                                <ModalContainer toggleModal={this.modalClick}
+                                    active={this.state.modalActive}
+                                    info='edit' />
+                            </div>
+                            <Switch>
+                                <Route exact path='/profile/:id' render={() =>
+                                    <Portfolio user={this.props.user} type='profile' user_projects={projects} />} />
+                                <Route path='/profile/:id/reviews' component={Reviews} />
+                                <Route path='/profile/:id/connections' component={Connections} />
+                                <Route path='/profile/:id/requests' component={Requests} />
+                            </Switch>
                         </div>
-                        <div className='profile-stats'>
-                            <div>
-                                {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
-                            </div>
-                            <div>
-                                {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
-                            </div>
-                            <div>
-                                {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
-                            </div>
-                        </div>
-                    </div>
-                    <ModalContainer toggleModal={this.modalClick}
-                        active={this.state.modalActive}
-                        info='edit' />
-                </div>
-                <Switch>
-                    <Route exact path='/profile/:id' render={() =>
-                        <Portfolio user={this.props.user} type='profile' user_projects={projects} />} />
-                    <Route path='/profile/:id/reviews' component={Reviews} />
-                    <Route path='/profile/:id/connections' component={Connections} />
-                    <Route path='/profile/:id/requests' component={Requests} />
-                </Switch>
+                }
+
             </div>
         )
     }

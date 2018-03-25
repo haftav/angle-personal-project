@@ -21,7 +21,8 @@ class Collab extends Component {
             finished_url: '',
             messages: [],
             userID: null,
-            scroll: false
+            scroll: false,
+            loading: true
         }
 
         this.completeProject = this.completeProject.bind(this);
@@ -43,7 +44,8 @@ class Collab extends Component {
         axios.get(`/api/projects/collab/${project_id}`).then(res => {
             console.log(res.data);
             this.setState({
-                project: res.data
+                project: res.data,
+                loading: false
             })
         })
         axios.get(`/api/messages/${this.props.match.params.id}`).then(res => {
@@ -188,93 +190,100 @@ class Collab extends Component {
         return (
             <div>
                 <Header userid={this.props.user.id} />
-                <div className='project'>
-                    <div style={{ minHeight: "calc(100vh - 55px)" }}>
+                {
+                    this.state.loading ?
+                        <div className='collab-loading'></div>
+                        :
+                        <div>
+                            <div className='project'>
+                                <div style={{ minHeight: "calc(100vh - 55px)" }}>
 
-                        <div className='project-image' style={{ backgroundImage: `url('${image}')` }}>
+                                    <div className='project-image' style={{ backgroundImage: `url('${image}')` }}>
 
-                        </div>
-                        <h1 className='project-name'>{name}</h1>
-                        <div className='project-creator' style={{ width: "90%" }}>
-                            <h1>Collab between&nbsp;
+                                    </div>
+                                    <h1 className='project-name'>{name}</h1>
+                                    <div className='project-creator' style={{ width: "90%" }}>
+                                        <h1>Collab between&nbsp;
                         <Link to={this.props.user.id === user_id ? `/profile/${user_id}` : `/user/${user_id}`}>
-                                    {first_name} {last_name}
-                                </Link>
-                                &nbsp;and&nbsp;
+                                                {first_name} {last_name}
+                                            </Link>
+                                            &nbsp;and&nbsp;
                         <Link to={this.props.user.id === collab_id ? `/profile/${collab_id}` : `/user/${collab_id}`}>
-                                    {collab_first} {collab_last}
-                                </Link></h1>
-                        </div>
-                        <div className='project-description'>
-                            <p>{description}</p>
-                        </div>
-                        <div className='project-deadline'>
-                            <h3 style={{paddingTop: "35px"}}>Deadline: {project_deadline}</h3>
-                        </div>
-                    </div>
-                    {
-                        this.props.user.id === collab_id ?
-                            <div className='project-complete'>
+                                                {collab_first} {collab_last}
+                                            </Link></h1>
+                                    </div>
+                                    <div className='project-description'>
+                                        <p>{description}</p>
+                                    </div>
+                                    <div className='project-deadline'>
+                                        <h3 style={{ paddingTop: "35px" }}>Deadline: {project_deadline}</h3>
+                                    </div>
+                                </div>
                                 {
-                                    status === 'completed' ?
-                                        <h1 style={{ width: "90%", fontSize: "22px" }}>This project has been completed.</h1>
-                                        :
-                                        <div >
-                                            <h1 style={{ width: "90%", fontSize: "22px" }}>Enter the link to the finished project below.</h1>
-                                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "25px" }}>
-                                                <input placeholder='Project URL'
-                                                    className='submit-project-input'
-                                                    value={this.setState.finished_url}
-                                                    onChange={(e) => this.handleChange(e.target.value)} />
-                                                <button className='submit-project-button' onClick={this.submitProject}>Submit</button>
-                                            </div>
-                                        </div>
-                                }
-
-                                {
-                                    finished_url ?
+                                    this.props.user.id === collab_id ?
                                         <div className='project-complete'>
-                                            <h1>Your Submission</h1>
-                                            <ReactPlayer url={finished_url}
-                                                className='project-complete-media'
-                                                playing={false}
-                                                width='500px'
-                                                height='300px' />
+                                            {
+                                                status === 'completed' ?
+                                                    <h1 style={{ width: "90%", fontSize: "22px" }}>This project has been completed.</h1>
+                                                    :
+                                                    <div >
+                                                        <h1 style={{ width: "90%", fontSize: "22px" }}>Enter the link to the finished project below.</h1>
+                                                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "25px" }}>
+                                                            <input placeholder='Project URL'
+                                                                className='submit-project-input'
+                                                                value={this.setState.finished_url}
+                                                                onChange={(e) => this.handleChange(e.target.value)} />
+                                                            <button className='submit-project-button' onClick={this.submitProject}>Submit</button>
+                                                        </div>
+                                                    </div>
+                                            }
+
+                                            {
+                                                finished_url ?
+                                                    <div className='project-complete'>
+                                                        <h1>Your Submission</h1>
+                                                        <ReactPlayer url={finished_url}
+                                                            className='project-complete-media'
+                                                            playing={false}
+                                                            width='500px'
+                                                            height='300px' />
+                                                    </div>
+                                                    :
+                                                    null
+                                            }
                                         </div>
                                         :
-                                        null
+                                        finished_url ?
+                                            <div className='project-complete'>
+                                                <h1>{collab_first}'s Submission</h1>
+                                                <ReactPlayer url={finished_url}
+                                                    className='project-complete-media'
+                                                    playing={false}
+                                                    width='500px'
+                                                    height='300px' />
+                                                <button className='submit-project-button'
+                                                    style={{ marginBottom: "15px" }}
+                                                    onClick={this.completeProject}>Finish Project</button>
+                                            </div>
+                                            :
+                                            <div className='project-complete'>
+                                                <h1 style={{ width: "90%", fontSize: "22px" }}>Your collaborator has not yet finished the project.</h1>
+                                            </div>
                                 }
                             </div>
-                            :
-                            finished_url ?
-                                <div className='project-complete'>
-                                    <h1>{collab_first}'s Submission</h1>
-                                    <ReactPlayer url={finished_url}
-                                        className='project-complete-media'
-                                        playing={false}
-                                        width='500px'
-                                        height='300px' />
-                                    <button className='submit-project-button' 
-                                    style={{marginBottom: "15px"}} 
-                                    onClick={this.completeProject}>Finish Project</button>
+                            <h1 className='chat-title'>Chat with {this.props.user.id === user_id ? collab_first : first_name}!</h1>
+                            <div className='collab-chat' >
+                                <div className='chat-messages-container'
+                                    ref={el => this.container = el}>
+                                    {messages}
                                 </div>
-                                :
-                                <div className='project-complete'>
-                                    <h1 style={{ width: "90%", fontSize: "22px" }}>Your collaborator has not yet finished the project.</h1>
+                                <div className='collab-chat-input'>
+                                    <input maxlength='200' ref='message' />
+                                    <button onClick={this.sendMessage}>Send</button>
                                 </div>
-                    }
-                </div>
-                <h1 className='chat-title'>Chat with {this.props.user.id === user_id ? collab_first : first_name}!</h1>
-                <div className='collab-chat' >
-                    <div className='chat-messages-container'
-                        ref={el => this.container = el}>
-                        {messages}
-                    </div>
-                    <div className='collab-chat-input'>
-                        <input maxlength='200' ref='message' />
-                        <button onClick={this.sendMessage}>Send</button>
-                    </div>
-                </div>
+                            </div>
+                        </div>
+                }
             </div>
         )
     }

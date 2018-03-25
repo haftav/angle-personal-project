@@ -14,7 +14,8 @@ class ProjectsPage extends Component {
         this.state = {
             projects: [],
             statusOption: 'pending',
-            loading: true
+            loading: true,
+            feedLoading: false
         }
     }
 
@@ -29,13 +30,17 @@ class ProjectsPage extends Component {
     }
 
     handleStatusChange(val) {
+        this.setState({
+            feedLoading: true
+        })
         console.log(val);
         // this.toggleFeedLoading();
         axios.get(`/api/collabs/?status=${val}`).then(res => {
             console.log(res.data);
             this.setState({
                 projects: res.data,
-                statusOption: val
+                statusOption: val,
+                feedLoading: false
             })
         })
     }
@@ -138,7 +143,7 @@ class ProjectsPage extends Component {
                 <div className='projects-page'>
                     {
                         this.state.loading ?
-                            <h1>Loading</h1>
+                            <div className='projects-page-loading'></div>
                             :
                             <div>
                                 <h1>Projects</h1>
@@ -167,6 +172,9 @@ class ProjectsPage extends Component {
                                     <label htmlFor='statusChoice3'><span className='radio'>Completed</span></label>
                                 </div>
                                 {
+                                    this.state.feedLoading ?
+                                    <div className='project-feed-loading'></div>
+                                    :
                                     this.state.projects.length === 0 ?
                                         <h1>No projects to display.</h1>
                                         :

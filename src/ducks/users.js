@@ -26,7 +26,7 @@ export default function reducer(state = initialState, action) {
 export function getUser() {
     let userData = axios.get('/api/user').then(res => {
         return res.data;
-    })
+    }).catch(err => this.props.history.push('http://localhost:3000/#/'))
     return {
         type: GET_USER,
         payload: userData

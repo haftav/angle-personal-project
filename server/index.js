@@ -129,6 +129,12 @@ app.get('/api/user/:id', (req, res) => {
     })
 })
 
+app.get('/api/auth/logout', function(req, res){
+    req.logOut();
+    //need to change the redirect url
+    res.redirect(process.env.FAILURE_URL);
+});
+
 app.put('/api/user/media', (req, res) => {
     const db = app.get('db');
     const id = req.user.id;
@@ -144,6 +150,8 @@ app.put('/api/user/media', (req, res) => {
         })
     }
 })
+
+
 
 // app.get('/auth/logout', function(req, res){
 //     req.logOut();

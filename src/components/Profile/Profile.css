@@ -185,3 +185,23 @@
     grid-column: 5 / 7;
     background: #FFFFFF;
 }
+
+.profile-loading {
+    border: 10px solid rgb(201, 201, 201);
+    border-top: 10px solid rgb(115, 154, 187);
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 255px;
+    animation: loading 1s infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

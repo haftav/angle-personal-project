@@ -8,7 +8,7 @@ import Bid from '../Bid/Bid';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import './Project.css';
-
+import _ from 'underscore';
 
 class Project extends Component {
     constructor(props) {
@@ -44,6 +44,21 @@ class Project extends Component {
                 loading: false
             })
         })
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (!_.isEqual(this.props, newProps)) {
+            this.setState({
+                loading: true
+            })
+            axios.get(`/api/projects/${newProps.match.params.id}`).then(res => {
+                console.log(res.data);
+                this.setState({
+                    project: res.data,
+                    loading: false
+                })
+            })
+        }
     }
 
     modalClick() {
@@ -198,14 +213,8 @@ class Project extends Component {
                 <Header userid={this.props.user.id} />
                 {
                     this.state.loading ?
-                        <div>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
-                            <h1>loading</h1>
+                        <div className='project-loading'>
+
                         </div>
                         :
                         <div>

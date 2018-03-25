@@ -1,24 +1,19 @@
-img {
-    height: 100px;
-}
-
-.requests-container {
+.connections-container {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     padding: 0px 100px;
 }
 
-.requests-container > h1 {
-    text-align: center;
-    margin: auto;
-}
-
-.requests-container a {
+.connections-container a {
     text-decoration: none;
 }
 
-.request {
+.connections-container h1 {
+    margin: auto;
+}
+
+.connection {
     width: 250px;
     height: 80px;
     display: flex;
@@ -29,7 +24,7 @@ img {
     color: rgb(54, 54, 54);
 }
 
-.request-image {
+.connection-image {
     height: 80px;
     width: 80px;
     background-size: cover;
@@ -38,24 +33,23 @@ img {
     border-bottom-left-radius: 5px;
 }
 
-.request h1 {
+.connection h1 {
     border-bottom: 1px solid rgb(202, 202, 202);
     color: rgb(0, 95, 150);
     padding-bottom: 2px;
-
 }
 
 
-.request-info {
+.connection-info {
     text-align: left;
     padding: 5px;
 }
 
-.request-info button {
-    margin-top: 10px;
+.connection-info p {
+    padding-top: 5px;
 }
 
-.requests-loading {
+.connections-loading {
     border: 10px solid rgb(201, 201, 201);
     border-top: 10px solid rgb(115, 154, 187);
     height: 75px;

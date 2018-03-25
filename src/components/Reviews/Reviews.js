@@ -14,7 +14,8 @@ class Reviews extends Component {
             reviews: [],
             canAdd: false,
             reviewText: '',
-            editID: null
+            editID: null,
+            loading: true
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -30,7 +31,8 @@ class Reviews extends Component {
         console.log(this.props.match.params.id);
         axios.get(`/api/reviews/${this.props.match.params.id}`).then(res => {
             this.setState({
-                reviews: res.data
+                reviews: res.data,
+                loading: false
             })
         })
         if (this.props.user.id != this.props.match.params.id) {
@@ -50,9 +52,13 @@ class Reviews extends Component {
         console.log('new props: ', newProps);
         console.log(_.isEqual(this.props, newProps));
         if (!_.isEqual(this.props, newProps)) {
+            this.setState({
+                loading: true
+            })
             axios.get(`/api/reviews/${newProps.match.params.id}`).then(res => {
                 this.setState({
-                    reviews: res.data
+                    reviews: res.data,
+                    loading: false
                 })
             })
             if (this.props.user.id != newProps.match.params.id) {
@@ -192,19 +198,37 @@ class Reviews extends Component {
             <div className='portfolio'>
                 <h1>REVIEWS</h1>
                 {
-                    this.state.canAdd ?
-                        <div>
-                            <ReviewInput submit={this.submitReview}
-                                handleChange={this.handleChange}
-                                user={this.props.user} />
-                        </div>
+                    this.state.loading ?
+                        <div className='reviews-loading'></div>
                         :
-                        this.props.user.id == this.props.match.params.id ?
-                            <h1>Your reviews</h1>
+                        this.state.canAdd ?
+                            <div>
+                                <ReviewInput submit={this.submitReview}
+                                    handleChange={this.handleChange}
+                                    user={this.props.user} />
+                                    {
+                                        reviews
+                                    }
+                            </div>
                             :
-                            null
+                            this.props.user.id == this.props.match.params.id ?
+                                reviews.length > 0 ?
+                                    <div>
+
+                                        <h1>Your reviews</h1>
+                                        { reviews }
+                                    </div>
+                                    :
+                                    <h1>No reviews to display.</h1>
+                                :
+                                reviews.length > 0 ?
+                                reviews
+                                :
+                                <h1>No reviews to display.</h1>
                 }
-                {reviews}
+                {
+
+                }
             </div>
         )
     }

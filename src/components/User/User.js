@@ -24,7 +24,8 @@ class User extends Component {
             connection_status: '',
             request_status: '',
             connections: [],
-            userInfo: {}
+            userInfo: {},
+            loading: true
         }
 
         this.getInfo = this.getInfo.bind(this);
@@ -36,7 +37,8 @@ class User extends Component {
 
         axios.get(`/api/user/${id}`).then(res => {
             this.setState({
-                user: res.data
+                user: res.data,
+                loading: false
             })
         })
         axios.get(`/api/projects/user/${id}`).then(res => {
@@ -140,64 +142,72 @@ class User extends Component {
 
         return (
             <div>
-                <Header userid={this.props.user.id}/>
-                <div className='profile-submenu'>
-                    <Link to={`/user/${this.props.match.params.id}`}>PROFILE</Link>
-                    <Link to={`/user/${this.props.match.params.id}/reviews`}>REVIEWS</Link>
-                    <Link to={`/user/${this.props.match.params.id}/connections`}>CONNECTIONS</Link>
-                </div>
-                <div className='profile-request'>
-                    {
-                        this.state.request_status === 'requesting' ?
-                            <p>
-                                {first_name} has requested to connect.
+                <Header userid={this.props.user.id} />
+                {
+                    this.state.loading ?
+                        <div className='profile-loading'></div>
+                        :
+                        <div>
+
+                            <div className='profile-submenu'>
+                                <Link to={`/user/${this.props.match.params.id}`}>PROFILE</Link>
+                                <Link to={`/user/${this.props.match.params.id}/reviews`}>REVIEWS</Link>
+                                <Link to={`/user/${this.props.match.params.id}/connections`}>CONNECTIONS</Link>
+                            </div>
+                            <div className='profile-request'>
+                                {
+                                    this.state.request_status === 'requesting' ?
+                                        <p>
+                                            {first_name} has requested to connect.
                         </p>
 
-                            :
-                            !this.state.connection_status ?
-                                <p>
-                                    You have not yet connected with {first_name}.
+                                        :
+                                        !this.state.connection_status ?
+                                            <p>
+                                                You have not yet connected with {first_name}.
                         </p>
-                                :
-                                this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
-                                    <p>You are connected with {first_name}</p>
-                    }
-                </div>
-                <div className='profile'>
-                    <div className='profile-user-content'>
-                        <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
+                                            :
+                                            this.state.connection_status === 'pending' ? <p>Connection Pending</p> :
+                                                <p>You are connected with {first_name}</p>
+                                }
+                            </div>
+                            <div className='profile'>
+                                <div className='profile-user-content'>
+                                    <div className='profile-user-image' style={{ backgroundImage: `url('${image}')` }}>
 
-                        </div>
-                        <div className='profile-description'>
-                            <h2>{first_name || 'first'} {last_name || 'last'}</h2>
-                            <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
-                            <p>{description || 'description description description description etc.'}</p>
-                            {
-                                this.state.connection_status === 'friends' ?
-                                    null
-                                    :
-                                    <button onClick={this.addConnection}>Connect</button>
-                            }
-                        </div>
-                        <div className='profile-stats'>
-                            <div>
-                                {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
+                                    </div>
+                                    <div className='profile-description'>
+                                        <h2>{first_name || 'first'} {last_name || 'last'}</h2>
+                                        <h2>{artist_type === 'Both' ? 'Filmmaker/Musician' : artist_type || 'specialty'}</h2>
+                                        <p>{description || 'description description description description etc.'}</p>
+                                        {
+                                            this.state.connection_status === 'friends' ?
+                                                null
+                                                :
+                                                <button onClick={this.addConnection}>Connect</button>
+                                        }
+                                    </div>
+                                    <div className='profile-stats'>
+                                        <div>
+                                            {this.state.userInfo.project_count} {project_count === "1" ? 'Project' : 'Projects'}
+                                        </div>
+                                        <div>
+                                            {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
+                                        </div>
+                                        <div>
+                                            {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                {this.state.userInfo.review_count} {review_count === "1" ? 'Review' : 'Reviews'}
-                            </div>
-                            <div>
-                                {this.state.userInfo.connection_count} {connection_count === "1" ? 'Connection' : 'Connections'}
-                            </div>
+                            <Switch>
+                                <Route exact path='/user/:id' render={() =>
+                                    <Portfolio user={this.state.user} type='user' user_projects={projects} />} />
+                                <Route path='/user/:id/reviews' component={Reviews} />
+                                <Route path='/user/:id/connections' component={Connections} />
+                            </Switch>
                         </div>
-                    </div>
-                </div>
-                <Switch>
-                    <Route exact path='/user/:id' render={() =>
-                        <Portfolio user={this.state.user} type='user' user_projects={projects} />} />
-                    <Route path='/user/:id/reviews' component={Reviews} />
-                    <Route path='/user/:id/connections' component={Connections} />
-                </Switch>
+                }
 
             </div>
         )
