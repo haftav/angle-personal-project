@@ -32,27 +32,52 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser();
-        console.log('userid: ', this.props.user.id)
-        axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
-            this.setState({
-                projects: res.data,
-                loading: false
-            })
-        })
-        axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
-            this.setState({
-                userInfo: Object.assign({}, this.state.userInfo, res.data)
-            })
-        })
-
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/');
+            } else {
+                if (this.props.user.id != this.props.match.params.id) {
+                    this.props.history.push(`/profile/${this.props.user.id}`);
+                } else {
+                    axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
+                        this.setState({
+                            projects: res.data,
+                            loading: false
+                        })
+                    })
+                    axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
+                        this.setState({
+                            userInfo: Object.assign({}, this.state.userInfo, res.data)
+                        })
+                    })
+                }
+            }
+        });
     }
 
     componentWillReceiveProps(newProps) {
-
+        console.log('old props: ', this.props);
+        console.log('new props: ', newProps);
         if (!_.isEqual(this.props.user, newProps.user)) {
-            this.props.getUser();
-        }
+            this.props.getUser()
+        } else if (!_.isEqual(this.props, newProps)) {
+            if (this.props.user.id != newProps.match.params.id) {
+                this.props.history.push(`/profile/${this.props.user.id}`);
+            } else {
+                axios.get(`/api/projects/user/${this.props.user.id}`).then(res => {
+                    this.setState({
+                        projects: res.data,
+                        loading: false
+                    })
+                })
+                axios.get(`/api/stats/${this.props.match.params.id}`).then(res => {
+                    this.setState({
+                        userInfo: Object.assign({}, this.state.userInfo, res.data)
+                    })
+                })
+            }
+        } 
+        
     }
 
 

@@ -36,14 +36,24 @@ class Project extends Component {
     }
 
     componentDidMount() {
-        const project_id = this.props.match.params.id;
-        axios.get(`/api/projects/${project_id}`).then(res => {
-            console.log(res.data);
-            this.setState({
-                project: res.data,
-                loading: false
-            })
-        })
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/')
+            } else {
+                const project_id = this.props.match.params.id;
+                axios.get(`/api/projects/${project_id}`).then(res => {
+                    if (res.data.status === 'collab') {
+                        this.props.history.push(`/collab/${project_id}`)
+                    } else {
+                        console.log(res.data);
+                        this.setState({
+                            project: res.data,
+                            loading: false
+                        })
+                    }
+                })
+            }
+        });
     }
 
     componentWillReceiveProps(newProps) {

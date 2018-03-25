@@ -26,7 +26,11 @@ class CreateProject extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser();
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/');
+            }
+        })
     }
 
     handleDrop(files) {

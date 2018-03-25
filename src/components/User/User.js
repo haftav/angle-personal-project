@@ -34,12 +34,15 @@ class User extends Component {
     }
 
     getInfo(id) {
-
         axios.get(`/api/user/${id}`).then(res => {
-            this.setState({
-                user: res.data,
-                loading: false
-            })
+            if (this.props.user.id == id) {
+                this.props.history.push(`/profile/${id}`)
+            } else {
+                this.setState({
+                    user: res.data,
+                    loading: false
+                })
+            }
         })
         axios.get(`/api/projects/user/${id}`).then(res => {
             this.setState({
@@ -84,7 +87,13 @@ class User extends Component {
     }
 
     componentDidMount() {
-        this.getInfo(this.props.match.params.id)
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/')
+            } else {
+                this.getInfo(this.props.match.params.id)
+            }
+        })
     }
 
     componentWillReceiveProps(newProps) {

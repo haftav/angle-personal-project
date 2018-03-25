@@ -32,22 +32,24 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser();
-        axios.get('/api/projects').then(res => {
-            this.setState({
-                projects: res.data,
-                loading: false
-            })
-        })
-        axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
-            let articles = res.data.articles.slice(0, 5);
-            this.setState({
-                articles: articles
-            })
-        })
-
-
-
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/')
+            } else {
+                axios.get('/api/projects').then(res => {
+                    this.setState({
+                        projects: res.data,
+                        loading: false
+                    })
+                })
+                axios.get(`https://newsapi.org/v2/top-headlines?country=us&category=entertainment&apiKey=${process.env.REACT_APP_NEWS_TOKEN}`).then(res => {
+                    let articles = res.data.articles.slice(0, 5);
+                    this.setState({
+                        articles: articles
+                    })
+                })
+            }
+        });
     }
 
     toggleFeedLoading() {

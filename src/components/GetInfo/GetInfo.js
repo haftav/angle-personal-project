@@ -27,10 +27,8 @@ class GetInfo extends Component {
         axios.get('/api/user/info').then(res => {
             if (res.data) {
                 this.props.history.push('/dashboard')
-            } else {
-                this.props.getUser();
-            }
-        })
+            } 
+        }).catch(err => this.props.history.push('/'))
     }
 
     componentWillReceiveProps(newProps) {

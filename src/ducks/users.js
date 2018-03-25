@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const initialState = {
     user: {},
     loading: false
@@ -26,7 +27,7 @@ export default function reducer(state = initialState, action) {
 export function getUser() {
     let userData = axios.get('/api/user').then(res => {
         return res.data;
-    }).catch(err => this.props.history.push('http://localhost:3000/#/'))
+    }).catch(err => false)
     return {
         type: GET_USER,
         payload: userData

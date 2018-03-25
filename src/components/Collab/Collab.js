@@ -35,25 +35,35 @@ class Collab extends Component {
     }
 
     componentDidMount() {
-        this.props.getUser();
-        this.socket = io('/');
-        this.socket.emit('join room', { room: this.props.match.params.id })
-        this.socket.on('welcome', this.setUserId)
-        this.socket.on('message dispatched', this.updateMessages);
-        const project_id = this.props.match.params.id;
-        axios.get(`/api/projects/collab/${project_id}`).then(res => {
-            console.log(res.data);
-            this.setState({
-                project: res.data,
-                loading: false
-            })
-        })
-        axios.get(`/api/messages/${this.props.match.params.id}`).then(res => {
-            this.setState({
-                messages: res.data,
-                scroll: true
-            })
-        })
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/')
+            } else {
+                this.socket = io('/');
+                this.socket.emit('join room', { room: this.props.match.params.id })
+                this.socket.on('welcome', this.setUserId)
+                this.socket.on('message dispatched', this.updateMessages);
+                const project_id = this.props.match.params.id;
+                axios.get(`/api/projects/collab/${project_id}`).then(res => {
+                    console.log(res.data);
+                    if (this.props.user.id == res.data.collab_id || this.props.user.id == res.data.user_id) {
+                        this.setState({
+                            project: res.data,
+                            loading: false
+                        })
+                    }
+                    else {
+                        this.props.history.push('/dashboard')
+                    }
+                })
+                axios.get(`/api/messages/${this.props.match.params.id}`).then(res => {
+                    this.setState({
+                        messages: res.data,
+                        scroll: true
+                    })
+                })
+            }
+        });
     }
 
     componentWillReceiveProps(newProps) {

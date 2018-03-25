@@ -200,23 +200,6 @@ input[type="radio"]:checked + label span.radio::after {
     color: rgb(1, 84, 151);
 }
 
-.create-button {
-    height: 50px;
-    width: 250px;
-}
-
-.create-button button {
-    background: #003C5E;
-    height: 50px;
-    width: 250px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 100;
-    letter-spacing: .1em;
-    font-size: 20px;
-    cursor: pointer;
-    margin: auto;
-}
-
 
 .filter-buttons {
     grid-row-start: 2;

@@ -11,7 +11,11 @@ export default function Header({ userid }) {
                 <Link className='header-home' to="/dashboard">
                     <img src={logo} alt="" />
                 </Link>
-                <input />
+                <Link className='create-button' to='/create'>
+                    <i class="fa fa-plus"></i>
+                    &nbsp;
+                    CREATE
+                </Link>
             </div>
             <div className='header-right'>
                 <Link className='home-button' to='/dashboard'>
@@ -27,7 +31,7 @@ export default function Header({ userid }) {
                     Projects
                 </Link>
                 <a href={process.env.REACT_APP_LOGOUT}>
-                <i class="fa fa-sign-out"></i>
+                    <i class="fa fa-sign-out"></i>
                     Log Out
                     </a>
             </div>

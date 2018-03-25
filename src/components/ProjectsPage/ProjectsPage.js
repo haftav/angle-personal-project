@@ -20,13 +20,29 @@ class ProjectsPage extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/api/collabs/?status=${this.state.statusOption}`).then(res => {
-            console.log(res.data);
-            this.setState({
-                projects: res.data,
-                loading: false
-            })
-        })
+        this.props.getUser().then(res => {
+            if (!res.value) {
+                this.props.history.push('/');
+            } else {
+                if (this.props.user.id != this.props.match.params.id) {
+                    this.props.history.push('/dashboard');
+                } else {
+                    axios.get(`/api/collabs/?status=${this.state.statusOption}`).then(res => {
+                        console.log(res.data);
+                        this.setState({
+                            projects: res.data,
+                            loading: false
+                        })
+                    })
+                }
+            }
+        });
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (this.props.user.id != newProps.match.params.id) {
+            this.props.history.push(`/projects/${this.props.user.id}`);
+        }
     }
 
     handleStatusChange(val) {
