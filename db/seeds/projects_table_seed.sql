@@ -11,5 +11,6 @@ CREATE TABLE IF NOT EXISTS projects (
     collab_id INTEGER REFERENCES users(id),
     bidding_deadline DATE,
     project_deadline DATE,
-    finished_url VARCHAR(200)
+    finished_url VARCHAR(200),
+    sort_date TEXT
 )

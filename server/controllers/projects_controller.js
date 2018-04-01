@@ -2,7 +2,8 @@ module.exports = {
     createProject: (req, res) => {
         const db = req.app.get('db');
         const { user_id, name, type, price, description, image, bidding_deadline, project_deadline } = req.body;
-        db.create_project([user_id, name, type, price, description, image, bidding_deadline, project_deadline]).then(project => {
+        let sort_date = new Date();
+        db.create_project([user_id, name, type, price, description, image, bidding_deadline, project_deadline, sort_date]).then(project => {
             res.status(200).send(project[0])
         })
     },
@@ -19,10 +20,12 @@ module.exports = {
                     return item;
                 })
                 Promise.all(results).then(function(values) {
-                    projects = [...projects, ...values]
+                    projects = [...projects, ...values];
+                    console.log(projects);
                     projects.sort((a, b) => {
-                        return b.id - a.id
+                        return b.sort_date > a.sort_date ? 1 : b.sort_date < a.sort_date ? -1 : 0
                     })
+                    console.log(projects);
                     if (!req.query.status && !req.query.type) {
                         res.status(200).send(projects);
                     } else {            
@@ -158,8 +161,9 @@ module.exports = {
     completeProject: (req, res) => {
         const db = req.app.get('db');
         const { id } = req.params;
+        let sort_date = new Date();
         //eventually add in completed link to this db query
-        db.complete_project([id]).then(output => {
+        db.complete_project([id, sort_date]).then(output => {
             db.get_project([id]).then(project => {
                 const { collab_id } = project[0];
                 db.find_id_user([collab_id]).then(user => {

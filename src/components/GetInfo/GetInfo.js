@@ -24,16 +24,24 @@ class GetInfo extends Component {
 
 
     componentDidMount() {
+        this.props.getUser();
         axios.get('/api/user/info').then(res => {
             if (res.data) {
                 this.props.history.push('/dashboard')
-            } 
+            } else {
+                console.log(res.data);
+                this.setState({
+                    user: Object.assign({}, {artist_type: 'Both', image_data: {} }),
+                    loading: false
+                })
+            }
         }).catch(err => this.props.history.push('/'))
     }
 
     componentWillReceiveProps(newProps) {
         if (!_.isEqual(this.props, newProps)) {
             axios.get('/api/user/info').then(res => {
+                console.log('here');
                 if (res.data) {
                     this.props.history.push('/dashboard')
                 } else {
@@ -82,10 +90,6 @@ class GetInfo extends Component {
                 <h1>Loading</h1>
                 :
                 <div>
-                    {/* {
-                    this.props.loading ?
-                    <h1>Loading</h1>
-                    : */}
                     <div className='login-header'>
                         <img src={logo} alt="logo" />
                     </div>
