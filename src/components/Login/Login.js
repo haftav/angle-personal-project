@@ -16,17 +16,7 @@ export default class Login extends Component {
                         <h1>There's more than one side to every story.</h1>
                     </div>
                 </section>
-                <section className='login-middle'>
-                    <div className='login-middle-top'>
-                    </div>
-                    <div className='login-middle-middle'>
 
-                    </div>
-                    <div className='login-middle-bottom'>
-
-                    </div>
-
-                </section>
             </div>
         )
     }
