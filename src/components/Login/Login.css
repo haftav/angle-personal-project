@@ -122,3 +122,16 @@
     height: 15vh;
     background: lightsalmon;
 }
+
+@media (max-width: 400px) {
+    .login-main > h1 {
+        font-size: 30px;
+        width: 80%;
+        line-height: 1.2em;
+        margin-top: 35px;
+    }
+    .login-button {
+        width: 300px;
+        font-size: 25px;
+    }
+}

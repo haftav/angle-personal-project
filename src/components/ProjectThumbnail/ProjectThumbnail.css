@@ -185,3 +185,87 @@
     font-size: 30px;
     color: rgb(5, 92, 133);
 }
+
+@media (max-width: 1240px) {
+    .project-thumbnail-content {
+        grid-template-rows: 40px 1fr 1fr 100px;
+    }
+    .project-thumbnail {
+        width: 500px;
+    }
+    .project-thumbnail-content {
+        width: 500px;
+        height: 400px;
+    }
+    .project-thumbnail-projectimage {
+        grid-column: 3 / 4;
+        grid-row: 2 / span 1;
+        margin: 0px auto;
+    }
+    .project-thumbnail-description {
+        grid-column: 1 / 5;
+        grid-row: 3 / span 1;
+        width: 400px;
+        margin: auto;
+    }
+    .project-thumbnail-bottom {
+        grid-row: 4 / span 1;
+    }
+    .project-thumbnail-name h2 {
+        font-size: 18px;
+    }
+    .project-thumbnail-name span {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 500px) {
+    .project-thumbnail-content {
+        grid-template-rows: 40px 1fr 1fr 100px;
+    }
+    .project-thumbnail {
+        width: 275px;
+    }
+    .project-thumbnail-content {
+        width: 275px;
+        height: 400px;
+    }
+    .project-thumbnail-projectimage {
+        grid-column: 1 / 5;
+        grid-row: 2 / span 1;
+        margin: 25px auto;
+    }
+    .project-thumbnail-description {
+        grid-column: 1 / 5;
+        grid-row: 3 / span 1;
+        width: 250px;
+        margin: 5px auto;
+    }
+    .project-thumbnail-bottom {
+        grid-row: 4 / span 1;
+    }
+    .project-thumbnail-name h2 {
+        font-size: 16px;
+    }
+    .project-thumbnail-name span {
+        font-size: 16px;
+    }
+    .project-thumbnail-bottom > div {
+        font-size: 14px;
+    }
+    .calendar-icon {
+        font-size: 20px;
+    }
+    .users-icon {
+        font-size: 20px;
+    }
+    .dollar-icon {
+        font-size: 20px;
+    }
+    .project-thumbnail-bottom > div:last-of-type p {
+        font-size: 20px;
+    }
+    .project-thumbnail-userimage {
+        height: 60px;
+    }
+}

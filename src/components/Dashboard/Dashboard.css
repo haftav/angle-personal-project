@@ -346,3 +346,66 @@ input[type="radio"]:checked + label span.radio::after {
     text-decoration: underline;
 }
 
+@media (max-width: 1240px) {
+    .dashboard-links a {
+        width: 500px;
+        height: 400px;
+    }
+
+    .dashboard-network {
+        display: none;
+    }
+
+    .dashboard-top-image {
+        display: none;
+    }
+    .dashboard-top-left {
+        display: none;
+    }
+
+    .create-button {
+        display: none;
+    }
+    .dashboard-top {
+        justify-content: center;
+    }
+    .dashboard-feed {
+        grid-column-start: 1;
+        grid-column-end: 6;
+        margin: auto;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .dashboard-links a {
+        width: 275px;
+        height: 400px;
+    }
+
+    .dashboard-network {
+        display: none;
+    }
+
+    .dashboard-top-image {
+        display: none;
+    }
+    .dashboard-top-left {
+        display: none;
+    }
+
+    .create-button {
+        display: none;
+    }
+    .dashboard-top {
+        justify-content: center;
+    }
+    .dashboard-feed {
+        grid-column-start: 1;
+        grid-column-end: 6;
+        margin: auto;
+    }
+    .filter-buttons {
+        display: none;
+    }
+}
