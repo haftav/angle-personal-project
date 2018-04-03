@@ -1,5 +1,5 @@
 .project-thumbnail {
-    margin: 0px auto 15px auto;
+    margin: 0px 0px 15px 0px;
     display: grid;
     grid-template-rows: 1fr;
     background: white;
@@ -101,7 +101,7 @@
     left     : 0;
     pointer-events   : none;
     background-image : linear-gradient(to bottom, 
-                      rgba(0, 0, 0, 0), 
+                      rgba(255, 255, 255, 0), 
                       rgb(255, 255, 255));
     width    : 100%;
     height   : 25%;
@@ -195,7 +195,7 @@
     }
     .project-thumbnail-content {
         width: 500px;
-        height: 400px;
+        height: 400px !important;
     }
     .project-thumbnail-projectimage {
         grid-column: 3 / 4;
@@ -228,7 +228,7 @@
     }
     .project-thumbnail-content {
         width: 275px;
-        height: 400px;
+        height: 400px !important;
     }
     .project-thumbnail-projectimage {
         grid-column: 1 / 5;
@@ -251,19 +251,19 @@
         font-size: 16px;
     }
     .project-thumbnail-bottom > div {
-        font-size: 14px;
+        font-size: 12px;
     }
     .calendar-icon {
         font-size: 20px;
     }
     .users-icon {
-        font-size: 20px;
+        font-size: 17px;
     }
     .dollar-icon {
-        font-size: 20px;
+        font-size: 17px;
     }
     .project-thumbnail-bottom > div:last-of-type p {
-        font-size: 20px;
+        font-size: 17px;
     }
     .project-thumbnail-userimage {
         height: 60px;

@@ -87,7 +87,7 @@ class GetInfo extends Component {
         console.log(this.state);
         return (
             this.state.loading ?
-                <h1>Loading</h1>
+                <div className='loading-animation'></div>
                 :
                 <div>
                     <div className='login-header'>

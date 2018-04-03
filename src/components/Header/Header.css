@@ -89,3 +89,77 @@
 .create-button:hover {
     color: white;
 }
+
+.hamburger {
+    display: none;
+}
+
+.pop-down-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 55px;
+    right: calc(-100vh);
+    z-index: 1;
+    transition: .3s all ease-in;
+    background: blue;
+}
+
+.pop-down-menu-active {
+    background: blue;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    z-index: 1;
+}
+
+.pop-down-menu a {
+    color: white;
+    width: 100%;
+    background: rgb(34, 90, 143);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.pop-down-menu a:active {
+    background: rgba(39, 103, 163, 0.89);
+}
+
+@media (max-width: 560px) {
+    .header-right {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+        height: 100%;
+        width: 124px;
+        color: white;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+}
+
+@media (min-width: 560px) {
+    .pop-down-menu {
+        display: none;
+    }
+
+    .pop-down-menu-active {
+        display: none;
+    }
+}

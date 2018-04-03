@@ -349,7 +349,7 @@ input[type="radio"]:checked + label span.radio::after {
 @media (max-width: 1240px) {
     .dashboard-links a {
         width: 500px;
-        height: 400px;
+        height: 400px !important;
     }
 
     .dashboard-network {
@@ -380,7 +380,7 @@ input[type="radio"]:checked + label span.radio::after {
 @media (max-width: 500px) {
     .dashboard-links a {
         width: 275px;
-        height: 400px;
+        height: 400px !important;
     }
 
     .dashboard-network {

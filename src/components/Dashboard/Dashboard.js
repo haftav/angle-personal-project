@@ -22,13 +22,15 @@ class Dashboard extends Component {
             typeOption: 'all',
             loading: true,
             feedLoading: false,
-            userInfo: {}
+            userInfo: {},
+            menuActive: false
         }
 
         this.handleStatusChange = this.handleStatusChange.bind(this);
         this.handleTypeChange = this.handleTypeChange.bind(this);
         this.toggleFeedLoading = this.toggleFeedLoading.bind(this);
         this.getRandomArrayElements = this.getRandomArrayElements.bind(this);
+        this.toggleMenu = this.toggleMenu.bind(this);
     }
 
     componentDidMount() {
@@ -50,6 +52,12 @@ class Dashboard extends Component {
                 })
             }
         });
+    }
+
+    toggleMenu() {
+        this.setState({
+            menuActive: !this.state.menuActive
+        })
     }
 
     toggleFeedLoading() {
@@ -115,7 +123,8 @@ class Dashboard extends Component {
             if (status === 'completed') {
                 return (
                     <Link to={`/project/${id}`}
-                        style={{height: "175px"}}>
+                        style={{height: "175px"}}
+                        key={`dashboard_project_${id}`}>
                         <ProjectThumbnail name={name}
                             type={type}
                             description={description}
@@ -201,7 +210,9 @@ class Dashboard extends Component {
         return (
 
             <div>
-                <Header userid={this.props.user.id} />
+                <Header userid={this.props.user.id} 
+                        toggleMenu={this.toggleMenu}
+                        menuActive={this.state.menuActive}/>
                 {
                     this.state.loading ?
                         <div className='loading-animation'></div>

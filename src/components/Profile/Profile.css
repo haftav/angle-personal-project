@@ -75,6 +75,8 @@
 
 
 .profile-user-image {
+    width: 200px;
+    height: 100%;
     grid-column: 1 / 2;
     grid-row-start: 1;
     background-size: cover;

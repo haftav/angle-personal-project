@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from './bigwhite.png'
 
-export default function Header({ userid }) {
+export default function Header({ userid, toggleMenu, menuActive }) {
     console.log(process.env.REACT_APP_LOGOUT)
     return (
         <div className='header'>
@@ -32,6 +32,26 @@ export default function Header({ userid }) {
                 </Link>
                 <a href={process.env.REACT_APP_LOGOUT}>
                     <i class="fa fa-sign-out"></i>
+                    Log Out
+                    </a>
+            </div>
+            <div className='hamburger' onClick={toggleMenu}>
+                I is hamburger
+            </div>
+            <div className={menuActive ? 'pop-down-menu pop-down-menu-active' : 'pop-down-menu'}>
+                <Link className='home-button' to='/dashboard'>
+                    Dashboard
+                </Link>
+                <Link to='/create'>
+                    Create
+                </Link>
+                <Link to={`/profile/${userid}`}>
+                    Profile
+                </Link>
+                <Link to={`/projects/${userid}`}>
+                    Projects
+                </Link>
+                <a href={process.env.REACT_APP_LOGOUT}>
                     Log Out
                     </a>
             </div>
