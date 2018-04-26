@@ -45,7 +45,6 @@ class Collab extends Component {
                 this.socket.on('message dispatched', this.updateMessages);
                 const project_id = this.props.match.params.id;
                 axios.get(`/api/projects/collab/${project_id}`).then(res => {
-                    console.log(res.data);
                     if (this.props.user.id == res.data.collab_id || this.props.user.id == res.data.user_id) {
                         this.setState({
                             project: res.data,
