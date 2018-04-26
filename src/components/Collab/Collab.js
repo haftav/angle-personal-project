@@ -67,12 +67,8 @@ class Collab extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log(this.props);
-        console.log(newProps);
-        console.log(_.isEqual(this.props, newProps));
         if (!_.isEqual(this.props, newProps)) {
             axios.get(`/api/projects/collab/${newProps.match.params.id}`).then(res => {
-                console.log(res.data);
                 this.setState({
                     project: res.data
                 })
@@ -120,7 +116,6 @@ class Collab extends Component {
     submitProject() {
         const { finished_url } = this.state;
         axios.put(`/api/projects/submit/${this.props.match.params.id}`, { finished_url }).then(res => {
-            console.log(res.data);
             this.setState({
                 project: res.data,
                 finished_url: ''
@@ -143,14 +138,11 @@ class Collab extends Component {
     }
 
     scrollToBottom() {
-        console.log(this.container.scrollTop);
-        console.log(this.container.scrollHeight);
         this.container.scrollTop = this.container.scrollHeight;
     }
 
     render() {
         // this.state.scroll = true ? this.scrollToBottom() : null
-        console.log(this.state);
         const { name, description, type, image, user_id,
             first_name, last_name, price, user_image, collab_user,
             finished_url, collab_id, status, project_deadline } = this.state.project;

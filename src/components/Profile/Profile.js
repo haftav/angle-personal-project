@@ -179,3 +179,5 @@ let actions = {
 }
 
 export default connect(mapStateToProps, actions)(Profile);
+
+
