@@ -27,8 +27,6 @@ class Reviews extends Component {
 
     componentDidMount() {
         this.props.getUser();
-        console.log(this.props.user.id);
-        console.log(this.props.match.params.id);
         axios.get(`/api/reviews/${this.props.match.params.id}`).then(res => {
             this.setState({
                 reviews: res.data,
@@ -48,9 +46,6 @@ class Reviews extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log('old props: ', this.props)
-        console.log('new props: ', newProps);
-        console.log(_.isEqual(this.props, newProps));
         if (!_.isEqual(this.props, newProps)) {
             this.setState({
                 loading: true
@@ -87,8 +82,6 @@ class Reviews extends Component {
         info.user_id = Number(this.props.match.params.id);
         info.post_date = date;
 
-        console.log('clicked')
-        console.log(info);
         axios.post('/api/reviews/add', info).then(res => {
             this.setState({
                 reviews: res.data,
@@ -118,7 +111,6 @@ class Reviews extends Component {
         info.description = this.state.reviewText;
         info.post_date = date;
         info.user_id = this.props.match.params.id;
-        console.log(info);
         axios.put('/api/reviews/edit', info).then(res => {
             this.setState({
                 reviews: res.data,
@@ -139,7 +131,6 @@ class Reviews extends Component {
 
 
     render() {
-        console.log(this.state);
         const reviews = this.state.reviews.map((el, idx) => {
             let { description, post_date, first_name, last_name, image, id, reviewer_id } = el;
             post_date = post_date.split('T')[0]

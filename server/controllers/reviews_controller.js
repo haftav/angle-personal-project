@@ -19,12 +19,9 @@ module.exports = {
                     let result = reviews.find((el) => {
                         return el.reviewer_id == user_id;
                     })
-                    console.log(result);
                     if (result) {
-                        console.log('sending false');
                         res.status(200).send(false);
                     } else {
-                        console.log('sending true');
                         res.status(200).send(true);
                     }
                 })
@@ -36,7 +33,6 @@ module.exports = {
     addReview: (req, res) => {
         const db = req.app.get('db');
         const { description, post_date, reviewer_id, user_id } = req.body;
-        console.log(req.body);
         db.add_review([description, post_date, reviewer_id, user_id]).then(reviews => {
             res.status(200).send(reviews);
         })
@@ -44,16 +40,12 @@ module.exports = {
     editReview: (req, res) => {
         const db = req.app.get('db');
         const { description, post_date, id, user_id } = req.body;
-        console.log(req.body);
-        console.log(description, post_date, id, user_id);
         db.edit_review([description, post_date, id, user_id]).then(reviews => {
-            console.log(reviews);
             res.status(200).send(reviews);
         })
     },
     deleteReview: (req, res) => {
         const db = req.app.get('db');
-        console.log(req.params);
         const { id, user_id } = req.params;
         db.delete_review([id, user_id]).then(reviews => {
             res.status(200).send(reviews);

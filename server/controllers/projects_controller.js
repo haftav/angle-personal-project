@@ -21,11 +21,10 @@ module.exports = {
                 })
                 Promise.all(results).then(function(values) {
                     projects = [...projects, ...values];
-                    console.log(projects);
+
                     projects.sort((a, b) => {
                         return b.sort_date > a.sort_date ? 1 : b.sort_date < a.sort_date ? -1 : 0
                     })
-                    console.log(projects);
                     if (!req.query.status && !req.query.type) {
                         res.status(200).send(projects);
                     } else {            
@@ -69,7 +68,6 @@ module.exports = {
             const { collab_id } = project[0];
             db.find_id_user([collab_id]).then(user => {
                 project[0].collab_user = user[0]
-                console.log(project[0])
                 res.status(200).send(project[0])
             })
         })

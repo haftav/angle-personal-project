@@ -45,7 +45,6 @@ class Project extends Component {
                     if (res.data.status === 'collab') {
                         this.props.history.push(`/collab/${project_id}`)
                     } else {
-                        console.log(res.data);
                         this.setState({
                             project: res.data,
                             loading: false
@@ -62,7 +61,6 @@ class Project extends Component {
                 loading: true
             })
             axios.get(`/api/projects/${newProps.match.params.id}`).then(res => {
-                console.log(res.data);
                 this.setState({
                     project: res.data,
                     loading: false
@@ -93,7 +91,6 @@ class Project extends Component {
                 let image = data.secure_url;
                 project.image = image;
                 axios.put(`/api/projects/${this.state.project.id}`, project).then(res2 => {
-                    console.log(res2.data);
                     this.setState({
                         project: Object.assign({}, res2.data, { bids: bids })
                     })
@@ -137,7 +134,6 @@ class Project extends Component {
     }
 
     chooseBid(project_id, bidder_id) {
-        console.log('I got clicked: ', project_id, bidder_id);
         // I want to update my project status to 'collab' and update collab_id to bidder_id
         axios.put(`/api/projects/collab/${project_id}`, { bidder_id }).then(res => {
             this.props.history.push(`/collab/${project_id}`);
@@ -145,11 +141,9 @@ class Project extends Component {
     }
 
     getTimeRemaining(endtime) {
-        console.log(endtime);
         let end = new Date(endtime.replace(/-/g, '\/'));
         let newDate = new Date()
         var t = Date.parse(end) - Date.parse(newDate);
-        console.log(t);
         var seconds = Math.floor((t / 1000) % 60);
         var minutes = Math.floor((t / 1000 / 60) % 60);
         var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
@@ -164,7 +158,6 @@ class Project extends Component {
     }
 
     render() {
-        console.log(this.state.project);
         let { name, type, price, description,
             image, status, user_id, user_name,
             first_name, last_name, artist_type, user_image,
@@ -189,12 +182,10 @@ class Project extends Component {
             days = countdown.days;
             hours = countdown.hours;
             minutes = countdown.minutes;
-            console.log('days: ', days, 'hours: ', hours, 'minutes: ', minutes, 'time: ', time)
         }
         if (project_deadline) {
             project_deadline = project_deadline.split('T')[0]
         }
-        console.log(this.state.project.bids);
         const bids = this.state.project.bids.map((el, idx) => {
             let { first_name, last_name, image, votes, bidder_id, project_id } = el;
             let bid_artist_type = el.artist_type;

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import logo from './bigwhite.png'
 
 export default function Header({ userid, toggleMenu, menuActive }) {
-    console.log(process.env.REACT_APP_LOGOUT)
     return (
         <div className='header'>
             <div className='header-left'>

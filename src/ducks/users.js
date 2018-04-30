@@ -14,10 +14,8 @@ export default function reducer(state = initialState, action) {
         case GET_USER + '_PENDING':
             return Object.assign({}, state, { loading: true })
         case GET_USER + '_FULFILLED':
-            console.log(action.payload);
             return Object.assign({}, state, { user: action.payload, loading: false })
         case UPDATE_USER + '_FULFILLED':
-            console.log(action.payload)
             return Object.assign({}, state, { user: action.payload })
         default:
             return state;

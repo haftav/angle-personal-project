@@ -69,7 +69,6 @@ class User extends Component {
 
         axios.get(`/api/connections/status/from/${id}`).then(res => {
             if (res.data.status === 'pending') {
-                console.log('requesting');
                 this.setState({
                     request_status: 'requesting'
                 })

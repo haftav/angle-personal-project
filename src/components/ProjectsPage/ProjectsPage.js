@@ -28,7 +28,6 @@ class ProjectsPage extends Component {
                     this.props.history.push('/dashboard');
                 } else {
                     axios.get(`/api/collabs/?status=${this.state.statusOption}`).then(res => {
-                        console.log(res.data);
                         this.setState({
                             projects: res.data,
                             loading: false
@@ -49,10 +48,8 @@ class ProjectsPage extends Component {
         this.setState({
             feedLoading: true
         })
-        console.log(val);
         // this.toggleFeedLoading();
         axios.get(`/api/collabs/?status=${val}`).then(res => {
-            console.log(res.data);
             this.setState({
                 projects: res.data,
                 statusOption: val,

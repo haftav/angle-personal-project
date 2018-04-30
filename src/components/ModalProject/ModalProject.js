@@ -74,7 +74,6 @@ class ModalProject extends Component {
     }
 
     render() {
-        console.log(this.state.project);
         const { toggleModal, active, update } = this.props;
         const { name, type, description, price, image } = this.props.project
         return (

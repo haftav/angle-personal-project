@@ -95,17 +95,14 @@ app.get('/api/user', (req, res) => {
 })
 
 app.get('/api/user/info', (req, res) => {
-    console.log('here', req.user);
     if (req.user.info === 'true') {
         res.status(200).send(true)
     } else {
-        console.log('else');
         res.status(200).send(false);
     }
 })
 
 app.put('/api/user', (req, res) => {
-    console.log('body: ', req.body)
     const { first_name, last_name, description, artist_type, image } = req.body;
     const db = app.get('db');
     if (image) {
@@ -216,7 +213,6 @@ app.get('/api/stats/:id', (req, res) => {
             output.review_count = reviews[0].review_count;
             db.get_connection_stats([id]).then(connections => {
                 output.connection_count = connections[0].connection_count;
-                console.log(output);
                 res.status(200).send(output)
             }) 
         })
@@ -241,7 +237,6 @@ io.on('connection', socket => {
     })
 
     socket.on('leave room', function(data) {
-        console.log('you hit this')
         socket.disconnect();
     })
 })

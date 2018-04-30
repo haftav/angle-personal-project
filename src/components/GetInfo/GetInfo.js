@@ -29,7 +29,6 @@ class GetInfo extends Component {
             if (res.data) {
                 this.props.history.push('/dashboard')
             } else {
-                console.log(res.data);
                 this.setState({
                     user: Object.assign({}, {artist_type: 'Both', image_data: {} }),
                     loading: false
@@ -41,7 +40,6 @@ class GetInfo extends Component {
     componentWillReceiveProps(newProps) {
         if (!_.isEqual(this.props, newProps)) {
             axios.get('/api/user/info').then(res => {
-                console.log('here');
                 if (res.data) {
                     this.props.history.push('/dashboard')
                 } else {
@@ -84,7 +82,6 @@ class GetInfo extends Component {
 
 
     render() {
-        console.log(this.state);
         return (
             this.state.loading ?
                 <div className='loading-animation'></div>

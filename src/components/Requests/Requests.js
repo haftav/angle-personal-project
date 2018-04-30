@@ -38,7 +38,6 @@ class Requests extends Component {
     }
 
     render() {
-        console.log(this.state.requests);
         const requests = this.state.requests.map((el, idx) => {
             let { first_name, last_name, image, user_id, connection_id } = el;
             return (

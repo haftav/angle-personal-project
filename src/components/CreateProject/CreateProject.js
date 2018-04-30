@@ -35,10 +35,6 @@ class CreateProject extends Component {
 
     handleDrop(files) {
 
-        console.log(files[0])
-
-        console.log(process.env);
-
         const formData = new FormData();
         formData.append("file", files[0]);
         formData.append("tags", `angle`);
@@ -59,11 +55,8 @@ class CreateProject extends Component {
 
     updateBiddingDeadline(val) {
         if (val) {
-            console.log(val);
             let project_deadline = new Date(val)
             project_deadline.setDate(project_deadline.getDate() + this.state.completion_time);
-            console.log(this.state.completion_time);
-            console.log(project_deadline);
             project_deadline = project_deadline.toISOString().split('T')[0];
             this.setState({
                 project: Object.assign({}, this.state.project, {
@@ -107,7 +100,6 @@ class CreateProject extends Component {
     }
 
     render() {
-        console.log(this.state.project);
         let today = new Date();
         today.setDate(today.getDate() + 1)
         today = today.toISOString().split('T')[0];

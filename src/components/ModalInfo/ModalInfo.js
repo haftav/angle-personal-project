@@ -37,7 +37,6 @@ class ModalInfo extends Component {
     }
 
     handleUpdate() {
-        console.log(this.state.user);
         const { user_name, first_name, last_name, description, artist_type } = this.state.user;
         if (user_name && first_name && last_name && description && artist_type) {
             this.props.updateUser(this.state.user);
@@ -71,7 +70,6 @@ class ModalInfo extends Component {
     }
 
     render() {
-        console.log(this.state);
         const { toggleModal, active } = this.props;
         return (
             <div ref={node => this.node = node}

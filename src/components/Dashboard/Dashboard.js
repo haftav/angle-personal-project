@@ -114,7 +114,6 @@ class Dashboard extends Component {
 
 
     render() {
-        console.log(this.state.projects);
         const projects = this.state.projects.map((el, idx) => {
             const { name, type, description,
                 price, image, id, first_name,

@@ -32,7 +32,6 @@ module.exports = {
     addConnection: (req, res) => {
         const db = req.app.get('db');
         const { friend_id_1, friend_id_2 } = req.body;
-        console.log('ids: ', friend_id_1, friend_id_2)
         db.add_connection([friend_id_1, friend_id_2]).then(status => {
             res.status(200).send(status[0]);
         })

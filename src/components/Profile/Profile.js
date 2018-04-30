@@ -56,8 +56,6 @@ class Profile extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        console.log('old props: ', this.props);
-        console.log('new props: ', newProps);
         if (!_.isEqual(this.props.user, newProps.user)) {
             this.props.getUser()
         } else if (!_.isEqual(this.props, newProps)) {
@@ -88,7 +86,6 @@ class Profile extends Component {
     }
 
     render() {
-        console.log(this.state);
 
         var { first_name, last_name, user_name, description, artist_type, image, id } = this.props.user;
         let imageAdded = false;
